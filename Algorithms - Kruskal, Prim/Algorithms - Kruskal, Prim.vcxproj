@@ -139,9 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AdjacencyList.cpp" />
     <ClCompile Include="Heap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdjacencyList.h" />
     <ClInclude Include="Heap.h" />
   </ItemGroup>
   <ItemGroup>
