@@ -1,19 +1,20 @@
 #pragma once
 #include <iostream>
+#include "LinkedList.h"
 using namespace std;
 // stores adjacency list items
-struct AdjNode {
-    int val, cost;
-    AdjNode* next;
-};
+
 // structure to store edges
 struct graphEdge {
     int start_ver, end_ver, weight;
 };
-class DiaGraph {
+class DiaGraph { // DiaGraph <LinkedList[]>
+    
     // insert new nodes into adjacency list from given graph
 public:
-    AdjNode** head;
+
+    LinkedList* adjArrGraph;
+
     //adjacency list as array of pointers
     // Constructor
 
@@ -32,30 +33,30 @@ public:
             int end_ver = edges[i].end_ver;
             int weight = edges[i].weight;
             // insert in the beginning
-            AdjNode* newNode = setAdjListNode(end_ver, weight, head[start_ver]);
+            
 
-            // point head pointer to new node
-            head[start_ver] = newNode;
+            // point adjArrGraph pointer to new node
+            adjArrGraph[start_ver].insertHead(end_ver , weight);
+            adjArrGraph[end_ver].insertHead(start_ver, weight);
         }
 
     }
     // Destructor
     ~DiaGraph() {
         for (int i = 0; i < N; i++)
-            delete[] head[i];
-        delete[] head;
+            //todo: delete list
+        delete[] adjArrGraph;
     }
 
 
     void MakeEmptyGraph(int n)
     {
-        head = new AdjNode * [n]();
-        // initialize head pointer for all vertices
-        for (int i = 0; i < n; ++i)
-            head[i] = nullptr;
+        adjArrGraph = new LinkedList[n]();
+        // initialize adjArrGraph pointer for all vertices
+       
         FLAG_INIT = true;
         // construct directed graph by adding edges to it
-        // point head pointer to new node
+        // point adjArrGraph pointer to new node
     }
 
 
@@ -67,35 +68,41 @@ public:
             //throw new exception("edge already exists"); 
         }
         else {
+            
 
-            AdjNode* newNode = setAdjListNode(end_ver, weight, head[start_ver]);
-            head[start_ver] = newNode;
+            adjArrGraph[start_ver].insertHead(end_ver, weight);
+            adjArrGraph[end_ver].insertHead(start_ver , weight);
         }
     }
 
     //todo: currently returns node, should return list after created
-    AdjNode* GetAdjList(int start_ver)
+    LinkedList GetAdjList(int start_ver)
     {
 
-        return head[start_ver];
+        return adjArrGraph[start_ver];
     }
 
 
     //todo: 
     bool RemoveEdge(int ver1, int ver2)
     {
-        //search in both directions
+        bool status = true;
+        if (edgeExists(ver1, ver2) == true) {
+            status |= adjArrGraph[ver1].remove(ver2);
+            status |= adjArrGraph[ver2].remove(ver1);
+        }
+        else
+        {
+            status = false;
+            //todo: throw exception
+        }
         //remove from linked list
+        return status;
     }
 
     bool IsAdjacent(int start_ver, int end_ver)
     {
-        bool status = false;
-        bool ans1 = edgeExists(end_ver, start_ver);
-        bool ans2 = edgeExists(start_ver, end_ver);
-        status = ans1 || ans2;
-
-        return status;
+        return edgeExists(end_ver, start_ver);
         //is end_ver a neighbor in start_Ver adj list
     }
 
@@ -104,11 +111,11 @@ private:
     bool edgeExists(int end_ver, int start_ver)
     {
         bool status = false;
-        AdjNode* curr = head[start_ver];
+        AdjNode* curr = adjArrGraph[start_ver].head;
 
         while (curr != nullptr)
         {
-            if (end_ver == curr->val)
+            if (end_ver == curr->index)
             {
                 status = true;
                 break;
@@ -119,18 +126,17 @@ private:
         return status;
     }
 
-    AdjNode* getAdjListNode(int origin, AdjNode* head)
-    {
-
-    }
+    // AdjNode* getAdjListNode(int index, LinkedList adjArrGraph)
+    // {
+    //     return adjArrGraph.find(index);
+    // }
 
     //needs to clear at destructor
-    AdjNode* setAdjListNode(int value, int weight, AdjNode* head) {
-        AdjNode* newNode = new AdjNode;
-        newNode->val = value;
-        newNode->cost = weight;
-
-        newNode->next = head;   // point new node to current head
+    AdjNode* CreatAdjNode(int value, int weight) {
+        AdjNode* newNode = new AdjNode();
+        newNode->index = value;
+        newNode->weight = weight;
+        newNode->next = nullptr;   // point new node to current adjArrGraph
         return newNode;
     }
 
@@ -138,11 +144,12 @@ private:
     int FLAG_INIT = false; //a flag that MakeEmptyGraph wasn't created properly, later to be used with exceptions
 };
 // print all adjacent vertices of given vertex
-inline void display_AdjList(AdjNode* ptr, int i)
+inline void display_AdjList(LinkedList list, int vertex)
 {
+    AdjNode* ptr = list.head;
     while (ptr != nullptr) {
-        cout << "(" << i << ", " << ptr->val
-            << ", " << ptr->cost << ") ";
+        cout << "(" << vertex << ", " << ptr->index
+            << ", " << ptr->weight << ") ";
         ptr = ptr->next;
     }
     cout << endl;

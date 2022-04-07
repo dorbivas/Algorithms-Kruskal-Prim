@@ -8,6 +8,19 @@
 
 using namespace std;
 
+void printGraph(DiaGraph graph)
+{
+    cout << "Graph adjacency list " << endl << "(start_vertex, end_vertex, weight):" << endl;
+    for (int i = 0; i < N; i++)
+    {
+        // if (diagraph.head[i] != nullptr) {
+        // display adjacent vertices of vertex i
+        display_AdjList(graph.GetAdjList(i), i);
+            
+        // }
+    }
+}
+
 //tests main
 int main()
 {
@@ -38,20 +51,18 @@ int main()
         cout << "(1, 2): " << graph.IsAdjacent(1, 2) << endl; //expected true
         cout << "(1, 3): " << graph.IsAdjacent(1, 3) << endl; //expected false
 
-        AdjNode* list = graph.GetAdjList(1); //expected to return 2 edges linked list
+        LinkedList list = graph.GetAdjList(1); //expected to return 2 edges linked list
+        cout << list.head->index << list.head->weight << endl; //print list actually
 
+        printGraph(graph);
 
-
-        cout << list->val << list->cost << endl;
+       graph.RemoveEdge(1, 2);
+        // graph.RemoveEdge(1, 3);
+      //  graph.RemoveEdge(1, 4);
+      
         // print adjacency list representation of graph
-        cout << "Graph adjacency list " << endl << "(start_vertex, end_vertex, weight):" << endl;
-        for (int i = 0; i < N; i++)
-        {
-            // if (diagraph.head[i] != nullptr) {
-                // display adjacent vertices of vertex i
-            display_AdjList(graph.head[i], i);
-            // }
-        }
+        printGraph(graph);
+
     }
     catch (exception& e)
     {
