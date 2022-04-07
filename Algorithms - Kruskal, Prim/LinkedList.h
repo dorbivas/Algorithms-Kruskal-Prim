@@ -1,5 +1,8 @@
 #define UNINIT -1;
 #include <climits>
+#include <iostream>
+
+using namespace std;
 
 struct AdjNode {
     int index = UNINIT;
@@ -18,11 +21,14 @@ public:
     bool isEmpty();
     void insertHead(int index, int weight);
     void insertTail(int data, int weight);
-    void remove(int data);
+    // bool remove(int data);
     AdjNode* find(int data);
     void display();
+    bool remove(int remValue);
 
 private:
+    
+
     AdjNode* temp = nullptr;
     
 

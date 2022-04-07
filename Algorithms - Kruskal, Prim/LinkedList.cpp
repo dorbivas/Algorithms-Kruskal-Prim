@@ -48,25 +48,61 @@ void LinkedList::insertTail(int data, int weight)
     ++size;
 }
 
-void LinkedList::remove(int data)
-{
-    temp = head;
-    AdjNode* prev = nullptr;
-    while (temp->next != nullptr && temp->index != data)
-    {
-        prev = temp;
-        temp = temp->next;
+bool LinkedList::remove(int remValue) {
+    // to remove an element, we go through the list, find the value given
+    // if we find it, stop
+    // to remove, disconnect the link
+    // relink the two values now (ie.
+    // value 1->2->3->NULL, 2 is removed, 1->3->NULL )
+    bool status = false;
+    AdjNode* current = head;
+    AdjNode* next = current;
+    while (current != nullptr) {
+        if (current->index == remValue) { // if match
+            status = true;
+            break; // break out of while
+            
+        }
+        else {
+            cout << "Value " << current->index << " does not match " << remValue << ".\n";
+            next = current; // save in case
+            current = current->next; // go to next value
+        }
+    } // end while
+    if (current == nullptr) { // if we reached end of list
+        cout << "Can't remove value: no match found.\n"; // no match, cant remove
     }
-    if (temp->index == data)
-    {
-        prev->next = temp->next;
-        delete temp;
+    else { // found match
+        cout << "Deleting: " << current << "\n";
+        delete current;
+        current = next->next; // current is updated
     }
-    else if (temp->next == nullptr)
-    {
-        cout << "Error: Number Not found..." << endl;
-    }
+    return status;
 }
+// bool LinkedList::remove(int data)
+// {
+//     bool status = false;
+//     temp = head;
+//     AdjNode* prev = nullptr;
+//     while (temp->next != nullptr && temp->index != data)
+//     {
+//         prev = temp;
+//         temp = temp->next;
+//     }
+//     if (temp->index == data)
+//     {
+//         if (prev != nullptr) {
+//             prev->next = temp->next;
+//             status = true;
+//             delete temp;
+//         }
+//     }
+//     else if (temp->next == nullptr)
+//     {
+//         cout << "Error: Number Not found..." << endl;
+//     }
+//     return status;
+// }
 
 AdjNode* LinkedList::find(int data)
 {

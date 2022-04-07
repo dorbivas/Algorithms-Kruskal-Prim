@@ -86,8 +86,18 @@ public:
     //todo: 
     bool RemoveEdge(int ver1, int ver2)
     {
-     
+        bool status = true;
+        if (edgeExists(ver1, ver2) == true) {
+            status |= adjArrGraph[ver1].remove(ver2);
+            status |= adjArrGraph[ver2].remove(ver1);
+        }
+        else
+        {
+            status = false;
+            //todo: throw exception
+        }
         //remove from linked list
+        return status;
     }
 
     bool IsAdjacent(int start_ver, int end_ver)
