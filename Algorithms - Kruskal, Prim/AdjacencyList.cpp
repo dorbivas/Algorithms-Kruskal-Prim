@@ -15,7 +15,8 @@ void printGraph(DiaGraph graph)
     {
         // if (diagraph.head[i] != nullptr) {
         // display adjacent vertices of vertex i
-        display_AdjList(graph.GetAdjList(i), i);
+        if (graph.GetAdjList(i).head != nullptr)
+            display_AdjList(graph.GetAdjList(i), i);
             
         // }
     }
@@ -56,12 +57,12 @@ int main()
 
         printGraph(graph);
 
-       graph.RemoveEdge(1, 2);
-        // graph.RemoveEdge(1, 3);
-      //  graph.RemoveEdge(1, 4);
+      graph.RemoveEdge(1, 2);
+      //graph.RemoveEdge(1, 3);
+     // graph.RemoveEdge(1, 4);
       
         // print adjacency list representation of graph
-        printGraph(graph);
+      printGraph(graph);
 
     }
     catch (exception& e)
@@ -69,7 +70,7 @@ int main()
         cout << e.what() << std::endl;
     }
     return 0;
-    std::cout << "Hello World!\n";
+    cout << "Hello World!\n";
 
 }
 

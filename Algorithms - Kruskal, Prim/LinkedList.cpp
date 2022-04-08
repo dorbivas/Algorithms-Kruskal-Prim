@@ -56,7 +56,8 @@ bool LinkedList::remove(int remValue) {
     // value 1->2->3->NULL, 2 is removed, 1->3->NULL )
     bool status = false;
     AdjNode* current = head;
-    AdjNode* next = current;
+    AdjNode* prev = current;
+
     while (current != nullptr) {
         if (current->index == remValue) { // if match
             status = true;
@@ -64,40 +65,41 @@ bool LinkedList::remove(int remValue) {
             
         }
         else {
-            cout << "Value " << current->index << " does not match " << remValue << ".\n";
-            next = current; // save in case
-            current = current->next; // go to next value
+            cout << current->index << " is not " << remValue <<  "'s neighbor" ".\n";
+            prev = current; // save in case
+            current = current->next; // go to prev value
         }
     } // end while
     if (current == nullptr) { // if we reached end of list
         cout << "Can't remove value: no match found.\n"; // no match, cant remove
     }
     else { // found match
-        cout << "Deleting: " << current << "\n";
-        delete current;
-        current = next->next; // current is updated
+        cout << "Deleting: " << current->index << " from: " << head->index << "'s neighbors list " << "\n";
+        prev->next = current->next;
+        delete current ;
+        current = prev->next; // current is updated
     }
     return status;
 }
 // bool LinkedList::remove(int data)
 // {
 //     bool status = false;
-//     temp = head;
+//     prev = head;
 //     AdjNode* prev = nullptr;
-//     while (temp->next != nullptr && temp->index != data)
+//     while (prev->prev != nullptr && prev->index != data)
 //     {
-//         prev = temp;
-//         temp = temp->next;
+//         prev = prev;
+//         prev = prev->prev;
 //     }
-//     if (temp->index == data)
+//     if (prev->index == data)
 //     {
 //         if (prev != nullptr) {
-//             prev->next = temp->next;
+//             prev->prev = prev->prev;
 //             status = true;
-//             delete temp;
+//             delete prev;
 //         }
 //     }
-//     else if (temp->next == nullptr)
+//     else if (prev->prev == nullptr)
 //     {
 //         cout << "Error: Number Not found..." << endl;
 //     }
