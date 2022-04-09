@@ -1,5 +1,6 @@
 #pragma once
 #include "LinkedList.h"
+#include "AdjacencyList.h"
 
 #include <iostream>
 #include<stdio.h>
