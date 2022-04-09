@@ -1,7 +1,5 @@
 // AdjacencyList.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
-#include <iostream>
 #include "AdjacencyList.h" //original
 
 #define N 6 // Number of vertices in the graph
@@ -15,11 +13,13 @@ void printGraph(DiaGraph graph)
     {
         // if (diagraph.head[i] != nullptr) {
         // display adjacent vertices of vertex i
-        if (graph.GetAdjList(i).head != nullptr)
-            display_AdjList(graph.GetAdjList(i), i);
-            
-        // }
+
+        if (graph[i].head != nullptr && graph[i].size > 0)
+            display_AdjList(graph[i], i);
+        else
+            cout << i << " list is empty. " << endl;
     }
+
 }
 
 //tests main
@@ -59,7 +59,8 @@ int main()
 
       graph.RemoveEdge(1, 2);
       //graph.RemoveEdge(1, 3);
-     // graph.RemoveEdge(1, 4);
+      //graph.RemoveEdge(1, 4);
+      graph.RemoveEdge(2, 3);
       
         // print adjacency list representation of graph
       printGraph(graph);

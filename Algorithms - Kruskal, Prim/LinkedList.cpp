@@ -54,7 +54,11 @@ bool LinkedList::remove(int remValue) {
     // to remove, disconnect the link
     // relink the two values now (ie.
     // value 1->2->3->NULL, 2 is removed, 1->3->NULL )
+    
     bool status = false;
+    if (this->size == 0)
+        return status;
+
     AdjNode* current = head;
     AdjNode* prev = current;
 
@@ -65,7 +69,6 @@ bool LinkedList::remove(int remValue) {
             
         }
         else {
-            cout << current->index << " is not " << remValue <<  "'s neighbor" ".\n";
             prev = current; // save in case
             current = current->next; // go to prev value
         }
@@ -74,37 +77,13 @@ bool LinkedList::remove(int remValue) {
         cout << "Can't remove value: no match found.\n"; // no match, cant remove
     }
     else { // found match
-        cout << "Deleting: " << current->index << " from: " << head->index << "'s neighbors list " << "\n";
+        --size;
         prev->next = current->next;
         delete current ;
         current = prev->next; // current is updated
     }
     return status;
 }
-// bool LinkedList::remove(int data)
-// {
-//     bool status = false;
-//     prev = head;
-//     AdjNode* prev = nullptr;
-//     while (prev->prev != nullptr && prev->index != data)
-//     {
-//         prev = prev;
-//         prev = prev->prev;
-//     }
-//     if (prev->index == data)
-//     {
-//         if (prev != nullptr) {
-//             prev->prev = prev->prev;
-//             status = true;
-//             delete prev;
-//         }
-//     }
-//     else if (prev->prev == nullptr)
-//     {
-//         cout << "Error: Number Not found..." << endl;
-//     }
-//     return status;
-// }
 
 AdjNode* LinkedList::find(int data)
 {

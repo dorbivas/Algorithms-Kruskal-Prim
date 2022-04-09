@@ -1,7 +1,9 @@
 #pragma once
 #include <iostream>
 #include "LinkedList.h"
+
 using namespace std;
+
 // stores adjacency list items
 
 // structure to store edges
@@ -23,7 +25,6 @@ public:
 
     }
 
-
     DiaGraph(graphEdge edges[], int vertix_number, int edge_number) {
         // allocate new node
         MakeEmptyGraph(vertix_number);
@@ -34,7 +35,6 @@ public:
             int weight = edges[i].weight;
             // insert in the beginning
             
-
             // point adjArrGraph pointer to new node
             adjArrGraph[start_ver].insertHead(end_ver , weight);
             adjArrGraph[end_ver].insertHead(start_ver, weight);
@@ -76,20 +76,35 @@ public:
     }
 
     //todo: currently returns node, should return list after created
-    LinkedList GetAdjList(int start_ver)
-    {
 
+    LinkedList& operator [](int start_ver) {
         return adjArrGraph[start_ver];
     }
+
+    LinkedList operator [](int start_ver) const {
+        return adjArrGraph[start_ver];
+    }
+
+  /*  LinkedList GetAdjList(int start_ver)
+    {
+        return adjArrGraph[start_ver];
+    }*/
 
 
     //todo: 
     bool RemoveEdge(int ver1, int ver2)
     {
         bool status = true;
-        if (edgeExists(ver1, ver2) == true) {
+        if (edgeExists(ver1, ver2) == true)
+        {
+            //TODO Remove unnececry prints
             status |= adjArrGraph[ver1].remove(ver2);
             status |= adjArrGraph[ver2].remove(ver1);
+            if (status)
+                cout << " Deleting the edge: " << "(" << ver1 << ", " << ver2 << ") " << endl;
+            else
+                cout << " the edge: " << "(" << ver1 << ", " << ver2 << ") " << "does not exist" << endl;
+
         }
         else
         {

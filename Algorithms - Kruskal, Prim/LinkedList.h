@@ -1,3 +1,4 @@
+#pragma once
 #define UNINIT -1;
 #include <climits>
 #include <iostream>
@@ -21,14 +22,11 @@ public:
     bool isEmpty();
     void insertHead(int index, int weight);
     void insertTail(int data, int weight);
-    // bool remove(int data);
     AdjNode* find(int data);
     void display();
     bool remove(int remValue);
 
 private:
-    
-
     AdjNode* temp = nullptr;
     
 
