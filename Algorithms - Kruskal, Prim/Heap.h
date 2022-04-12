@@ -14,28 +14,35 @@ using std::string;
 
 
 
+typedef int Weight;
+
 class Heap {
 private:
-	graphEdge** data;
+
+	Weight* data;
 	int heapSize;
 	int parent(int index) { return (index - 1) / 2; }
 	int left(int index) { return (2 * index + 1); }
 	int right(int index) { return (2 * index + 2); }
-
-public:
-	Heap() : heapSize(0) {};
-	void insertMax(graphEdge* item);
-	graphEdge* max() { return data[0]; }
-	graphEdge* deleteMax();
+	void fixHeapMin(int node);
+	void Swap(Weight& pairA, Weight& pairB); 
+	
 	void deleteLastLeaf(int ind);
-	void fixHeapMax(int node);
-	void mySwap(graphEdge*& pairA, graphEdge*& pairB); //todo
+public:
+	void Build();
+	Weight DeleteMin();
+	bool IsEmpty();
+	void DecreaseKey(int place, int newKey);
+
+	Heap() : heapSize(0) {};
+	void insertMin(Weight item);
 
 
+	Weight min() { return data[0]; }
 	int getSize() { return heapSize; }
-	void fixBotToTopMax(int index);
-	void creatEmptyMax();
+	void fixBotToTopMin(int index);
+	void creatEmptyMin();
 
-	graphEdge** getData() { return data; }
+	Weight* getData() { return data; }
 };
 

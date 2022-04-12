@@ -142,6 +142,7 @@
     <ClCompile Include="AdjacencyList.cpp" />
     <ClCompile Include="DisjointSet.cpp" />
     <ClCompile Include="Heap.cpp" />
+    <ClCompile Include="ExSolution.cpp" />
     <ClCompile Include="LinkedList.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,61 +1,75 @@
 #include "Heap.h"
 
-void Heap::fixHeapMax(int node) {
-	int max;
+//min heap which sorted by the lowest weight  
+
+bool Heap::IsEmpty()
+{
+	return heapSize == 0;
+}
+
+void Heap::DecreaseKey(int place, int newKey)
+{
+	data[place] = newKey;
+}
+
+void Heap::fixHeapMin(int node) {
+	int min;
 	int curr_left = left(node);
 	int curr_right = right(node);
 
-	if (curr_right < heapSize && data[curr_right]->weight >= data[node]->weight)
+
+	if (curr_right < heapSize && data[curr_right] <= data[node])
 	{
-		max = curr_right;
+		min = curr_right;
 	}
 	else
 	{
-		max = node;
+		min = node;
 	}
-	if (curr_left < heapSize && data[curr_left]->weight >= data[node]->weight)
+	if (curr_left < heapSize && data[curr_left] <= data[node])
 	{
-		max = curr_left;
+		min = curr_left;
 	}
-	if (max != node)
+	if (min != node)
 	{
-		mySwap(data[node], data[max]);
-		fixHeapMax(max);
+		Swap(data[node], data[min]);
+		fixHeapMin(min);
 	}
 }
 
-void Heap::mySwap(graphEdge*& pairA, graphEdge*& pairB)
+void Heap::Swap(Weight& pairA, Weight& pairB)
 {
-	graphEdge* temp = pairA;
-	int tempInd = pairB->weight;
-
+	Weight temp = pairA;
 	pairA = pairB;
 	pairB = temp;
-
-	pairA->weight = pairB->weight;
-	pairB->weight = tempInd;
 }
 
-graphEdge* Heap::deleteMax() {
+void Heap::Build()
+{
+	for (int i = heapSize/2; i >= 0; i--)
+		fixBotToTopMin(i);
+}
+
+Weight Heap::DeleteMin() {
 	if (heapSize < 1)
 	{
 		//throw handle exp TODO 
 	}
-	graphEdge* max = data[0];
-	mySwap(data[0], data[--heapSize]);
-	data[heapSize] = nullptr;
+	Weight min = data[0];
+	Swap(data[0], data[--heapSize]);
+	data[heapSize] = INT_MAX; // infinty
 
-	fixHeapMax(0);
-	return(max);
+	fixHeapMin(0);
+	return(min);
 }
 
 void Heap::deleteLastLeaf(int ind) {
-	mySwap(data[ind], data[--heapSize]);
-	data[heapSize] = nullptr;
-	fixBotToTopMax(ind);
+	Swap(data[ind], data[--heapSize]);
+	data[heapSize] = INT_MAX;
+	fixBotToTopMin(ind);
 }
 
-void Heap::insertMax(graphEdge* item) {
+void Heap::insertMin(Weight item) {
 	int i = heapSize;
 	if (heapSize == MAX_SIZE)
 	{
@@ -63,30 +77,30 @@ void Heap::insertMax(graphEdge* item) {
 	}
 	++heapSize;
 	data[i] = item;
-	data[i]->weight = i;
+	data[i] = i;
 
-	fixBotToTopMax(i);
+	fixBotToTopMin(i);
 }
 
-void Heap::fixBotToTopMax(int index) {
+void Heap::fixBotToTopMin(int index) {
 	int i = index;
-	if (data[i] != nullptr)
+	if (data[i] != INT_MAX)
 	{
-		while (i > 0 && data[parent(i)]->weight <= data[i]->weight)
+		while (i > 0 && data[parent(i)] >= data[i])
 		{
-			mySwap(data[i], data[parent(i)]);
+			Swap(data[i], data[parent(i)]);
 			i = parent(i);
 		}
 	}
 }
 
-void Heap::creatEmptyMax() {
+void Heap::creatEmptyMin() {
 	heapSize = 0;
 
-	data = new graphEdge * [MAX_SIZE];
+	data = new Weight [MAX_SIZE];
 
 	for (int i = 0; i < MAX_SIZE; i++)
 	{
-		data[i] = nullptr;
+		data[i] = INT_MAX; //
 	}
 }
