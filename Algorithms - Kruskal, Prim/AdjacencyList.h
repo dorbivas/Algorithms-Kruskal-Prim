@@ -48,6 +48,17 @@ public:
         delete[] adjArrGraph;
     }
 
+    AdjNode* getAdjListNode(int index, LinkedList adjArrGraph)
+    {
+        return adjArrGraph.find(index);
+    }
+
+    LinkedList getAdjList(int index)
+    {
+        return adjArrGraph[index];
+    }
+
+
 
     void MakeEmptyGraph(int n)
     {
@@ -140,11 +151,6 @@ private:
 
         return status;
     }
-
-    // AdjNode* getAdjListNode(int index, LinkedList adjArrGraph)
-    // {
-    //     return adjArrGraph.find(index);
-    // }
 
     //needs to clear at destructor
     AdjNode* CreatAdjNode(int value, int weight) {

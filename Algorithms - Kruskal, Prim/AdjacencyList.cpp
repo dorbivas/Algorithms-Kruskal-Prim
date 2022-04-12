@@ -8,70 +8,71 @@ using namespace std;
 
 void printGraph(DiaGraph graph)
 {
-    cout << "Graph adjacency list " << endl << "(start_vertex, end_vertex, weight):" << endl;
-    for (int i = 0; i < N; i++)
-    {
-        // if (diagraph.head[i] != nullptr) {
-        // display adjacent vertices of vertex i
+	cout << "Graph adjacency list " << endl << "(start_vertex, end_vertex, weight):" << endl;
+	for (int i = 0; i < N; i++)
+	{
+		// if (diagraph.head[i] != nullptr) {
+		// display adjacent vertices of vertex i
 
-        if (graph[i].head != nullptr && graph[i].size > 0)
-            display_AdjList(graph[i], i);
-        else
-            cout << i << " list is empty. " << endl;
-    }
+		if (graph[i].head != nullptr && graph[i].size > 0)
+			display_AdjList(graph[i], i);
+		else
+			cout << i << " list is empty. " << endl;
+	}
 
 }
 
 //tests main
 int main()
 {
-    //Graph graph =(new AdjacencyList(N)); How to do?
-    // AdjacencyList* graph = new AdjacencyList(N);
+	//Graph graph =(new AdjacencyList(N)); How to do?
+	// AdjacencyList* graph = new AdjacencyList(N);
 
-    try {
-        //read input into edges
-        graphEdge edges[] = {
-            // (x, y, w) -> edge from x to y with weight w
-            {0,1,2},{0,2,4},{1,4,3},{2,3,2},{3,1,4},{4,3,3}
-        };
+	try {
+		//read input into edges
+		graphEdge edges[] = {
+			// (x, y, w) -> edge from x to y with weight w
+			{0,1,2},{0,2,4},{1,4,3},{2,3,2},{3,1,4},{4,3,3}
+		};
 
-        // calculate number of edges
-        int n = sizeof(edges) / sizeof(graphEdge);
-        // DiaGraph diagraph(nullptr, 0, N);
+		// calculate number of edges
+		int n = sizeof(edges) / sizeof(graphEdge);
+		// DiaGraph diagraph(nullptr, 0, N);
 
-        // construct graph
-        // DiaGraph diagraph(edges, n, N);
+		// construct graph
+		// DiaGraph diagraph(edges, n, N);
 
-        DiaGraph graph;
-        graph.MakeEmptyGraph(N);
-        graph.AddEdge(1, 2, 3);
-        graph.AddEdge(1, 4, 6);
-        graph.AddEdge(2, 3, 1);
-        //  graph.AddEdge(1, 2, 3);
-          // cout << graph.IsAdjacent(1, 3); //excptected false
-        cout << "(1, 2): " << graph.IsAdjacent(1, 2) << endl; //expected true
-        cout << "(1, 3): " << graph.IsAdjacent(1, 3) << endl; //expected false
+		DiaGraph graph;
+		graph.MakeEmptyGraph(N);
+		graph.AddEdge(1, 2, 3);
+		graph.AddEdge(1, 4, 6);
+		graph.AddEdge(2, 3, 1);
+		//  graph.AddEdge(1, 2, 3);
+		  // cout << graph.IsAdjacent(1, 3); //excptected false
+		cout << "(1, 2): " << graph.IsAdjacent(1, 2) << endl; //expected true
+		cout << "(1, 3): " << graph.IsAdjacent(1, 3) << endl; //expected false
 
-        LinkedList list = graph.GetAdjList(1); //expected to return 2 edges linked list
-        cout << list.head->index << list.head->weight << endl; //print list actually
 
-        printGraph(graph);
+		LinkedList list = graph.getAdjList(2);//graph.getAdjListNode(1, graph[1].head); //expected to return 2 edges linked list
+		cout << "this" << list.head->index << list.head->weight << endl; //print list actually
 
-      graph.RemoveEdge(1, 2);
-      //graph.RemoveEdge(1, 3);
-      //graph.RemoveEdge(1, 4);
-      graph.RemoveEdge(2, 3);
-      
-        // print adjacency list representation of graph
-      printGraph(graph);
+		printGraph(graph);
 
-    }
-    catch (exception& e)
-    {
-        cout << e.what() << std::endl;
-    }
-    return 0;
-    cout << "Hello World!\n";
+		graph.RemoveEdge(1, 2);
+		//graph.RemoveEdge(1, 3);
+		//graph.RemoveEdge(1, 4);
+		graph.RemoveEdge(2, 3);
+
+		// print adjacency list representation of graph
+		printGraph(graph);
+
+	}
+	catch (exception& e)
+	{
+		cout << e.what() << std::endl;
+	}
+	return 0;
+	cout << "Hello World!\n";
 
 }
 
