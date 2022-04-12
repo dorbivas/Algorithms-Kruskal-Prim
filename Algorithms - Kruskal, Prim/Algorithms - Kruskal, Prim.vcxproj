@@ -140,7 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AdjacencyList.cpp" />
-    <ClCompile Include="DisjointSets.cpp" />
+    <ClCompile Include="DisjointSet.cpp" />
     <ClCompile Include="Heap.cpp" />
     <ClCompile Include="LinkedList.cpp" />
   </ItemGroup>
@@ -148,7 +148,7 @@
     <ClInclude Include="AdjacencyList.h" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="LinkedList.h" />
-    <ClInclude Include="DisjointSets.h" />
+    <ClInclude Include="DisjointSet.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readMe.txt" />

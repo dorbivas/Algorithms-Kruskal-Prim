@@ -24,7 +24,7 @@
     <ClCompile Include="LinkedList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DisjointSets.cpp">
+    <ClCompile Include="DisjointSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClInclude Include="LinkedList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DisjointSets.h">
+    <ClInclude Include="DisjointSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
