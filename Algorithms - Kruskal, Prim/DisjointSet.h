@@ -1,3 +1,4 @@
+
 class DisjointSet {
 
 private:
@@ -6,7 +7,6 @@ private:
 		int parent;
 		int arrSize;
 	}Element;
-	
 	
 	int arrSize;
 	Element* parentsArr;
@@ -17,8 +17,6 @@ private:
 	}
 
 public:
-
-	
 
 	DisjointSet(int arrSize) {
 

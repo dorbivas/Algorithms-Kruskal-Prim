@@ -27,7 +27,7 @@
     <ClCompile Include="DisjointSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ExSolution.cpp">
+    <ClCompile Include="ExeSolution.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -42,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DisjointSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExeSolution.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

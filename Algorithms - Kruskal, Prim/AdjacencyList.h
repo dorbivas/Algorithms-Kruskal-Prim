@@ -4,18 +4,18 @@
 
 using namespace std;
 
-// stores adjacency list items
-
 // structure to store edges
 struct graphEdge {
     int start_ver, end_ver, weight;
 };
+
 class DiaGraph { // DiaGraph <LinkedList[]>
     
     // insert new nodes into adjacency list from given graph
 public:
 
     LinkedList* adjArrGraph;
+    int edgesAmount ;
 
     //adjacency list as array of pointers
     // Constructor
@@ -58,8 +58,6 @@ public:
         return adjArrGraph[index];
     }
 
-
-
     void MakeEmptyGraph(int n)
     {
         adjArrGraph = new LinkedList[n]();
@@ -79,15 +77,14 @@ public:
             //throw new exception("edge already exists"); 
         }
         else {
-            
-
             adjArrGraph[start_ver].insertHead(end_ver, weight);
             adjArrGraph[end_ver].insertHead(start_ver , weight);
+            ++edgesAmount;
         }
+       
     }
 
     //todo: currently returns node, should return list after created
-
     LinkedList& operator [](int start_ver) {
         return adjArrGraph[start_ver];
     }
