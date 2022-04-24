@@ -7,10 +7,18 @@ bool Heap::IsEmpty()
 	return heapSize == 0;
 }
 
-//todo:
-void Heap::DecreaseKey(int place, int newKey)
+//todo: fix efficiency
+void Heap::DecreaseKey(int searchedIndex, int newWeight)
 {
-	// data[place] = newKey;
+	for (auto heap_node : data)
+	{
+		if (heap_node.index == searchedIndex)
+		{
+			heap_node.weight = newWeight;
+		}
+	}
+	//(data[searchedIndex].weight < newWeight)
+	//find in heap, change 
 }
 
 void Heap::fixHeapMin(int node) {

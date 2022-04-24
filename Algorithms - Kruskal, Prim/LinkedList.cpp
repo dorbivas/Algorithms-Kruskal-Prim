@@ -11,7 +11,7 @@ bool LinkedList::isEmpty()
     return head == nullptr;
 }
 
-void LinkedList::insertHead(Index index, Weight weight)
+void LinkedList::insertHead(int index, int weight)
 {
     temp = new Node;
     temp->index = index;
@@ -28,7 +28,7 @@ void LinkedList::insertHead(Index index, Weight weight)
     ++size;
 }
 
-void LinkedList::insertTail(Index index, Weight weight)
+void LinkedList::insertTail(int index, int weight)
 {
     temp = new Node;
     temp->index = index;
@@ -48,7 +48,7 @@ void LinkedList::insertTail(Index index, Weight weight)
     ++size;
 }
 
-bool LinkedList::remove(Index indexRemoved) {
+bool LinkedList::remove(int indexRemoved) {
     // to remove an element, we go through the list, find the value given
     // if we find it, stop
     // to remove, disconnect the link

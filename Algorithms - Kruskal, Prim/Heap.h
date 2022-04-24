@@ -40,7 +40,7 @@ public:
 	void Build();
 	int DeleteMin();
 	bool IsEmpty();
-	void DecreaseKey(int place, int newKey);
+	void DecreaseKey(int searchedIndex, int newWeight);
 
 	Heap() : heapSize(0) {};
 	void insertMin(int item);

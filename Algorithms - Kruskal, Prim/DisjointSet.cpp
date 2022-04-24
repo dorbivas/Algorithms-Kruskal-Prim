@@ -45,6 +45,11 @@ DisjointSet::~DisjointSet()
 
 int DisjointSet::Find(int index)
 {
+    if (index > arrSize)
+	{
+		cout << "Invalid input";
+		exit(1); // todo throw
+	}
 	if (parentsArr[index].parent != index)
 		parentsArr[index].parent = Find(parentsArr[index].parent);
 

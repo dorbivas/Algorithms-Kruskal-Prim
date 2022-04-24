@@ -7,19 +7,16 @@
 
 using namespace std;
 
-typedef int Weight;
-typedef int Index;
-
-struct Node
-{
-    int index = UNINIT; //todo: might be nice
-    int weight = INT_MAX; //todo: might be nice
+struct Node {
+    int index = UNINIT;
+    int weight = INT_MAX;
     Node* next;
 
-    private:
-    friend ostream& operator<<(ostream& os, const Node& vertex);
- 
+    bool includedFlag = false;
+    Node* brother;
 
+private:
+    friend ostream& operator<<(ostream& os, const Node& vertex);
 };
 
 
@@ -31,11 +28,11 @@ public:
     int size = 0;
 
     bool isEmpty();
-    void insertHead(Index index, Weight weight);
-    void insertTail(Index index, Weight weight);
+    void insertHead(int index, int weight);
+    void insertTail(int index, int weight);
     Node* find(int data);
     void display();
-    bool remove(Index index_removed);
+    bool remove(int index_removed);
 
 private:
     Node* temp = nullptr;

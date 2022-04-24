@@ -1,4 +1,4 @@
-
+#pragma once
 #include "ExeSolution.h"
 #include <vector>
 #include <algorithm>
@@ -6,6 +6,7 @@
 #include "Heap.h"
 struct graphEdge;
 using namespace std;
+
 
 
 bool ExeSolution::run_tests(AdjListGraph graph)
@@ -30,9 +31,14 @@ int ExeSolution::runProgram()
 		//prim
 		//removeEdge
 		graph = readData();
-		
+
+		Kruskel(*graph);
+		Prim(*graph);
 		//read input into edges
-	
+		Kruskel(*graph);
+
+		//	Prim(*graph);
+
 
 		run_tests(*graph);
 
@@ -95,12 +101,10 @@ void ExeSolution::readInputFromFunc(int& numVectors, int& numEdges, vector<graph
 
 }
 
-void ExeSolution::createEdgesArray(AdjListGraph graph, vector<graphEdge>& Edges)
+void ExeSolution::createEdgesArray(AdjListGraph graph, int* weightEdges, vector<graphEdge>& Edges)
 {
 	bool flag = false;
 	int wightInd = 1;
-
-	int* weightEdges = new int[graph.edges_amount()](); // 1 2  , 2->1
 
 	for (int i = 0; i < graph.vertixAmount; i++)
 	{
@@ -137,40 +141,38 @@ void ExeSolution::createEdgesArray(AdjListGraph graph, vector<graphEdge>& Edges)
 	}
 }
 
-graphEdge* ExeSolution::Kruskel(AdjListGraph graph)
+vector<graphEdge> ExeSolution::Kruskel(AdjListGraph graph)
 {
-	int u, v;
+	int u, v, currWeight = 0;
 	DisjointSet graphSet(graph.edges_amount());
-	graphEdge* result = new graphEdge[graph.edges_amount()]();
-	//Edges = graph.getEdges();
+	vector<graphEdge> result;
+
 	vector<graphEdge> Edges;
-	createEdgesArray(graph, Edges);
+	int* weightEdges = new int(graph.edges_amount());
 
-	//quickSort(weightEdges, 0, graph.vertixAmount - 1);
-
-
-	//sort(weightEdges.begin(), weightEdges.end(), [](const graphEdge& edgeA, const graphEdge& edgeB) {	return edgeA.weight > edgeB.weight; }); // TODO qsort?
+	createEdgesArray(graph, weightEdges, Edges);
+	quickSort(weightEdges, 0, graph.vertixAmount - 1);
 
 	for (int i = 0; i < 6 /*for each vertix in graph*/; i++) //TODO make arr to vector then use graph.size
 		graphSet.MakeSet(i);
 
-	int i = 0;
-
-	for (auto& edge : Edges)
+	for (int i = 0; i < Edges.size(); i++)
 	{
-		u = graphSet.Find(edge.start_ver);
-		v = graphSet.Find(edge.end_ver);
+		u = graphSet.Find(Edges[i].start_ver);
+		v = graphSet.Find(Edges[i].end_ver);
 
 		if (u != v)
 		{
-			result[i] = edge;
+			result.push_back(Edges[i]);
 			graphSet.UnionBySize(u, v);
 		}
 	}
-	/*for (int i = 0; i < forest.size(); i++)
+
+	for (int i = 0; i < result.size(); i++)
 	{
-		weight += forest[i]->edgeWeight;
-	}*/
+		currWeight += result[i].weight;
+	}
+
 	return result;
 }
 
@@ -180,6 +182,7 @@ graphEdge* ExeSolution::Kruskel(AdjListGraph graph)
 
 
 int ExeSolution::partition(int arr[], int start, int end)
+
 {
 	int pivot = arr[start], offset = 0;
 
@@ -228,14 +231,14 @@ vector<int> ExeSolution::Prim(AdjListGraph graph)
 {
 	Heap Q;
 	vector<bool> inT; //in tree array
-	vector<Weight> min; //Weight array
+	vector<int> min; //Weight array
 	vector<int> p; //parent Array
-	
+
 	min[0] = 0;
 	p[0] = 0;
 
-	//
-	for (int i=0 ;i<Q.getSize(); ++i)
+	
+	for (int i = 0; i < Q.getSize(); ++i)
 	{
 		inT[i] = false;
 		min[i] = _MAX_INT_DIG;
@@ -248,7 +251,7 @@ vector<int> ExeSolution::Prim(AdjListGraph graph)
 		int minWeightIndex = Q.DeleteMin();
 		inT[minWeightIndex] = true;
 		Node* curr_neighbor = graph[minWeightIndex].head;
-		while(curr_neighbor)
+		while (curr_neighbor)
 		{
 			if (!inT[curr_neighbor->index] && curr_neighbor->weight < min[curr_neighbor->index])
 			{
@@ -260,4 +263,5 @@ vector<int> ExeSolution::Prim(AdjListGraph graph)
 		}
 	}
 	return p;
+
 }

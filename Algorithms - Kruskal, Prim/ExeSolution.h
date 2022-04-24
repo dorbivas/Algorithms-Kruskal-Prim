@@ -24,9 +24,9 @@ private:
 	
 	AdjListGraph* graph = nullptr;
 	void readInputFromFunc(int& numVectors, int& numEdges, vector<graphEdge> graphEdges, graphEdge& removedEdge);
-	void createEdgesArray(AdjListGraph graph, vector<graphEdge>& Edges);
+	void createEdgesArray(AdjListGraph graph, int* weightEdges, vector<graphEdge>& Edges);
 	AdjListGraph* readData();
-	graphEdge* Kruskel(AdjListGraph graph);
+	vector<graphEdge> Kruskel(AdjListGraph graph);
 	vector<int> Prim(AdjListGraph graph);
 	int partition(int arr[], int start, int end);
 	void quickSort(int arr[], int start, int end);
