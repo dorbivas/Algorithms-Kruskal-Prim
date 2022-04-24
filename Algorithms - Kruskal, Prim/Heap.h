@@ -1,12 +1,12 @@
 #pragma once
 #include "LinkedList.h"
-#include "AdjacencyList.h"
 
 #include <iostream>
 #include<stdio.h>
 #include<string>
 #include <fstream>
 #include <filesystem>
+#include <vector>
 
 using namespace std;
 using std::string;
@@ -14,35 +14,43 @@ using std::string;
 
 
 
-typedef int Weight;
 
 class Heap {
 private:
+	struct HeapNode
+	{
+		unsigned int weight;
+		unsigned int index;
+	};
 
-	Weight* data;
+	// Weight* data;
+	vector<HeapNode> data;
+
 	int heapSize;
 	int parent(int index) { return (index - 1) / 2; }
 	int left(int index) { return (2 * index + 1); }
 	int right(int index) { return (2 * index + 2); }
 	void fixHeapMin(int node);
-	void Swap(Weight& pairA, Weight& pairB); 
+	void Swap(HeapNode& pairA, HeapNode& pairB); 
 	
-	void deleteLastLeaf(int ind);
+	// void deleteLastLeaf(int ind);
+	
 public:
+
 	void Build();
-	Weight DeleteMin();
+	int DeleteMin();
 	bool IsEmpty();
 	void DecreaseKey(int place, int newKey);
 
 	Heap() : heapSize(0) {};
-	void insertMin(Weight item);
+	void insertMin(int item);
 
 
-	Weight min() { return data[0]; }
+	// Weight min() { return data[0]; }
 	int getSize() { return heapSize; }
-	void fixBotToTopMin(int index);
+	void  fixBotToTopMin(int index);
 	void creatEmptyMin();
 
-	Weight* getData() { return data; }
+	// Weight* getData() { return data; }
 };
 

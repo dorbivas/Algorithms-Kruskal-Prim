@@ -11,9 +11,9 @@ bool LinkedList::isEmpty()
     return head == nullptr;
 }
 
-void LinkedList::insertHead(int index ,int weight)
+void LinkedList::insertHead(Index index, Weight weight)
 {
-    temp = new AdjNode;
+    temp = new Node;
     temp->index = index;
     temp->weight = weight;
 
@@ -28,10 +28,10 @@ void LinkedList::insertHead(int index ,int weight)
     ++size;
 }
 
-void LinkedList::insertTail(int data, int weight)
+void LinkedList::insertTail(Index index, Weight weight)
 {
-    temp = new AdjNode;
-    temp->index = data;
+    temp = new Node;
+    temp->index = index;
     temp->weight = weight;
 
     temp->next = nullptr;
@@ -48,7 +48,7 @@ void LinkedList::insertTail(int data, int weight)
     ++size;
 }
 
-bool LinkedList::remove(int remValue) {
+bool LinkedList::remove(Index indexRemoved) {
     // to remove an element, we go through the list, find the value given
     // if we find it, stop
     // to remove, disconnect the link
@@ -59,11 +59,11 @@ bool LinkedList::remove(int remValue) {
     if (this->size == 0)
         return status;
 
-    AdjNode* current = head;
-    AdjNode* prev = current;
+    Node* current = head;
+    Node* prev = current;
 
     while (current != nullptr) {
-        if (current->index == remValue) { // if match
+        if (current->index == indexRemoved) { // if match
             status = true;
             break; // break out of while
             
@@ -85,10 +85,10 @@ bool LinkedList::remove(int remValue) {
     return status;
 }
 
-AdjNode* LinkedList::find(int data)
+Node* LinkedList::find(int data)
 {
     int i;
-    AdjNode* ret_val = nullptr;
+    Node* ret_val = nullptr;
     for (i = 1, temp = head; temp->next != nullptr && temp->index != data; temp = temp->next, i++);
     if (temp->index == data)
     {
@@ -103,17 +103,21 @@ AdjNode* LinkedList::find(int data)
     
 }
 
-void LinkedList::display()
+ostream& operator<<(ostream& os, const Node& vertex)
 {
-    if (!isEmpty())
-    {
-        for (temp = head; temp != nullptr; temp = temp->next)
-            cout << temp->index << " ";
-        cout << endl;
-    }
-    else
-    {
-        cout << "List is Empty!" << endl;
-    }
+
+    os << "(" << vertex.index
+        << ", " << vertex.weight << ") ";
+    os << endl;
+    return os;
 }
 
+ ostream& operator<<(ostream& os, const LinkedList& list)
+{
+    Node* ptr = list.head;
+    while (ptr != nullptr) {
+        ptr = ptr->next;
+        os << ptr;
+    }
+    return os;
+}

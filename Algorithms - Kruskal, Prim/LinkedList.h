@@ -3,32 +3,43 @@
 #include <climits>
 #include <iostream>
 
+#include "Heap.h"
+
 using namespace std;
 
-struct AdjNode {
-    int index = UNINIT;
-    int weight = INT_MAX;
-    AdjNode* next;
+typedef int Weight;
+typedef int Index;
+
+struct Node
+{
+    int index = UNINIT; //todo: might be nice
+    int weight = INT_MAX; //todo: might be nice
+    Node* next;
+
+    private:
+    friend ostream& operator<<(ostream& os, const Node& vertex);
+ 
+
 };
 
-class LinkedList 
+
+class LinkedList  //todo: can be made generic with node outside
 {
 public:
-  
-    AdjNode* head = nullptr;
-    AdjNode* tail = nullptr;
+    Node* head = nullptr;
+    Node* tail = nullptr;
     int size = 0;
 
     bool isEmpty();
-    void insertHead(int index, int weight);
-    void insertTail(int data, int weight);
-    AdjNode* find(int data);
+    void insertHead(Index index, Weight weight);
+    void insertTail(Index index, Weight weight);
+    Node* find(int data);
     void display();
-    bool remove(int remValue);
+    bool remove(Index index_removed);
 
 private:
-    AdjNode* temp = nullptr;
-    
-
+    Node* temp = nullptr;
+    friend ostream& operator<<(ostream& os, const LinkedList& vertex);
+   
 };
 

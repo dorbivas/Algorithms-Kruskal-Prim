@@ -139,14 +139,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AdjacencyList.cpp" />
+    <ClCompile Include="AdjListGraph.cpp" />
     <ClCompile Include="DisjointSet.cpp" />
     <ClCompile Include="Heap.cpp" />
     <ClCompile Include="ExeSolution.cpp" />
     <ClCompile Include="LinkedList.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AdjacencyList.h" />
+    <ClInclude Include="AdjListGraph.h" />
     <ClInclude Include="ExeSolution.h" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="LinkedList.h" />
