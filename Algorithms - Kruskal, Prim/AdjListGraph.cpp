@@ -26,12 +26,27 @@ AdjListGraph::AdjListGraph(int numberOfVector)
 	MakeEmptyGraph(numberOfVector);
 }
 
+//todo:
 AdjListGraph::~AdjListGraph()
 {
-	for (int i = 0; i < N; i++)
+	// Node* currentEdge = head;
+	// Node* saverEdge = nullptr;
+
+	// for (int i = 0; i < N; i++)
 		//todo: delete list
-		delete[] adjGraphArr;
+		// adjGraphArr[i].delete();
+	// delete[] adjGraphArr;
+
+	
+
+	// while (currentEdge != nullptr)
+	// {
+	// 	saverEdge = currentEdge->next;
+	// 	delete[] currentEdge;
+	// 	currentEdge = saverEdge;
+	// }
 }
+
 
 Node* AdjListGraph::getAdjListNode(int index, LinkedList adjArrGraph)
 {
@@ -51,8 +66,7 @@ void AdjListGraph::MakeEmptyGraph(int n)
 	FLAG_INIT = true;
 	// construct directed graph by adding edges to it
 	// point adjGraphArr pointer to new node
-	
-}
+	}
 
 void AdjListGraph::AddEdge(int start_ver, int end_ver, int weight)
 {
@@ -61,8 +75,8 @@ void AdjListGraph::AddEdge(int start_ver, int end_ver, int weight)
 		//throw new exception("edge already exists"); 
 	}
 	else {
-		adjGraphArr[start_ver].insertHead(end_ver, weight);
-	//	adjGraphArr[end_ver].insertHead(start_ver , weight);
+		adjGraphArr[start_ver].insertTail(end_ver, weight);
+		adjGraphArr[end_ver].insertTail(start_ver , weight);
 		++edgesAmount;
 	}
        
@@ -84,8 +98,8 @@ bool AdjListGraph::RemoveEdge(int ver1, int ver2)
 	if (edgeExists(ver1, ver2) == true)
 	{
 		//TODO Remove unnececry prints
-		status |= adjGraphArr[ver1].remove(ver2);
-		status |= adjGraphArr[ver2].remove(ver1);
+		status |= adjGraphArr[ver1].RemoveFromList(ver2);
+		status |= adjGraphArr[ver2].RemoveFromList(ver1);
 		if (status)
 			cout << " Deleting the edge: " << "(" << ver1 << ", " << ver2 << ") " << endl;
 		else
@@ -97,8 +111,15 @@ bool AdjListGraph::RemoveEdge(int ver1, int ver2)
 		status = false;
 		//todo: throw exception
 	}
-	//remove from linked list
+	//RemoveFromList from linked list
 	return status;
+}
+
+
+
+void AdjListGraph::setFlagInit(int flag_init)
+{
+	FLAG_INIT = flag_init;
 }
 
 bool AdjListGraph::IsAdjacent(int start_ver, int end_ver)
@@ -125,7 +146,7 @@ bool AdjListGraph::edgeExists(int end_ver, int start_ver)
 	return status;
 }
 
-Node* AdjListGraph::CreatAdjNode(int value, int weight)
+Node* AdjListGraph::createAdjNode(int value, int weight)
 {
 	Node* newNode = new Node();
 	newNode->index = value;

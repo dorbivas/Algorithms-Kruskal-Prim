@@ -26,11 +26,8 @@ void DisjointSet::pathCompression()
 		
 }
 
-DisjointSet::DisjointSet(int arrSize)
+DisjointSet::DisjointSet(int arrSize) : parentsArr(new Element[arrSize])
 {
-
-	parentsArr = new Element[arrSize];
-
 	for (int i = 0; i < arrSize; i++) 
 	{
 		parentsArr[i].parent = -1;
@@ -50,10 +47,16 @@ int DisjointSet::Find(int index)
 		cout << "Invalid input";
 		exit(1); // todo throw
 	}
-	if (parentsArr[index].parent != index)
+	if (parentsArr[index].parent == index || index == -1)
+	{
+		return index;
+	}
+	else
+	{
+		
 		parentsArr[index].parent = Find(parentsArr[index].parent);
-
-	return parentsArr[index].parent;
+		return parentsArr[index].parent;
+	}
 }
 
 void DisjointSet::UnionBySize(int aSet, int bSet)

@@ -1,15 +1,12 @@
 #pragma once
 #define UNINIT -1;
-#include <climits>
 #include <iostream>
-
-#include "Heap.h"
 
 using namespace std;
 
 struct Node {
     int index = UNINIT;
-    int weight = INT_MAX;
+    int weight = UNINIT;
     Node* next;
 
     bool includedFlag = false;
@@ -32,11 +29,11 @@ public:
     void insertTail(int index, int weight);
     Node* find(int data);
     void display();
-    bool remove(int index_removed);
+    bool RemoveFromList(int index_removed);
 
 private:
     Node* temp = nullptr;
-    friend ostream& operator<<(ostream& os, const LinkedList& vertex);
+    friend auto operator<<(ostream& os, const LinkedList& vertex) -> ostream&;  // NOLINT(readability-inconsistent-declaration-parameter-name)
    
 };
 
