@@ -11,7 +11,7 @@ bool LinkedList::isEmpty()
     return head == nullptr;
 }
 
-void LinkedList::insertHead(Index index, Weight weight)
+void LinkedList::insertHead(int index, int weight)
 {
     temp = new Node;
     temp->index = index;
@@ -28,7 +28,7 @@ void LinkedList::insertHead(Index index, Weight weight)
     ++size;
 }
 
-void LinkedList::insertTail(Index index, Weight weight)
+void LinkedList::insertTail(int index, int weight)
 {
     temp = new Node;
     temp->index = index;
@@ -48,10 +48,10 @@ void LinkedList::insertTail(Index index, Weight weight)
     ++size;
 }
 
-bool LinkedList::remove(Index indexRemoved) {
-    // to remove an element, we go through the list, find the value given
+bool LinkedList::RemoveFromList(int indexRemoved) {
+    // to RemoveFromList an element, we go through the list, find the value given
     // if we find it, stop
-    // to remove, disconnect the link
+    // to RemoveFromList, disconnect the link
     // relink the two values now (ie.
     // value 1->2->3->NULL, 2 is removed, 1->3->NULL )
     
@@ -74,7 +74,7 @@ bool LinkedList::remove(Index indexRemoved) {
         }
     } // end while
     if (current == nullptr) { // if we reached end of list
-        cout << "Can't remove value: no match found.\n"; // no match, cant remove
+        cout << "Can't RemoveFromList value: no match found.\n"; // no match, cant RemoveFromList
     }
     else { // found match
         --size;

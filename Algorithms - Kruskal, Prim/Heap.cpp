@@ -7,48 +7,69 @@ bool Heap::IsEmpty()
 	return heapSize == 0;
 }
 
-//todo:
-void Heap::DecreaseKey(int place, int newKey)
+//todo: fix efficiency
+void Heap::DecreaseKey(int searchedIndex, int newWeight)
 {
-	// data[place] = newKey;
+	if (searchedIndex >= data.size() || searchedIndex < 0)
+	{
+		cout << "Invalid input" << endl;
+		exit(1);
+	}
+	while ((searchedIndex > 0) && data[parent(searchedIndex)].weight >newWeight)
+	{
+		
+	}
+
+	vector<HeapNode>::iterator ptr = data.begin();
+
+	for (auto& heap_node : data)
+	{
+		if (heap_node.index == searchedIndex)
+		{
+			//delete from data:
+			//insert to to data
+		
+			heap_node.weight = newWeight;
+
+			break;
+		}
+	}
+	
+	//(data[searchedIndex].weight < newWeight)
+	//find in heap, change 
 }
 
-void Heap::fixHeapMin(int node) {
-	int min;
-	int curr_left = left(node);
-	int curr_right = right(node);
 
-
-	if (curr_right < heapSize && data[curr_right].weight <= data[node].weight)
-	{
-		min = curr_right;
-	}
-	else
-	{
-		min = node;
-	}
-	if (curr_left < heapSize && data[curr_left].weight <= data[node].weight)
-	{
-		min = curr_left;
-	}
-	if (min != node)
-	{
-		Swap(data[node], data[min]);
-		fixHeapMin(min);
-	}
-}
 
 void Heap::Swap(Heap::HeapNode& pairA, Heap::HeapNode& pairB)
-{
+ {
 	Heap::HeapNode temp = pairA;
 	pairA = pairB;
 	pairB = temp;
 }
 
-void Heap::Build()
+
+void Heap::FloydBuild()
 {
 	for (int i = heapSize/2; i >= 0; i--)
-		fixBotToTopMin(i);
+		fixHeap(i);
+}
+
+void Heap::reassignWeights(vector<int>& min)
+{
+	int i = 0;
+	for (HeapNode& node: data)
+	{
+		node.weight = min[i];
+		node.index = i++;
+	}
+}
+
+//assumes heapSize is correct
+void Heap::Build(vector<int>& min)
+{
+	reassignWeights(min);
+	FloydBuild();
 }
 
 int Heap::DeleteMin() {
@@ -68,7 +89,7 @@ int Heap::DeleteMin() {
 // void Heap::deleteLastLeaf(int ind) {
 // 	Swap(data[ind], data[--heapSize]);
 // 	data[heapSize] = INT_MAX;
-// 	fixBotToTopMin(ind);
+// 	fixHeap(ind);
 // }
 
 // void Heap::insertMin(Weight item) {
@@ -81,18 +102,47 @@ int Heap::DeleteMin() {
 // 	data[i] = item;
 // 	data[i] = i;
 //
-// 	fixBotToTopMin(i);
+// 	fixHeap(i);
 // }
 
-void Heap::fixBotToTopMin(int index) {
-	int i = index;
-	if (data[i].weight != INT_MAX)
+//void Heap::fixHeap(int index) {
+//	int i = index;
+//	if (data[i].weight != INT_MAX)
+//	{
+//		while (i > 0 && data[parent(i)].weight >= data[i].weight)
+//		{
+//			Swap(data[i], data[parent(i)]);
+//			i = parent(i);
+//		}
+//	}
+//}
+
+void Heap::fixHeap(int index)
+{
+	int min;
+	int leftIndex = left(index);
+	int rightIndex = right(index);
+
+	if ((leftIndex < data.size()) && (data[leftIndex].weight < data[index].weight))
 	{
-		while (i > 0 && data[parent(i)].weight >= data[i].weight)
-		{
-			Swap(data[i], data[parent(i)]);
-			i = parent(i);
-		}
+		min = leftIndex;
+	}
+	else
+	{
+		min = index;
+	}
+
+	if ((rightIndex < data.size()) && (data[rightIndex].weight < data[min].weight))
+	{
+		min = rightIndex;
+	}
+
+	if (min != index)
+	{
+		swap(data[index], data[min]);
+		//swap(indenciesArr[data[index].data - 1], indenciesArr[data[min].data - 1]);
+
+		fixHeap(min);
 	}
 }
 
