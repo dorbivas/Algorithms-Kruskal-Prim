@@ -6,42 +6,21 @@
 
 using namespace std;
 
-bool ExeSolution::run_tests(AdjListGraph graph)
-{
-	cout << "(1, 2): " << graph.IsAdjacent(1, 2) << endl; //expected true
-	cout << "(1, 3): " << graph.IsAdjacent(1, 3) << endl; //expected false
 
-	LinkedList list = graph.GetAdjList(1); //expected to return 2 edges linked list
-	cout << endl << "this " << list.head->index << " " << list.head->weight << endl; //print list actually
-
-	graph.RemoveEdge(1, 2);
-	graph.RemoveEdge(2, 3);
-
-	return true;
-}
 
 int ExeSolution::runProgram()
 {
 	try {
-		//input
-		//kruskal
-		//prim
-		//removeEdge
-		graph = readData();
-		cout << "test" << endl;
+		
+		int v1 = 1, int v2 = 3;//todo: read from user
+		graph = readData(); //todo: read from user
+		
 		//Kruskel(*graph);
 		Prim(*graph);
-		//read input into edges
-
-
-		//	Prim(*graph);
-
-
-		run_tests(*graph);
-
-
-
-
+		graph->RemoveEdge(v1,v2);
+		//checkIfRemovedGraphWasABridge (DFS or use prim and check uninitialized data)
+		//if not, do kruskal again
+		//PrintGraphWeights();
 
 	}
 	catch (exception& e)
@@ -242,4 +221,17 @@ vector<int> ExeSolution::Prim(AdjListGraph graph)
 	}
 	return p;
 
+}
+bool ExeSolution::run_tests(AdjListGraph graph)
+{
+	cout << "(1, 2): " << graph.IsAdjacent(1, 2) << endl; //expected true
+	cout << "(1, 3): " << graph.IsAdjacent(1, 3) << endl; //expected false
+
+	LinkedList list = graph.GetAdjList(1); //expected to return 2 edges linked list
+	cout << endl << "this " << list.head->index << " " << list.head->weight << endl; //print list actually
+
+	graph.RemoveEdge(1, 2);
+	graph.RemoveEdge(2, 3);
+
+	return true;
 }
