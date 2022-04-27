@@ -6,20 +6,6 @@
 #define N 6 // Number of vertices in the graph
 
 using namespace std;
-//
-// void printGraph(AdjListGraph graph)
-// {
-// 	cout << "Graph adjacency list " << endl << "(start_vertex, end_vertex, weight):" << endl;
-// 	for (int i = 0; i < N; i++)
-// 	{
-// 		if (graph[i].head != nullptr && graph[i].size > 0)
-// 			display_AdjList(graph[i], i);
-// 		else
-// 			cout << i << " list is empty. " << endl;
-// 	}
-//
-// }
-
 
 AdjListGraph::AdjListGraph(int numberOfVector)
 {
@@ -70,7 +56,7 @@ void AdjListGraph::MakeEmptyGraph(int n)
 
 void AdjListGraph::AddEdge(int start_ver, int end_ver, int weight)
 {
-	if (IsAdjacent(start_ver, end_ver) == true)
+  	if (IsAdjacent(start_ver, end_ver) == true)
 	{
 		//throw new exception("edge already exists"); 
 	}
@@ -167,6 +153,22 @@ ostream& operator<<(ostream& os, const AdjListGraph& graph)
 	}
 	return os;
 }
+
+
+// void printGraph(AdjListGraph graph)
+// {
+// 	cout << "Graph adjacency list " << endl << "(start_vertex, end_vertex, weight):" << endl;
+// 	for (int i = 0; i < N; i++)
+// 	{
+// 		if (graph[i].head != nullptr && graph[i].size > 0)
+// 			display_AdjList(graph[i], i);
+// 		else
+// 			cout << i << " list is empty. " << endl;
+// 	}
+//
+// }
+
+
 
 // void display_AdjList(LinkedList list, int vertex, ostream& os)
 // {

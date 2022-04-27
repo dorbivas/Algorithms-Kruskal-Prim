@@ -26,36 +26,30 @@ private:
 
 	// Weight* data;
 	
-
-	int heapSize;
+	bool validatePointingTwoWays(); //validates if two way pointers are correct, otherwise exists.
+	bool validateHeapSorted();
 	int parent(int index) { return (index - 1) / 2; }
 	int left(int index) { return (2 * index + 1); }
 	int right(int index) { return (2 * index + 2); }
-	void fixHeapMin(int node);
-	void Swap(HeapNode& pairA, HeapNode& pairB);
+	void  fixHeap(int index);
+	
+	//void fixHeapMin(int node);
 	void FloydBuild();
 	void reassignWeights(vector<int>& min);
 
 	// void deleteLastLeaf(int ind);
 	
 public:
-
-
+	int heapSize;
+	vector<int>nodeIDArr; //nodeID at location x points to the index of nodeID in data.
 	vector<HeapNode> data;
 	void Build(vector<int>& min);
 	int DeleteMin();
 	bool IsEmpty();
 	void DecreaseKey(int searchedIndex, int newWeight);
-
 	Heap(int size) : heapSize(size) , data(size) {};
-	void insertMin(int item);
-
-
-	// Weight min() { return data[0]; }
+	void insertMin(int nodeID, int weight);
 	int getSize() { return heapSize; }
-	void  fixHeap(int index);
 	void creatEmptyMin();
-
-	// Weight* getData() { return data; }
 };
 
