@@ -12,7 +12,7 @@ int ExeSolution::runProgram()
 {
 	try {
 		
-		int v1 = 1, int v2 = 3;//todo: read from user
+		int v1 = 1, v2 = 3;//todo: read from user
 		graph = readData(); //todo: read from user
 		
 		//Kruskel(*graph);
