@@ -1,0 +1,3 @@
+Kruskal NO MST
+Prim NO MST
+Kruskal2 NO MST

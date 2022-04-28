@@ -1,0 +1,3 @@
+Kruskal 15
+Prim 15
+Kruskal2 15

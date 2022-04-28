@@ -77,10 +77,18 @@ bool LinkedList::RemoveFromList(int indexRemoved) {
         cout << "Can't RemoveFromList value: no match found.\n"; // no match, cant RemoveFromList
     }
     else { // found match
+
         --size;
-        prev->next = current->next;
-        delete current ;
+        if (current != head) {
+            delete current;
+        }
+  
         current = prev->next; // current is updated
+        if (this->size == 0)
+        {
+            this->head = nullptr;
+            this->tail = nullptr;
+        }
     }
     return status;
 }

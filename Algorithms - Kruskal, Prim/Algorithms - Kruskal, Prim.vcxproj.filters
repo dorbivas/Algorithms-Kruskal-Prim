@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{d298ced9-5297-4a15-bb78-e67a9f93779f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test\input">
+      <UniqueIdentifier>{14e2749b-e539-4e1d-b8df-3a34ee6c2279}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test\output">
+      <UniqueIdentifier>{4fc5e0d7-770e-408a-886d-26063910ee13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Heap.cpp">
@@ -54,6 +63,117 @@
   <ItemGroup>
     <Text Include="readMe.txt">
       <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="..\InputFiles\15_15_15.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\19_19_21.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\20_20_NoMST.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\43_43_46.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\47_47_49.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\47_47_NoMST.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\6006_6006_NoMST.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\badNumberOfVertex.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\EmptyFile.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\missingWeight.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\negativeAmountOfVertex.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\negativeVertexIdInSomeVertex.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\negativeVertexIdInVertexToRemove.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\noConnection.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\notADigitInInput.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\notADigitInWeight.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\wrongAmountOfEdges.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\InputFiles\wrongVertexIdInEdge.txt">
+      <Filter>test\input</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\badNumberOfVertexOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\EmptyFileOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\missingWeightOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\negativeAmountOfVertexOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\negativeVertexIdInSomeVertexOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\negativeVertexIdInVertexToRemoveOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\noConnectionOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\notADigitInInputOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\notADigitInWeightOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\wrongAmountOfEdgesOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\wrongVertexIdInEdgeOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\15_15_15Output.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\19_19_21Output.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\20_20_NoMSTOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\43_43_46Output.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\47_47_49Output.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\47_47_NoMSTOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="..\OutputFiles\6006_6006_NoMSTOutput.txt">
+      <Filter>test\output</Filter>
+    </Text>
+    <Text Include="test1.txt">
+      <Filter>test\input</Filter>
     </Text>
   </ItemGroup>
 </Project>

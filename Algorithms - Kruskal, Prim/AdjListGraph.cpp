@@ -1,14 +1,47 @@
 // AdjacencyList.cpp : This file contains the 'main' function. Program execution begins and ends there.
-
 #include "AdjListGraph.h"
-
 
 #define N 6 // Number of vertices in the graph
 
 using namespace std;
 
+bool AdjListGraph::IsConnectedDFS(AdjListGraph graph) {
+
+	for (int i = 0; i < vertixAmount; ++i) {
+		colorArr[i] = WHITE;
+	}
+	for (int i = 0; i < vertixAmount; ++i) {
+		if (colorArr[i] == WHITE)
+			Visit(i);
+	}
+	bool status = true;
+	for (int i = 0; i < vertixAmount; ++i) {
+		if (colorArr[i] == WHITE)
+		{
+			status = false;
+			break;
+		}
+
+	}
+	return status;
+}
+void AdjListGraph::Visit(int vertexId) {
+	colorArr[vertexId] == GRAY;
+
+	Node* currNode = adjGraphArr[vertexId].head;
+	while (currNode != nullptr) {
+		if (colorArr[vertexId] == WHITE) {
+			if(currNode->next != nullptr)
+				Visit(currNode->next->index);
+		}
+	}
+	colorArr[vertexId] = BLACK;
+
+}
+
 AdjListGraph::AdjListGraph(int numberOfVector)
 {
+	colorArr = new eColor[vertixAmount];
 	MakeEmptyGraph(numberOfVector);
 }
 
@@ -23,7 +56,7 @@ AdjListGraph::~AdjListGraph()
 		// adjGraphArr[i].delete();
 	// delete[] adjGraphArr;
 
-	
+
 
 	// while (currentEdge != nullptr)
 	// {
@@ -52,20 +85,24 @@ void AdjListGraph::MakeEmptyGraph(int n)
 	FLAG_INIT = true;
 	// construct directed graph by adding edges to it
 	// point adjGraphArr pointer to new node
-	}
+}
 
 void AdjListGraph::AddEdge(int start_ver, int end_ver, int weight)
 {
-  	if (IsAdjacent(start_ver, end_ver) == true)
+	if (this->adjGraphArr->head != nullptr)
 	{
-		//throw new exception("edge already exists"); 
+		if (IsAdjacent(start_ver, end_ver) == true)
+		{
+			//throw new exception("edge already exists"); 
+		}
 	}
+
 	else {
 		adjGraphArr[start_ver].insertTail(end_ver, weight);
-		adjGraphArr[end_ver].insertTail(start_ver , weight);
+		adjGraphArr[end_ver].insertTail(start_ver, weight);
 		++edgesAmount;
 	}
-       
+
 }
 
 LinkedList& AdjListGraph::operator[](int start_ver)
@@ -81,26 +118,40 @@ LinkedList AdjListGraph::operator[](int start_ver) const
 bool AdjListGraph::RemoveEdge(int ver1, int ver2)
 {
 	bool status = true;
-	if (edgeExists(ver1, ver2) == true)
+	if (this->adjGraphArr->head != nullptr)
 	{
-		//TODO Remove unnececry prints
-		status |= adjGraphArr[ver1].RemoveFromList(ver2);
-		status |= adjGraphArr[ver2].RemoveFromList(ver1);
-		if (status)
-			cout << " Deleting the edge: " << "(" << ver1 << ", " << ver2 << ") " << endl;
-		else
-			cout << " the edge: " << "(" << ver1 << ", " << ver2 << ") " << "does not exist" << endl;
+		if (edgeExists(ver1, ver2) == true)
+		{
+			//TODO Remove unnececry prints
+			status |= adjGraphArr[ver1].RemoveFromList(ver2);
+			if (status) {
+				status |= adjGraphArr[ver2].RemoveFromList(ver1);
+				if (status)
+				{
+					cout << " Deleting the edge: " << "(" << ver1 << ", " << ver2 << ") " << endl;
 
-	}
-	else
-	{
+					--edgesAmount;
+				}
+				else
+				{
+					throw "system";//print
+				}
+			}
+			else
+				throw "system";//print
+
+		}
+		else
+		{
+			status = false;
+			throw "edge not found";//print
+		}
+		//RemoveFromList from linked list
+	}else {
 		status = false;
-		//todo: throw exception
 	}
-	//RemoveFromList from linked list
 	return status;
 }
-
 
 
 void AdjListGraph::setFlagInit(int flag_init)

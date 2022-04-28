@@ -1,26 +1,28 @@
-
+#pragma once
 #include "ExeSolution.h"
-
-
-
-
-using namespace std;
-
-
 
 int ExeSolution::runProgram()
 {
 	try {
-		
-		int v1 = 1, v2 = 3;//todo: read from user
-		graph = readData(); //todo: read from user
-		
-		//Kruskel(*graph);
-		Prim(*graph);
-		graph->RemoveEdge(v1,v2);
-		//checkIfRemovedGraphWasABridge (DFS or use prim and check uninitialized data)
-		//if not, do kruskal again
-		//PrintGraphWeights();
+
+		int resultsArr[3];
+		readData(); //todo: read from user
+		//bool isConnected;
+		//if (!isConnected) {
+		//	throw " "; //todo:
+		//}
+		// 
+		Kruskel(*graph); //res[0]
+		Prim(*graph); //res[1]
+		graph->RemoveEdge(removedEdgeInput.start_ver, removedEdgeInput.end_ver); // TODO USE STATUS for invalid
+		graph->RemoveEdge(removedEdgeInput.start_ver, removedEdgeInput.end_ver);
+
+		//bool res = graph->IsConnectedDFS(*graph); //todo
+		//if (!isConnected) {
+		//	throw " "; //todo:
+		//}
+		//Kruskel(*graph); // res[2]
+		//PrintGraphWeights(resultsArr[0], resultArr[1], resultsArr[2]);
 
 	}
 	catch (exception& e)
@@ -37,29 +39,135 @@ int ExeSolution::runProgram()
 
 //1. reads graph from user into AdjGraph
 //2. updates graph instance and returns a pointer to it.
-AdjListGraph* ExeSolution::readData()
+//AdjListGraph* ExeSolution::readData()
+//{
+//	int numVertixInput = 0;
+//	int numEdgesInput =0;
+//	vector<graphEdge> edgesArrInput;
+//	graphEdge removedEdgeInput;
+//
+//
+//	//allocate adjListGraph from given data
+//	readInputFromFunc(numVertixInput, numVertixInput, edgesArrInput, removedEdgeInput);
+//	//todo:  readInputFromFile
+//
+//	graph = new AdjListGraph(numVertixInput);
+//	//allocate adjListGraph from given data
+//
+//
+//	for (auto graph_edge : edgesArrInput)
+//	{
+//		graph->AddEdge(graph_edge.end_ver, graph_edge.start_ver, graph_edge.weight);
+//	}
+//
+//	
+//	return graph;
+//}
+//
+void ExeSolution::readData()
 {
-	int numVectorsInput =0;
-	int numEdgesInput =0;
-	vector<graphEdge> edgesArrInput;
-	graphEdge removed_edgeInput;
-
-	//allocate adjListGraph from given data
-	readInputFromFunc(numVectorsInput, numVectorsInput, edgesArrInput, removed_edgeInput);
-	//todo:  readInputFromFile
-
-	graph = new AdjListGraph(numVectorsInput);
-	//allocate adjListGraph from given data
+	string delimiter = " ", line;
+	size_t posEdge;
 
 
-	for (auto graph_edge : edgesArrInput)
+	string token;
+
+	getline(fGraphInput, line);
+	if (numVertixInput = stoi(line) <= 0)
 	{
-		graph->AddEdge(graph_edge.end_ver, graph_edge.start_ver, graph_edge.weight);
+		throw ""; //TODO
+	}
+	graph = new AdjListGraph(numVertixInput); // TODO DESTRUC
+
+	getline(fGraphInput, line);
+	numEdgesInput = stoi(line);
+	if (numEdgesInput <= 0)
+	{
+		throw ""; //TODO
 	}
 
 	
-	return graph;
+	for (int i = 0; i < numEdgesInput; i++)
+	{
+		int parsedArr[3] = { -1,-1,-1 };
+		getline(fGraphInput, line);
+		for (int j = 0; j < 3; j++) 
+		{
+		
+			posEdge = line.find(delimiter);
+			token = line.substr(0, posEdge);
+			parsedArr[j] = stoi(token);
+			line.erase(0, posEdge + delimiter.length());
+		}
+		edgesArrInput.push_back(graphEdge(parsedArr[0], parsedArr[1], parsedArr[2]));
+	}
+
+	getline(fGraphInput, line);
+	removedEdgeInput.start_ver = line[0]-'0';
+	removedEdgeInput.end_ver = line[2] - '0';
+	if (removedEdgeInput.end_ver <= 0 ||
+		removedEdgeInput.end_ver <= 0)
+	{
+		throw ""; //TODO
+	}
+	getline(fGraphInput, line);
+	if (line == "\n" || !fGraphInput.eof()) {
+		throw ""; //TODO
+	}
+	for (int i = 0; i < numEdgesInput; i++)
+	{
+		graphEdge graph_edge = edgesArrInput[i];
+		graph->AddEdge(graph_edge.end_ver, graph_edge.start_ver, graph_edge.weight);
+
+	}
+
 }
+
+//vertix 0-9 
+//edge 0-9
+//edges (start, end, weight)
+
+/*
+*
+8
+10
+1 2 1
+2 3 3
+2 4 4
+2 5 2
+3 4 4
+4 5 1
+5 6 1
+5 8 5
+6 7 3
+7 8 4
+1 3
+
+*/
+//
+//void readEdgeLine(string line, graphEdge& edge)
+//{
+//	string delimiter = " ";
+//	size_t pos = 0;
+//	pos = line.find(delimiter);
+//	line.erase(0, pos + delimiter.length()); //delete date
+//
+//	pos = line.find(delimiter);
+//	edge.start_ver = getOneParam(delimiter, line, pos);
+//	edge.end_ver = getOneParam(delimiter, line, pos);
+//	edge.weight = getOneParam(delimiter, line, pos);
+//
+//}
+//
+//int getOneParam(string delimiter, string& line, size_t& pos)
+//{
+//	string token = line.substr(0, pos);
+//	line.erase(0, pos + delimiter.length());
+//	pos = line.find(delimiter);
+//	return stoi(token);
+//}
+
+
 
 void ExeSolution::readInputFromFunc(int& numVectors, int& numEdges, vector<graphEdge>& graphEdges, graphEdge& removedEdge)
 {
@@ -78,7 +186,7 @@ void ExeSolution::readInputFromFunc(int& numVectors, int& numEdges, vector<graph
 
 }
 
-void ExeSolution::createEdgesArray(AdjListGraph graph, vector<graphEdge>& Edges)
+void ExeSolution::CreatKruskelEdgesArray(AdjListGraph graph, vector<graphEdge>& Edges)
 {
 	bool flag = false;
 	int wightInd = 1;
@@ -120,12 +228,10 @@ vector<graphEdge> ExeSolution::Kruskel(AdjListGraph graph)
 {
 	int u, v, currWeight = 0;
 	DisjointSet graphSet(graph.edgesAmount);
-	vector<graphEdge> result;
+	vector<graphEdge> result, Edges;
 
-	vector<graphEdge> Edges;
-
-	createEdgesArray(graph, Edges);
-	quickSort(Edges, 0,Edges.size() - 1);
+	CreatKruskelEdgesArray(graph, Edges);
+	quickSort(Edges, 0, Edges.size() - 1);
 
 	for (int i = 0; i < 6 /*for each vertix in graph*/; i++) //todo: make arr to vector then use graph.size
 		graphSet.MakeSet(i);
@@ -149,8 +255,6 @@ vector<graphEdge> ExeSolution::Kruskel(AdjListGraph graph)
 
 	return result;
 }
-
-
 
 int ExeSolution::partition(vector<graphEdge>& edgesArr, int start, int end)
 
@@ -183,26 +287,26 @@ void ExeSolution::quickSort(vector<graphEdge>& edgesArr, int start, int end)
 
 vector<int> ExeSolution::Prim(AdjListGraph graph)
 {
-	
-	Heap Q(6);
+
+	Heap Q(graph.vertixAmount);
 	vector<bool> inT(graph.vertixAmount); //in tree array
 	vector<int> min(graph.vertixAmount); //Weight array
 	vector<int> p(graph.vertixAmount); //parent Array
-	
+
 	min.front() = 0;
 	p.front() = NO_PARENT;
 
 	for (int i = 1; i < graph.vertixAmount; ++i)
 	{
 		inT[i] = false;
-		min[i] =  INT_MAX;
+		min[i] = INT_MAX;
 		p[i] = NO_PARENT;
 	}
 	Q.Build(min);
 
 	while (!Q.IsEmpty())
 	{
-		
+
 		int minWeightIndex = Q.DeleteMin();
 		cout << "deleting current min(ID) : " << minWeightIndex << endl;
 		inT[minWeightIndex] = true;
