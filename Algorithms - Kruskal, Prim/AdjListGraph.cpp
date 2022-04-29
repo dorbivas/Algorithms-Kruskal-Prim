@@ -39,28 +39,31 @@ void AdjListGraph::Visit(int vertexId) {
 	cout << "Current index visited:" << vertexId << endl; //prints
 	cout << "color status is: " << colorArr[vertexId] << endl; //prints
 	//if duplicate ignore
+	cout << "start: " << endl;
 	PrintColorArray();
-	colorArr[vertexId] == GRAY;
 
+
+	colorArr[vertexId] = GRAY;
+	
 	Node* currNode = adjGraphArr[vertexId].head;
 	 //prints
 	while (currNode != nullptr) {
-		cout << "going to neighbor:  " << currNode->index << endl;
-		if (currNode->includedFlag != true) //if not brothers
+		
+		if (currNode->brother->includedFlag != true) //if not brothers
 		{
 			if (colorArr[currNode->index] == WHITE) {
+				cout << "going to neighbor:  " << currNode->index << endl;
 				if (currNode->next != nullptr) {
 					currNode->includedFlag = true;;
 					Visit(currNode->next->index);
 				}
 			}
 		}
-		else{
 			currNode = currNode->next;
-		}
-	
 	}
 	colorArr[vertexId] = BLACK;
+	cout << "end: " << endl;
+	PrintColorArray();
 }
 
 AdjListGraph::AdjListGraph(int numberOfVector)
