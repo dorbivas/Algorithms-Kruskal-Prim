@@ -5,7 +5,7 @@
 
 using namespace std;
 
-bool AdjListGraph::IsConnectedDFS(AdjListGraph graph) {
+bool AdjListGraph::IsConnectedDFS() {
 
 	for (int i = 0; i < vertixAmount; ++i) {
 		colorArr[i] = WHITE;
@@ -25,18 +25,42 @@ bool AdjListGraph::IsConnectedDFS(AdjListGraph graph) {
 	}
 	return status;
 }
+
+void AdjListGraph::PrintColorArray()
+{
+	for (int i=0; i<vertixAmount; ++i)
+	{
+		cout << "Index: " << i << " Color: " << colorArr[i] << endl;
+	}
+}
+
 void AdjListGraph::Visit(int vertexId) {
+
+	cout << "Current index visited:" << vertexId << endl; //prints
+	cout << "color status is: " << colorArr[vertexId] << endl; //prints
+	//if duplicate ignore
+	PrintColorArray();
 	colorArr[vertexId] == GRAY;
 
 	Node* currNode = adjGraphArr[vertexId].head;
+	 //prints
 	while (currNode != nullptr) {
-		if (colorArr[vertexId] == WHITE) {
-			if(currNode->next != nullptr)
-				Visit(currNode->next->index);
+		cout << "going to neighbor:  " << currNode->index << endl;
+		if (currNode->includedFlag != true) //if not brothers
+		{
+			if (colorArr[currNode->index] == WHITE) {
+				if (currNode->next != nullptr) {
+					currNode->includedFlag = true;;
+					Visit(currNode->next->index);
+				}
+			}
 		}
+		else{
+			currNode = currNode->next;
+		}
+	
 	}
 	colorArr[vertexId] = BLACK;
-
 }
 
 AdjListGraph::AdjListGraph(int numberOfVector)
@@ -89,17 +113,19 @@ void AdjListGraph::MakeEmptyGraph(int n)
 
 void AdjListGraph::AddEdge(int start_ver, int end_ver, int weight)
 {
-	if (this->adjGraphArr->head != nullptr)
-	{
+	//if (this->adjGraphArr->head != nullptr)
+	//{}
 		if (IsAdjacent(start_ver, end_ver) == true)
 		{
 			//throw new exception("edge already exists"); 
 		}
-	}
+	
 
 	else {
 		adjGraphArr[start_ver].insertTail(end_ver, weight);
 		adjGraphArr[end_ver].insertTail(start_ver, weight);
+		adjGraphArr[end_ver].tail->brother = adjGraphArr[start_ver].tail;
+		adjGraphArr[start_ver].tail->brother = adjGraphArr[end_ver].tail;
 		++edgesAmount;
 	}
 
