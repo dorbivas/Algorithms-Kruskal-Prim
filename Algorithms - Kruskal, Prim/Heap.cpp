@@ -7,16 +7,22 @@ bool Heap::IsEmpty()
 	return heapSize == 0;
 }
 
+bool Heap::validateInput(int nodeId)
+{
+	if (nodeId >= data.size() || nodeId < 0)
+	{
+		cout << "Invalid input at DecreaseKey" << endl;
+		exit(1);
+	}
+	return false;
+}
+
 //todo: fix efficiency
 void Heap::DecreaseKey(int nodeId, int newKey)
 {
-	validatePointingTwoWays();
-	validateHeapSorted();
-	if (nodeId >= data.size() || nodeId < 0)
-	{
-		cout << "Invalid input" << endl;
-		exit(1);
-	}
+	//validatePointingTwoWays();
+	//validateHeapSorted();
+	//validateInput(nodeId);
 
 	int heapNodeIndex = nodeIDArr[nodeId];
 	int lastHeapIndex;
@@ -31,8 +37,8 @@ void Heap::DecreaseKey(int nodeId, int newKey)
 	}
 	data[0].weight = newKey;
 	fixHeap(0);
-	validatePointingTwoWays();
-	validateHeapSorted();
+	/*validatePointingTwoWays();
+	validateHeapSorted();*/
 }
 
 bool Heap::validatePointingTwoWays() {
@@ -51,20 +57,21 @@ bool Heap::validatePointingTwoWays() {
 bool Heap::validateHeapSorted()
 {
 	bool status = true;
-	//for (int i = 0; i < heapSize; ++i) {
-	//	if (left(i) > heapSize || data[i].weight > data[left(i)].weight) {
-	//		status &= false;
-	//	}
-	//	if (right(i) > heapSize || data[i].weight > data[right(i)].weight) {
-	//		status &= false;
-	//	}
-	//	if (!status) {
-	//		cout << "index: " << i << " invalid" << endl;
-	//		exit(1);
-	//	}
+	for (int i = 0; i < heapSize; ++i) {
+		if (left(i) > heapSize || data[i].weight > data[left(i)].weight) {
+			status &= false;
+		}
+		if (right(i) > heapSize || data[i].weight > data[right(i)].weight) {
+			status &= false;
+		}
+		if (!status) {
+			cout << "index: " << i << " invalid" << endl;
+			exit(1);
+		}
 		return status;
-	//}
+	}
 }
+
 void Heap::FloydBuild()
 {
 	for (int i = heapSize/2; i >= 0; i--)
@@ -103,16 +110,16 @@ int Heap::DeleteMin() {
 	}
 	
 	int delNodeId = data[0].index;
-	validatePointingTwoWays();
-	validateHeapSorted();
+	//validatePointingTwoWays();
+	//validateHeapSorted();
 	swap(data[0], data[--heapSize]);
 	swap(nodeIDArr[data[0].index], nodeIDArr[data[heapSize].index]);
 
 	//data[heapSize].weight = INT_MAX; // infinty
 	//data[heapSize].index = UNINIT;
 	fixHeap(0);
-	validatePointingTwoWays();
-	validateHeapSorted();
+	//validatePointingTwoWays();
+	//validateHeapSorted();
 	return(delNodeId);
 }
 

@@ -46,6 +46,7 @@ public:
 	void Build(vector<int>& min);
 	int DeleteMin();
 	bool IsEmpty();
+	bool validateInput(int nodeId);
 	void DecreaseKey(int searchedIndex, int newWeight);
 	Heap(int size) : heapSize(size) , data(size) {};
 	void insertMin(int nodeID, int weight);

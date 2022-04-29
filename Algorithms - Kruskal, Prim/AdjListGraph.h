@@ -37,8 +37,8 @@ public:
 	bool RemoveEdge(int ver1, int ver2);
 
 	void setFlagInit(int flag_init);
-	bool IsConnectedDFS(AdjListGraph graph);
-
+	bool IsConnectedDFS();
+	void PrintColorArray();
 
 private:
 	
@@ -59,7 +59,7 @@ public:
 
 	// Destructor
 	~AdjListGraph();
-
+	
 	Node* getAdjListNode(int index, LinkedList adjArrGraph);
 	//todo: currently returns node, should return list after created
 	LinkedList& operator [](int start_ver);

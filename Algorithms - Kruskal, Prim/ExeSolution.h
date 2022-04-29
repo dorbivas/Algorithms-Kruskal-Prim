@@ -27,10 +27,15 @@ class ExeSolution
 {
 public:
 
-	int runProgram();	
+	int runProgram();
+	void createGraphFromInput(int& numVertixInput, int& numEdgesInput, vector<graphEdge>&edgesArrInput, graphEdge& removedEdgeInput);
+	
+	void readInputFromFile(string& delimiter, string& line, size_t& posEdge, int& numVertixInput,
+	                       int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token);
 
 	ExeSolution(string inpuFileName)
 	{
+		removedEdge.start_ver = 0; removedEdge.end_ver = 0, removedEdge.weight = 0;
 		fGraphInput.open(inpuFileName);
 		fResult.open("Out");
 		
@@ -43,18 +48,15 @@ public:
 		delete graph;
 	}
 
-	int numVertixInput = 0;
-	int numEdgesInput = 0;
-	vector<graphEdge> edgesArrInput;
-	graphEdge removedEdgeInput;
+
 
 private:
 
 	ofstream fResult;
 	ifstream fGraphInput;
-
-
-	AdjListGraph* graph;
+	void readEdgeLine();
+	graphEdge removedEdge;
+	AdjListGraph* graph = nullptr;
 	void readInputFromFunc(int& numVectors, int& numEdges, vector<graphEdge>& graphEdges, graphEdge& removedEdge);
 	void CreatKruskelEdgesArray(AdjListGraph graph, vector<graphEdge>& Edges);
 	void readData();
@@ -64,3 +66,6 @@ private:
 	void quickSort(vector<graphEdge>& edgesArr, int start, int end);
 	#define NO_PARENT -1
 };
+
+
+

@@ -1,21 +1,28 @@
 #pragma once
 #include "ExeSolution.h"
 
+
+
 int ExeSolution::runProgram()
 {
 	try {
 
 		int resultsArr[3];
 		readData(); //todo: read from user
-		//bool isConnected;
-		//if (!isConnected) {
-		//	throw " "; //todo:
-		//}
-		// 
+		
+		bool isConnected = graph->IsConnectedDFS();
+		if (!isConnected) {
+			throw " "; //todo:
+		}
+		
+
+		//this works
+		/* 
 		Kruskel(*graph); //res[0]
 		Prim(*graph); //res[1]
-		graph->RemoveEdge(removedEdgeInput.start_ver, removedEdgeInput.end_ver); // TODO USE STATUS for invalid
-		graph->RemoveEdge(removedEdgeInput.start_ver, removedEdgeInput.end_ver);
+		graph->RemoveEdge(0, 2);
+		graph->RemoveEdge(removedEdge.start_ver, removedEdge.end_ver); // TODO USE STATUS for invalid
+	*/
 
 		//bool res = graph->IsConnectedDFS(*graph); //todo
 		//if (!isConnected) {
@@ -35,6 +42,82 @@ int ExeSolution::runProgram()
 	//do kruskel
 	//do prim
 	//RemoveFromList and do extra logic
+}
+
+void ExeSolution::createGraphFromInput(int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput)
+{
+	graph = new AdjListGraph(numVertixInput);
+	for (int i = 0; i < numEdgesInput; i++)
+	{
+		graphEdge addedEdge = edgesArrInput[i];
+		graph->AddEdge(addedEdge.start_ver, addedEdge.end_ver, addedEdge.weight);
+	}
+}
+
+
+void ExeSolution::readInputFromFile(string& delimiter, string&line, size_t &posEdge, int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token)
+{
+	//(1)Vertix Number:
+	getline(fGraphInput, line);
+	numVertixInput = stoi(line);
+	if (numVertixInput <= 0)
+	{
+		throw ""; //TODO
+	}
+
+	//(2)Edges Amount
+	getline(fGraphInput, line);
+	numEdgesInput = stoi(line);
+	if (numEdgesInput <= 0)
+	{
+		throw ""; //TODO
+	}
+	//now reading the edges:
+	 
+
+	//(3-3+EdgesAmount)edgesArray
+	for (int i = 0; i < numEdgesInput; i++)
+	{
+		int edgeTmp[3] = { -1,-1,-1 };
+		const int weightInput = -1;
+		
+		getline(fGraphInput, line);
+		for (int j = 0; j < 3; j++)
+		{
+			posEdge = line.find(delimiter);
+			token = line.substr(0, posEdge);
+			edgeTmp[j] = stoi(token);
+			line.erase(0, posEdge + delimiter.length());
+		}
+		edgesArrInput.emplace_back(edgeTmp[0], edgeTmp[1], edgeTmp[2]);
+	}
+
+	//removedEdge
+	getline(fGraphInput, line);
+	int edgeTmp[3] = { -1,-1,-1 };
+	for (int j = 0; j < 2; j++)
+	{
+
+		posEdge = line.find(delimiter);
+		token = line.substr(0, posEdge);
+		edgeTmp[j] = stoi(token);
+		line.erase(0, posEdge + delimiter.length());
+	}
+	
+	removedEdge.start_ver = edgeTmp[0];
+	removedEdge.end_ver = edgeTmp[1];
+	line.erase();
+
+	if (line != "") {
+		throw ""; //TODO
+	}
+	if (removedEdge.end_ver <= 0 ||
+		removedEdge.end_ver <= 0)
+	{
+		throw ""; //TODO
+	}
+	
+	
 }
 
 //1. reads graph from user into AdjGraph
@@ -67,60 +150,15 @@ int ExeSolution::runProgram()
 void ExeSolution::readData()
 {
 	string delimiter = " ", line;
-	size_t posEdge;
-
-
+	size_t posEdge = 0;
+	int numVertixInput = 0;
+	int numEdgesInput = 0;
+	vector<graphEdge> edgesArrInput;
+	graphEdge removedEdgeInput;
 	string token;
 
-	getline(fGraphInput, line);
-	if (numVertixInput = stoi(line) <= 0)
-	{
-		throw ""; //TODO
-	}
-	graph = new AdjListGraph(numVertixInput); // TODO DESTRUC
-
-	getline(fGraphInput, line);
-	numEdgesInput = stoi(line);
-	if (numEdgesInput <= 0)
-	{
-		throw ""; //TODO
-	}
-
-	
-	for (int i = 0; i < numEdgesInput; i++)
-	{
-		int parsedArr[3] = { -1,-1,-1 };
-		getline(fGraphInput, line);
-		for (int j = 0; j < 3; j++) 
-		{
-		
-			posEdge = line.find(delimiter);
-			token = line.substr(0, posEdge);
-			parsedArr[j] = stoi(token);
-			line.erase(0, posEdge + delimiter.length());
-		}
-		edgesArrInput.push_back(graphEdge(parsedArr[0], parsedArr[1], parsedArr[2]));
-	}
-
-	getline(fGraphInput, line);
-	removedEdgeInput.start_ver = line[0]-'0';
-	removedEdgeInput.end_ver = line[2] - '0';
-	if (removedEdgeInput.end_ver <= 0 ||
-		removedEdgeInput.end_ver <= 0)
-	{
-		throw ""; //TODO
-	}
-	getline(fGraphInput, line);
-	if (line == "\n" || !fGraphInput.eof()) {
-		throw ""; //TODO
-	}
-	for (int i = 0; i < numEdgesInput; i++)
-	{
-		graphEdge graph_edge = edgesArrInput[i];
-		graph->AddEdge(graph_edge.end_ver, graph_edge.start_ver, graph_edge.weight);
-
-	}
-
+	readInputFromFile(delimiter, line, posEdge, numVertixInput, numEdgesInput, edgesArrInput, removedEdgeInput, token);
+	createGraphFromInput(numVertixInput,numEdgesInput,edgesArrInput, removedEdgeInput);
 }
 
 //vertix 0-9 

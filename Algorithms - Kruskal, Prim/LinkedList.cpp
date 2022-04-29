@@ -33,7 +33,6 @@ void LinkedList::insertTail(int index, int weight)
     temp = new Node;
     temp->index = index;
     temp->weight = weight;
-
     temp->next = nullptr;
     if (isEmpty())
     {
