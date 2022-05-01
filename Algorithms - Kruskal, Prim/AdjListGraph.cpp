@@ -10,10 +10,10 @@ bool AdjListGraph::IsConnectedDFS() {
 	for (int i = 0; i < vertixAmount; ++i) {
 		colorArr[i] = WHITE;
 	}
-	for (int i = 0; i < vertixAmount; ++i) {
-		if (colorArr[i] == WHITE)
-			Visit(i);
-	}
+	
+	Visit(0);
+
+	
 	bool status = true;
 	for (int i = 0; i < vertixAmount; ++i) {
 		if (colorArr[i] == WHITE)
@@ -36,14 +36,14 @@ void AdjListGraph::PrintColorArray()
 
 void AdjListGraph::Visit(int vertexId) {
 
-	cout << "Current index visited:" << vertexId << endl; //prints
-	cout << "color status is: " << colorArr[vertexId] << endl; //prints
+	cout << "Current index visited:" << vertexId << endl << endl; //prints
+	cout << "color status is: " << colorArr[vertexId] << endl << endl; //prints
 	//if duplicate ignore
-	cout << "start: " << endl;
+	cout << "start: " << endl << endl;
+	colorArr[vertexId] = GRAY;
 	PrintColorArray();
 
 
-	colorArr[vertexId] = GRAY;
 	
 	Node* currNode = adjGraphArr[vertexId].head;
 	 //prints
@@ -51,15 +51,17 @@ void AdjListGraph::Visit(int vertexId) {
 		
 		if (currNode->brother->includedFlag != true) //if not brothers
 		{
+			currNode->brother->includedFlag = true;
+			currNode->includedFlag = true;
 			if (colorArr[currNode->index] == WHITE) {
-				cout << "going to neighbor:  " << currNode->index << endl;
+				
 				if (currNode->next != nullptr) {
-					currNode->includedFlag = true;;
+					cout << "going to neighbor:  " << currNode->next->index << endl;
 					Visit(currNode->next->index);
 				}
 			}
 		}
-			currNode = currNode->next;
+		currNode = currNode->next;
 	}
 	colorArr[vertexId] = BLACK;
 	cout << "end: " << endl;

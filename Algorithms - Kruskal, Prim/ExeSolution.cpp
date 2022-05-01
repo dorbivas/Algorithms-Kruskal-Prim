@@ -6,41 +6,57 @@
 int ExeSolution::runProgram()
 {
 	try {
-
-		int resultsArr[3];
 		readData(); //todo: read from user
-		
+		vector<string> result;
+
 		bool isConnected = graph->IsConnectedDFS();
-		if (!isConnected) {
-			throw " "; //todo:
+		if (!isConnected) 
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				result.push_back("NO MST FOUND");
+			}
 		}
-		
+
 
 		//this works
-		/* 
-		Kruskel(*graph); //res[0]
-		Prim(*graph); //res[1]
+		/*
+		auto kruskalRes1 = Kruskel(*graph); //res[0]
+		result.push_back(kruskalRes1.second);
+		
+		auto prim = Prim(*graph); //res[1]
+		result.push_back(prim.second);
+		
 		graph->RemoveEdge(0, 2);
 		graph->RemoveEdge(removedEdge.start_ver, removedEdge.end_ver); // TODO USE STATUS for invalid
 	*/
 
+
 		//bool res = graph->IsConnectedDFS(*graph); //todo
 		//if (!isConnected) {
-		//	throw " "; //todo:
+		//		result.push_back("NO MST FOUND");
 		//}
-		//Kruskel(*graph); // res[2]
-		//PrintGraphWeights(resultsArr[0], resultArr[1], resultsArr[2]);
+		//auto kruskalRes2 = Kruskel(*graph); // res[2]
+		//result.push_back(kruskalRes2.second);
 
+		
+		//PrintGraphWeights(resultsArr[0], resultArr[1], resultsArr[2]);
+		for (auto res : result)
+		{
+			fResult << res << endl;
+		}
 	}
 	catch (exception& e)
 	{
 		cout << e.what() << std::endl;
 	}
+
+	
 	return 0;
 	cout << "Hello World!\n";
 	//read input from file
-	//do kruskel
-	//do prim
+
+
 	//RemoveFromList and do extra logic
 }
 
@@ -55,7 +71,7 @@ void ExeSolution::createGraphFromInput(int& numVertixInput, int& numEdgesInput, 
 }
 
 
-void ExeSolution::readInputFromFile(string& delimiter, string&line, size_t &posEdge, int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token)
+void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& posEdge, int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token)
 {
 	//(1)Vertix Number:
 	getline(fGraphInput, line);
@@ -73,14 +89,14 @@ void ExeSolution::readInputFromFile(string& delimiter, string&line, size_t &posE
 		throw ""; //TODO
 	}
 	//now reading the edges:
-	 
+
 
 	//(3-3+EdgesAmount)edgesArray
 	for (int i = 0; i < numEdgesInput; i++)
 	{
 		int edgeTmp[3] = { -1,-1,-1 };
 		const int weightInput = -1;
-		
+
 		getline(fGraphInput, line);
 		for (int j = 0; j < 3; j++)
 		{
@@ -103,7 +119,7 @@ void ExeSolution::readInputFromFile(string& delimiter, string&line, size_t &posE
 		edgeTmp[j] = stoi(token);
 		line.erase(0, posEdge + delimiter.length());
 	}
-	
+
 	removedEdge.start_ver = edgeTmp[0];
 	removedEdge.end_ver = edgeTmp[1];
 	line.erase();
@@ -116,8 +132,8 @@ void ExeSolution::readInputFromFile(string& delimiter, string&line, size_t &posE
 	{
 		throw ""; //TODO
 	}
-	
-	
+
+
 }
 
 //1. reads graph from user into AdjGraph
@@ -158,7 +174,7 @@ void ExeSolution::readData()
 	string token;
 
 	readInputFromFile(delimiter, line, posEdge, numVertixInput, numEdgesInput, edgesArrInput, removedEdgeInput, token);
-	createGraphFromInput(numVertixInput,numEdgesInput,edgesArrInput, removedEdgeInput);
+	createGraphFromInput(numVertixInput, numEdgesInput, edgesArrInput, removedEdgeInput);
 }
 
 //vertix 0-9 
@@ -262,12 +278,14 @@ void ExeSolution::CreatKruskelEdgesArray(AdjListGraph graph, vector<graphEdge>& 
 	}
 }
 
-vector<graphEdge> ExeSolution::Kruskel(AdjListGraph graph)
+pair<vector<graphEdge>, string> ExeSolution::Kruskel(AdjListGraph graph)
 {
+
 	int u, v, currWeight = 0;
 	DisjointSet graphSet(graph.edgesAmount);
-	vector<graphEdge> result, Edges;
-
+	vector<graphEdge>  Edges;
+	pair<vector<graphEdge>, string> result;
+	result.second = "0";
 	CreatKruskelEdgesArray(graph, Edges);
 	quickSort(Edges, 0, Edges.size() - 1);
 
@@ -281,16 +299,17 @@ vector<graphEdge> ExeSolution::Kruskel(AdjListGraph graph)
 
 		if (u != v && u != -1 && v != -1)
 		{
-			result.push_back(Edge);
+			result.first.push_back(Edge);
 			graphSet.UnionBySize(u, v);
 		}
 	}
 
-	for (auto& i : result)
+	for (auto& i : result.first)
 	{
 		currWeight += i.weight;
 	}
-
+	result.second = to_string(currWeight);
+	//calculate tree weight
 	return result;
 }
 
