@@ -60,7 +60,7 @@ private:
 	void readInputFromFunc(int& numVectors, int& numEdges, vector<graphEdge>& graphEdges, graphEdge& removedEdge);
 	void CreatKruskelEdgesArray(AdjListGraph graph, vector<graphEdge>& Edges);
 	void readData();
-	vector<graphEdge> Kruskel(AdjListGraph graph);
+	Pair<vector<graphEdge>, string> Kruskel(AdjListGraph graph);
 	vector<int> Prim(AdjListGraph graph);
 	int partition(vector<graphEdge>& edgesArr, int start, int end);
 	void quickSort(vector<graphEdge>& edgesArr, int start, int end);
