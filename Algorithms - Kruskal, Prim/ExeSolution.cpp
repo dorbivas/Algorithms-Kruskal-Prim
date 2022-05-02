@@ -9,8 +9,7 @@ int ExeSolution::runProgram()
 		readData(); //todo: read from user
 		vector<string> result;
 
-		bool isConnected = graph->IsConnectedDFS();
-		if (!isConnected) 
+ 		if (!graph->IsConnectedDFS()) 
 		{
 			for (int i = 0; i < 3; i++)
 			{
