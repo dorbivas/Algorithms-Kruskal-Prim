@@ -36,12 +36,12 @@ void AdjListGraph::PrintColorArray()
 
 void AdjListGraph::Visit(int vertexId) {
 
-	cout << "Current index visited:" << vertexId << endl << endl; //prints
-	cout << "color status is: " << colorArr[vertexId] << endl << endl; //prints
+	//cout << "Current index visited:" << vertexId << endl << endl; //prints
+	//cout << "color status is: " << colorArr[vertexId] << endl << endl; //prints
 	//if duplicate ignore
-	cout << "start: " << endl << endl;
+	//cout << "start: " << endl << endl;
 	colorArr[vertexId] = GRAY;
-	PrintColorArray();
+	//PrintColorArray();
 
 
 	
@@ -54,7 +54,7 @@ void AdjListGraph::Visit(int vertexId) {
 			currNode->brother->includedFlag = true;
 			currNode->includedFlag = true;
 			if (colorArr[currNode->index] == WHITE) {
-				cout << "going to neighbor:  " << currNode->index << endl;
+		//		cout << "going to neighbor:  " << currNode->index << endl;
 				Visit(currNode->index);
 				
 			}
@@ -62,8 +62,8 @@ void AdjListGraph::Visit(int vertexId) {
 		currNode = currNode->next;
 	}
 	colorArr[vertexId] = BLACK;
-	cout << "end: " << endl;
-	PrintColorArray();
+	//cout << "end: " << endl;
+	//PrintColorArray();
 }
 
 AdjListGraph::AdjListGraph(int numberOfVector)
@@ -72,7 +72,7 @@ AdjListGraph::AdjListGraph(int numberOfVector)
 	MakeEmptyGraph(numberOfVector);
 }
 
-//todo:
+//TODO:
 AdjListGraph::~AdjListGraph()
 {
 	// Node* currentEdge = head;
@@ -224,31 +224,15 @@ Node* AdjListGraph::createAdjNode(int value, int weight)
 ostream& operator<<(ostream& os, const AdjListGraph& graph)
 {
 	os << "Graph adjacency list " << endl << "(start_vertex, end_vertex, weight):" << endl;
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < graph.vertixAmount; i++)
 	{
-		if (graph[i].head != nullptr && graph[i].size > 0)
-			os << graph[i];
+		if (graph[i].head != nullptr)
+			os << "VertixId: " << i << ":" << graph[i] << endl;
 		else
 			os << i << " list is empty. " << endl;
 	}
 	return os;
 }
-
-
-// void printGraph(AdjListGraph graph)
-// {
-// 	cout << "Graph adjacency list " << endl << "(start_vertex, end_vertex, weight):" << endl;
-// 	for (int i = 0; i < N; i++)
-// 	{
-// 		if (graph[i].head != nullptr && graph[i].size > 0)
-// 			display_AdjList(graph[i], i);
-// 		else
-// 			cout << i << " list is empty. " << endl;
-// 	}
-//
-// }
-
-
 
 // void display_AdjList(LinkedList list, int vertex, ostream& os)
 // {

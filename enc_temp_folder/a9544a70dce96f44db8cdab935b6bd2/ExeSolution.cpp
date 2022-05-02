@@ -7,15 +7,13 @@
 //handle errors
 //test output file
 //create main
-//if desired for easier testing - you can use graph print operator(to see for example delete from edge isn't working)
-
+//if desired for easier testing - fix the print operators (not working currently)
 int ExeSolution::runProgram()
 {
 	string s_NoMstMsg = "NO MST";
 	string s_Kruskal = "Kruskal ";
 	string s_Prim = "Prim ";
 	string s_Kruskal2 = "Kruskal2 ";
-
 	try {
 		readData(); //todo: read from user
 		cout << *graph;
@@ -62,6 +60,11 @@ int ExeSolution::runProgram()
 
 	
 	return 0;
+	cout << "Hello World!\n";
+	//read input from file
+
+
+	//RemoveFromList and do extra logic
 }
 
 void ExeSolution::createGraphFromInput(int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput)
