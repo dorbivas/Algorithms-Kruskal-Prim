@@ -115,7 +115,6 @@ ostream& operator<<(ostream& os, const Node& vertex)
 
     os << "(" << vertex.index
         << ", " << vertex.weight << ") ";
-    os << endl;
     return os;
 }
 
@@ -123,8 +122,9 @@ ostream& operator<<(ostream& os, const Node& vertex)
 {
     Node* ptr = list.head;
     while (ptr != nullptr) {
+        os << *ptr << "->" ;
         ptr = ptr->next;
-        os << ptr;
+
     }
-    return os;
+    return os ;
 }

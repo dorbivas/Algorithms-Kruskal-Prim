@@ -61,7 +61,7 @@ private:
 	void CreatKruskelEdgesArray(AdjListGraph graph, vector<graphEdge>& Edges);
 	void readData();
 	pair<vector<graphEdge>, string> Kruskel(AdjListGraph graph);
-	vector<int> Prim(AdjListGraph graph);
+	pair<vector<int>, string> Prim(AdjListGraph graph);
 	int partition(vector<graphEdge>& edgesArr, int start, int end);
 	void quickSort(vector<graphEdge>& edgesArr, int start, int end);
 	#define NO_PARENT -1
