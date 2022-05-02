@@ -54,11 +54,9 @@ void AdjListGraph::Visit(int vertexId) {
 			currNode->brother->includedFlag = true;
 			currNode->includedFlag = true;
 			if (colorArr[currNode->index] == WHITE) {
+				cout << "going to neighbor:  " << currNode->index << endl;
+				Visit(currNode->index);
 				
-				if (currNode->next != nullptr) {
-					cout << "going to neighbor:  " << currNode->next->index << endl;
-					Visit(currNode->next->index);
-				}
 			}
 		}
 		currNode = currNode->next;

@@ -9,37 +9,41 @@ int ExeSolution::runProgram()
 		readData(); //todo: read from user
 		vector<string> result;
 
-		bool isConnected = graph->IsConnectedDFS();
-		if (!isConnected) 
+ 		if (!graph->IsConnectedDFS()) 
 		{
 			for (int i = 0; i < 3; i++)
 			{
 				result.push_back("NO MST FOUND");
 			}
 		}
-
-
-		//this works
-		/*
-		auto kruskalRes1 = Kruskel(*graph); //res[0]
-		result.push_back(kruskalRes1.second);
+		else {
 		
-		auto prim = Prim(*graph); //res[1]
-		result.push_back(prim.second);
-		
-		graph->RemoveEdge(0, 2);
+			auto kruskalRes1 = Kruskel(*graph); //res[0]
+			result.push_back(kruskalRes1.second);
+
+		//auto prim = Prim(*graph); //res[1]
+		//result.push_back(prim.second);
+
 		graph->RemoveEdge(removedEdge.start_ver, removedEdge.end_ver); // TODO USE STATUS for invalid
-	*/
+		bool res = graph->IsConnectedDFS(*graph); //todo
+		if (!graph->IsConnectedDFS()) {
+				result.push_back("NO MST FOUND");
+		}
+		else {
+			auto kruskalRes2 = Kruskel(*graph); // res[2]
+			result.push_back(kruskalRes2.second);
+		}
+
+	
 
 
-		//bool res = graph->IsConnectedDFS(*graph); //todo
-		//if (!isConnected) {
-		//		result.push_back("NO MST FOUND");
-		//}
-		//auto kruskalRes2 = Kruskel(*graph); // res[2]
-		//result.push_back(kruskalRes2.second);
+	
 
-		
+
+
+		}
+
+
 		//PrintGraphWeights(resultsArr[0], resultArr[1], resultsArr[2]);
 		for (auto res : result)
 		{
