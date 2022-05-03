@@ -24,6 +24,7 @@
     <ProjectGuid>{668afa24-e990-436b-88c7-0976996de1b7}</ProjectGuid>
     <RootNamespace>AlgorithmsKruskalPrim</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Algorithms-Kruskal-Prim</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

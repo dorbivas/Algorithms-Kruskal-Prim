@@ -57,7 +57,7 @@ int ExeSolution::runProgram()
 	}
 	catch (exception& e)
 	{
-		cout << e.what() << std::endl;
+		cout << e.what() << endl;
 	}
 
 	
