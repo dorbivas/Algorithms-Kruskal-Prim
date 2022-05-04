@@ -1,12 +1,18 @@
 #pragma once
 #include "ExeSolution.h"
+#include "Utils.h"
 
 //TODO:
-//delete edge is acting weird - needs fixing (test with test1.txt)
+// V     ***delete edge is acting weird - needs fixing (test with test1.txt)***
 //go ever kruskal, prim and graph efficiency
-//handle errors
+// ***partly done*** handle errors
+//			- to file ?
+//			- error format
+//			- place in catch write to file or console ?
+// 
 //test output file
-//create main
+// 
+//V    ***create main **
 //if desired for easier testing - you can use graph print operator(to see for example delete from edge isn't working)
 
 int ExeSolution::runProgram()
@@ -21,16 +27,16 @@ int ExeSolution::runProgram()
 		cout << *graph;
 		vector<string> result;
 
- 		if (!graph->IsConnectedDFS()) 
+		if (!graph->IsConnectedDFS())
 		{
-						
-				result.push_back(s_Kruskal + s_NoMstMsg);
-				result.push_back(s_Prim + s_NoMstMsg);
-				result.push_back(s_Kruskal2 + s_NoMstMsg);
-		
+
+			result.push_back(s_Kruskal + s_NoMstMsg);
+			result.push_back(s_Prim + s_NoMstMsg);
+			result.push_back(s_Kruskal2 + s_NoMstMsg);
+
 		}
 		else {
-		
+
 			auto kruskalRes1 = Kruskel(*graph); //res[0]
 			result.push_back(s_Kruskal + kruskalRes1.second);
 
@@ -47,20 +53,20 @@ int ExeSolution::runProgram()
 				result.push_back(s_Kruskal2 + kruskalRes2.second);
 			}
 
-			}
-			//PrintGraphWeights(resultsArr[0], resultArr[1], resultsArr[2]);
-			for (auto res : result)
-			{
-				cout << res << endl;
-				fResult << res << endl;
-			}
+		}
+		//PrintGraphWeights(resultsArr[0], resultArr[1], resultsArr[2]);
+		for (auto res : result)
+		{
+			cout << res << endl;
+			fResult << res << endl;
+		}
 	}
 	catch (exception& e)
 	{
 		cout << e.what() << endl;
 	}
 
-	
+
 	return 0;
 }
 
@@ -82,7 +88,7 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 	numVertixInput = stoi(line);
 	if (numVertixInput <= 0)
 	{
-		throw ""; //TODO
+		throw errorMassege("invalid vertix amount");
 	}
 
 	//(2)Edges Amount
@@ -90,10 +96,9 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 	numEdgesInput = stoi(line);
 	if (numEdgesInput <= 0)
 	{
-		throw ""; //TODO
+		throw errorMassege("invalid edges amount");
 	}
 	//now reading the edges:
-
 
 	//(3-3+EdgesAmount)edgesArray
 	for (int i = 0; i < numEdgesInput; i++)
@@ -112,7 +117,6 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 		edgesArrInput.emplace_back(edgeTmp[0], edgeTmp[1], edgeTmp[2]);
 	}
 
-	//removedEdge
 	getline(fGraphInput, line);
 	int edgeTmp[3] = { -1,-1,-1 };
 	for (int j = 0; j < 2; j++)
@@ -128,17 +132,17 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 	removedEdge.end_ver = edgeTmp[1];
 	line.erase();
 
-	if (line != "") {
-		throw ""; //TODO
-	}
-	if (removedEdge.end_ver <= 0 ||
-		removedEdge.end_ver <= 0)
-	{
-		throw ""; //TODO
-	}
+	if (line != "") 
+		throw errorMassege("to many lines in file");
+	
+	if (removedEdge.end_ver <= 0 ||	removedEdge.end_ver <= 0)
+		throw errorMassege("unkown negative edge");
+	
 
 
 }
+
+
 
 //1. reads graph from user into AdjGraph
 //2. updates graph instance and returns a pointer to it.
@@ -389,8 +393,8 @@ pair<vector<int>, string> ExeSolution::Prim(AdjListGraph graph)
 	for (auto vertix : min) {
 		currMinWeight += vertix;
 	}
-	
-	 
+
+
 	pair<vector<int>, string> res;
 	res.second = to_string(currMinWeight);
 	res.first = p;

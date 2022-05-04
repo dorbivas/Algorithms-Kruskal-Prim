@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <ostream>
+#include "Utils.h"
 
 using namespace std;
 
@@ -59,7 +60,6 @@ bool LinkedList::RemoveFromList(int indexRemoved) {
         return status;
 
     Node* current = head;
-    Node* prev = current;
 
     while (current != nullptr) {
         if (current->index == indexRemoved) { // if match
@@ -68,7 +68,6 @@ bool LinkedList::RemoveFromList(int indexRemoved) {
             
         }
         else {
-            prev = current; // save in case
             current = current->next; // go to prev value
         }
     } // end while
@@ -78,11 +77,10 @@ bool LinkedList::RemoveFromList(int indexRemoved) {
     else { // found match
 
         --size;
-        if (current != head) {
-            delete current;
-        }
-  
-        current = prev->next; // current is updated
+        if (current == head) 
+            head = current->next;
+
+        delete current;
         if (this->size == 0)
         {
             this->head = nullptr;
@@ -104,7 +102,7 @@ Node* LinkedList::find(int data)
     }
     else if (temp->next == nullptr)
     {
-        //throw "Error: Number Not found..." ; TODO 
+        throw errorMassege("cant find vertix to remove in list " + this->head->index);
     }
     return ret_val;
     

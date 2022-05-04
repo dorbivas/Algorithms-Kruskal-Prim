@@ -10,9 +10,6 @@ using namespace std;
 using std::string;
 #define MAX_SIZE 100
 
-
-
-
 class Heap {
 public:
 	struct HeapNode

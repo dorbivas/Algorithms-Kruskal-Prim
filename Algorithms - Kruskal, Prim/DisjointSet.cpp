@@ -1,6 +1,7 @@
 
 #include "DisjointSet.h"
 #include "LinkedList.h"
+#include "Utils.h"
 
 // //tests main
 // int main()
@@ -44,8 +45,8 @@ int DisjointSet::Find(int index)
 {
     if (index > arrSize)
 	{
-		cout << "Invalid input";
-		exit(1); // todo throw
+		throw errorMassege("invalid vertix amount");
+
 	}
 	if (parentsArr[index].parent == index || index == -1)
 	{

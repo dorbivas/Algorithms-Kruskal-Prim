@@ -146,6 +146,7 @@
     <ClCompile Include="ExeSolution.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdjListGraph.h" />

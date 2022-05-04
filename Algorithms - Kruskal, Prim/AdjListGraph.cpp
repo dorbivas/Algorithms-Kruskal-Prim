@@ -10,10 +10,10 @@ bool AdjListGraph::IsConnectedDFS() {
 	for (int i = 0; i < vertixAmount; ++i) {
 		colorArr[i] = WHITE;
 	}
-	
+
 	Visit(0);
 
-	
+
 	bool status = true;
 	for (int i = 0; i < vertixAmount; ++i) {
 		if (colorArr[i] == WHITE)
@@ -28,7 +28,7 @@ bool AdjListGraph::IsConnectedDFS() {
 
 void AdjListGraph::PrintColorArray()
 {
-	for (int i=0; i<vertixAmount; ++i)
+	for (int i = 0; i < vertixAmount; ++i)
 	{
 		cout << "Index: " << i << " Color: " << colorArr[i] << endl;
 	}
@@ -44,19 +44,19 @@ void AdjListGraph::Visit(int vertexId) {
 	//PrintColorArray();
 
 
-	
+
 	Node* currNode = adjGraphArr[vertexId].head;
-	 //prints
+	//prints
 	while (currNode != nullptr) {
-		
+
 		if (currNode->brother->includedFlag != true) //if not brothers
 		{
 			currNode->brother->includedFlag = true;
 			currNode->includedFlag = true;
 			if (colorArr[currNode->index] == WHITE) {
-		//		cout << "going to neighbor:  " << currNode->index << endl;
+				//		cout << "going to neighbor:  " << currNode->index << endl;
 				Visit(currNode->index);
-				
+
 			}
 		}
 		currNode = currNode->next;
@@ -116,13 +116,12 @@ void AdjListGraph::MakeEmptyGraph(int n)
 
 void AdjListGraph::AddEdge(int start_ver, int end_ver, int weight)
 {
-	//if (this->adjGraphArr->head != nullptr)
-	//{}
-		if (IsAdjacent(start_ver, end_ver) == true)
-		{
-			//throw new exception("edge already exists"); 
-		}
-	
+
+	if (IsAdjacent(start_ver, end_ver) == true)
+	{
+		throw errorMassege("edge already exists");
+	}
+
 
 	else {
 		adjGraphArr[start_ver].insertTail(end_ver, weight);
@@ -147,7 +146,7 @@ LinkedList AdjListGraph::operator[](int start_ver) const
 bool AdjListGraph::RemoveEdge(int ver1, int ver2)
 {
 	bool status = true;
-	if (this->adjGraphArr->head != nullptr)
+	if (this->adjGraphArr != nullptr)
 	{
 		if (edgeExists(ver1, ver2) == true)
 		{
@@ -176,7 +175,8 @@ bool AdjListGraph::RemoveEdge(int ver1, int ver2)
 			throw "edge not found";//print
 		}
 		//RemoveFromList from linked list
-	}else {
+	}
+	else {
 		status = false;
 	}
 	return status;

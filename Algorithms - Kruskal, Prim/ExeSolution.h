@@ -48,8 +48,6 @@ public:
 		delete graph;
 	}
 
-
-
 private:
 
 	ofstream fResult;

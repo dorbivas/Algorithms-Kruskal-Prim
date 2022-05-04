@@ -28,7 +28,6 @@ public:
     void insertHead(int index, int weight);
     void insertTail(int index, int weight);
     Node* find(int data);
-    void display();
     bool RemoveFromList(int index_removed);
 
 private:
