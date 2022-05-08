@@ -37,7 +37,7 @@ public:
 	bool RemoveEdge(int ver1, int ver2);
 
 	void setFlagInit(int flag_init);
-	bool IsConnectedDFS();
+	bool IsConnectedVisit();
 	void PrintColorArray();
 
 private:
@@ -49,9 +49,9 @@ private:
 	eColor* colorArr;
 	void Visit(int vertexId);
 
-	bool edgeExists(int end_ver, int start_ver);
+	bool edgeExists(int end_ver, int start_ver) const;
 	//needs to clear at destructor
-	Node* createAdjNode(int value, int weight);
+	static Node* createAdjNode(int value, int weight);
 	int N;  // number of nodes in the graph
 	int FLAG_INIT = false; //a flag that MakeEmptyGraph wasn't created properly, later to be used with exceptions
 	friend ostream& operator<<(ostream& os, const AdjListGraph& graph);

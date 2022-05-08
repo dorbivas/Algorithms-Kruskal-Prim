@@ -2,4 +2,10 @@
 #include <iostream>
 using namespace std;
 
-static const string errorMassege(string msg) { cout << "Invalid Input. error: " + msg + "\n"; }
+static const string errorMessage(string msg)
+{
+	string str = "Invalid Input. error: " + msg + "\n";
+	cout << str;
+	return str;
+
+}

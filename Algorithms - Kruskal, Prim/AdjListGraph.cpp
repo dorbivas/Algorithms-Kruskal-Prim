@@ -1,20 +1,35 @@
 // AdjacencyList.cpp : This file contains the 'main' function. Program execution begins and ends there.
 #include "AdjListGraph.h"
 
+#include "Utils.h"
+
 #define N 6 // Number of vertices in the graph
 
 using namespace std;
-
-bool AdjListGraph::IsConnectedDFS() {
+//if tree is connected, all neighbores should be visited eventually, since we know it has no cycles,
+//we can ensure if all nodes were visited they finish black eventualy.
+bool AdjListGraph::IsConnectedVisit() {
 
 	for (int i = 0; i < vertixAmount; ++i) {
+		//colorArr
 		colorArr[i] = WHITE;
+
+		//graph arr neighbor list
+		Node* currNode = adjGraphArr[i].head;
+		while (currNode != nullptr)
+		{
+			currNode->includedFlag = false;
+			currNode->includedFlag = false;
+			currNode = currNode->next;
+		}
 	}
+	
 
 	Visit(0);
-
-
+	
+	
 	bool status = true;
+
 	for (int i = 0; i < vertixAmount; ++i) {
 		if (colorArr[i] == WHITE)
 		{
@@ -56,7 +71,7 @@ void AdjListGraph::Visit(int vertexId) {
 			if (colorArr[currNode->index] == WHITE) {
 				//		cout << "going to neighbor:  " << currNode->index << endl;
 				Visit(currNode->index);
-
+				
 			}
 		}
 		currNode = currNode->next;
@@ -119,7 +134,7 @@ void AdjListGraph::AddEdge(int start_ver, int end_ver, int weight)
 
 	if (IsAdjacent(start_ver, end_ver) == true)
 	{
-		throw errorMassege("edge already exists");
+		throw errorMessage("edge already exists");
 	}
 
 
@@ -156,7 +171,7 @@ bool AdjListGraph::RemoveEdge(int ver1, int ver2)
 				status |= adjGraphArr[ver2].RemoveFromList(ver1);
 				if (status)
 				{
-					cout << " Deleting the edge: " << "(" << ver1 << ", " << ver2 << ") " << endl;
+				//	cout << " Deleting the edge: " << "(" << ver1 << ", " << ver2 << ") " << endl;
 
 					--edgesAmount;
 				}
@@ -172,9 +187,8 @@ bool AdjListGraph::RemoveEdge(int ver1, int ver2)
 		else
 		{
 			status = false;
-			throw "edge not found";//print
+			//throw "edge not found"; examples show on thrown but ignored
 		}
-		//RemoveFromList from linked list
 	}
 	else {
 		status = false;
@@ -194,7 +208,7 @@ bool AdjListGraph::IsAdjacent(int start_ver, int end_ver)
 	//is end_ver a neighbor in start_Ver adj list
 }
 
-bool AdjListGraph::edgeExists(int end_ver, int start_ver)
+bool AdjListGraph::edgeExists(int end_ver, int start_ver) const
 {
 	bool status = false;
 	Node* curr = adjGraphArr[start_ver].head;
@@ -233,55 +247,3 @@ ostream& operator<<(ostream& os, const AdjListGraph& graph)
 	}
 	return os;
 }
-
-// void display_AdjList(LinkedList list, int vertex, ostream& os)
-// {
-// 	Node* ptr = list.head;
-// 	while (ptr != nullptr) {
-// 		os << "(" << vertex << ", " << ptr->index
-// 			<< ", " << ptr->weight << ") ";
-// 		ptr = ptr->next;
-// 	}
-// 	os << endl;
-// }
-//
-
-//tests main
-//int main()
-//{
-//	try {
-//		//read input into edges
-//		graphEdge edges[] = {
-//			// (x, y, w) -> edge from x to y with weight w
-//			{0,1,2},{0,2,4},{1,4,3},{2,3,2},{3,1,4},{4,3,3}
-//		};
-//
-//		// calculate number of edges
-//		int n = sizeof(edges) / sizeof(graphEdge);
-//
-//		AdjListGraph graph;
-//		graph.MakeEmptyGraph(N);
-//		graph.AddEdge(1, 2, 3);
-//		graph.AddEdge(1, 4, 6);
-//		graph.AddEdge(2, 3, 1);
-//
-//		cout << "(1, 2): " << graph.IsAdjacent(1, 2) << endl; //expected true
-//		cout << "(1, 3): " << graph.IsAdjacent(1, 3) << endl; //expected false
-//
-//		LinkedList list = graph.GetAdjList(1); //expected to return 2 edges linked list
-//		cout << endl << "this " << list.head->index << " " << list.head->weight << endl; //print list actually
-//
-//		graph.RemoveEdge(1, 2);
-//		graph.RemoveEdge(2, 3);
-//
-//		printGraph(graph);
-//
-//	}
-//	catch (exception& e)
-//	{
-//		cout << e.what() << std::endl;
-//	}
-//	return 0;
-//	cout << "Hello World!\n";
-//
-//}
