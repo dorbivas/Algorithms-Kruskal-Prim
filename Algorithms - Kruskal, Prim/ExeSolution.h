@@ -29,7 +29,12 @@ public:
 
 	int runProgram();
 	void createGraphFromInput(int& numVertixInput, int& numEdgesInput, vector<graphEdge>&edgesArrInput, graphEdge& removedEdgeInput);
-	
+	void readVertixNumberInput(string& line, int& numVertixInput);
+	void readEdgesNumberInput(string& line, int& numEdgesInput);
+	void readEdgesArrayInput(string& delimiter, string& line, size_t& posEdge, int& numEdgesInput,
+	                         vector<graphEdge>& edgesArrInput, string& token);
+	void readRemovedEdgeInput(string& delimiter, string& line, size_t& posEdge, string& token);
+
 	void readInputFromFile(string& delimiter, string& line, size_t& posEdge, int& numVertixInput,
 	                       int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token);
 

@@ -49,12 +49,6 @@ void LinkedList::insertTail(int index, int weight)
 }
 
 bool LinkedList::RemoveFromList(int indexRemoved) {
-    // to RemoveFromList an element, we go through the list, find the value given
-    // if we find it, stop
-    // to RemoveFromList, disconnect the link
-    // relink the two values now (ie.
-    // value 1->2->3->NULL, 2 is removed, 1->3->NULL )
-    
     bool status = false;
     if (this->size == 0)
         return status;

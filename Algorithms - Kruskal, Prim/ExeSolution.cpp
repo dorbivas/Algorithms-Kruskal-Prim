@@ -82,42 +82,50 @@ void ExeSolution::createGraphFromInput(int& numVertixInput, int& numEdgesInput, 
 }
 
 
-void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& posEdge, int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token)
+void ExeSolution::readVertixNumberInput(string& line, int& numVertixInput)
 {
-	//(1)Vertix Number:
 	getline(fGraphInput, line);
 	numVertixInput = stoi(line);
 	if (numVertixInput <= 0)
 	{
-		throw errorMessage("invalid vertix amount");
+		throw errorMessage("invalid input"); //todo: const
 	}
+}
 
-	//(2)Edges Amount
+void ExeSolution::readEdgesNumberInput(string& line, int& numEdgesInput)
+{
 	getline(fGraphInput, line);
 	numEdgesInput = stoi(line);
 	if (numEdgesInput <= 0)
 	{
-		throw errorMessage("invalid edges amount");
+		throw errorMessage("invalid input");
 	}
-	//now reading the edges:
+}
 
-	//(3-3+EdgesAmount)edgesArray
+void ExeSolution::readEdgesArrayInput(string& delimiter, string& line, size_t& posEdge, int& numEdgesInput, vector<graphEdge>& edgesArrInput, string& token)
+{
 	for (int i = 0; i < numEdgesInput; i++)
 	{
 		int edgeTmp[3] = { -1,-1,-1 };
-		const int weightInput = -1;
-
 		getline(fGraphInput, line);
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < 2; j++)
 		{
 			posEdge = line.find(delimiter);
 			token = line.substr(0, posEdge);
-			edgeTmp[j] = stoi(token);
+			edgeTmp[j] = stoi(token)-1;
 			line.erase(0, posEdge + delimiter.length());
 		}
-		edgesArrInput.emplace_back(edgeTmp[0], edgeTmp[1], edgeTmp[2]);
-	}
 
+		posEdge = line.find(delimiter);
+		token = line.substr(0, posEdge);
+		edgeTmp[2] = stoi(token);
+		line.erase(0, posEdge + delimiter.length());
+		edgesArrInput.emplace_back(edgeTmp[0]-1, edgeTmp[1]-1, edgeTmp[2]);
+	}
+}
+
+void ExeSolution::readRemovedEdgeInput(string& delimiter, string& line, size_t& posEdge, string& token)
+{
 	getline(fGraphInput, line);
 	int edgeTmp[3] = { -1,-1,-1 };
 	for (int j = 0; j < 2; j++)
@@ -125,7 +133,7 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 
 		posEdge = line.find(delimiter);
 		token = line.substr(0, posEdge);
-		edgeTmp[j] = stoi(token);
+		edgeTmp[j] = stoi(token) - 1;
 		line.erase(0, posEdge + delimiter.length());
 	}
 
@@ -133,45 +141,26 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 	removedEdge.end_ver = edgeTmp[1];
 	line.erase();
 
-	if (line != "") 
-		throw errorMessage("to many lines in file");
-	
-	if (removedEdge.end_ver <= 0 ||	removedEdge.end_ver <= 0)
-		throw errorMessage("unkown negative edge");
-	
+	if (removedEdge.end_ver <= 0 || removedEdge.end_ver <= 0)
+		throw errorMessage("invalid input");
+}
 
+void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& posEdge, int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token)
+{
+	//(1)Vertix Number:
+	readVertixNumberInput(line, numVertixInput);
+
+	//(2)Edges Amount
+	readEdgesNumberInput(line, numEdgesInput);
+
+	//(3) edges[] (v1,v2,weight)
+	readEdgesArrayInput(delimiter, line, posEdge, numEdgesInput, edgesArrInput, token);
+
+	//(4) removed edge
+	readRemovedEdgeInput(delimiter, line, posEdge, token);
 
 }
 
-
-
-//1. reads graph from user into AdjGraph
-//2. updates graph instance and returns a pointer to it.
-//AdjListGraph* ExeSolution::readData()
-//{
-//	int numVertixInput = 0;
-//	int numEdgesInput =0;
-//	vector<graphEdge> edgesArrInput;
-//	graphEdge removedEdgeInput;
-//
-//
-//	//allocate adjListGraph from given data
-//	readInputFromFunc(numVertixInput, numVertixInput, edgesArrInput, removedEdgeInput);
-//	//todo:  readInputFromFile
-//
-//	graph = new AdjListGraph(numVertixInput);
-//	//allocate adjListGraph from given data
-//
-//
-//	for (auto graph_edge : edgesArrInput)
-//	{
-//		graph->AddEdge(graph_edge.end_ver, graph_edge.start_ver, graph_edge.weight);
-//	}
-//
-//	
-//	return graph;
-//}
-//
 void ExeSolution::readData()
 {
 	string delimiter = " ", line;
