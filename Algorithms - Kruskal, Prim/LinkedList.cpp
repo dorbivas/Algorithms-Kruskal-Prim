@@ -60,32 +60,34 @@ bool LinkedList::RemoveFromList(int indexRemoved) {
         return status;
 
     Node* current = head;
+    Node* prev = nullptr;
 
     while (current != nullptr) {
         if (current->index == indexRemoved) { // if match
             status = true;
             break; // break out of while
-            
         }
-        else {
-            current = current->next; // go to prev value
-        }
+        prev = current;
+        current = current->next; // go to prev value
+        
+        
     } // end while
     if (current == nullptr) { // if we reached end of list
         cout << "Can't RemoveFromList value: no match found.\n"; // no match, cant RemoveFromList
     }
     else { // found match
-
-        --size;
-        if (current == head) 
-            head = current->next;
-
-        delete current;
-        if (this->size == 0)
-        {
-            this->head = nullptr;
-            this->tail = nullptr;
+        if (current == tail) {
+            tail = prev;
+            tail->next = nullptr;
         }
+        else if (current == head) {
+            head = current->next;
+        }
+        else {
+            prev->next = current;
+        }
+        --size;
+        delete current;
     }
     return status;
 }
@@ -102,7 +104,7 @@ Node* LinkedList::find(int data)
     }
     else if (temp->next == nullptr)
     {
-        throw errorMassege("cant find vertix to remove in list " + this->head->index);
+        throw errorMessage("cant find vertix to remove in list " + this->head->index);
     }
     return ret_val;
     

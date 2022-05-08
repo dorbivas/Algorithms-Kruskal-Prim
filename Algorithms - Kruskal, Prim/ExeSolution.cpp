@@ -17,6 +17,7 @@
 
 int ExeSolution::runProgram()
 {
+	
 	string s_NoMstMsg = "NO MST";
 	string s_Kruskal = "Kruskal ";
 	string s_Prim = "Prim ";
@@ -27,7 +28,7 @@ int ExeSolution::runProgram()
 		cout << *graph;
 		vector<string> result;
 
-		if (!graph->IsConnectedDFS())
+		if (!graph->IsConnectedVisit())
 		{
 
 			result.push_back(s_Kruskal + s_NoMstMsg);
@@ -45,7 +46,7 @@ int ExeSolution::runProgram()
 
 			graph->RemoveEdge(removedEdge.start_ver, removedEdge.end_ver); // TODO this is not working i think
 			cout << *graph;
-			if (!graph->IsConnectedDFS()) {
+			if (!graph->IsConnectedVisit()) {
 				result.push_back(s_Kruskal2 + s_NoMstMsg);
 			}
 			else {
@@ -88,7 +89,7 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 	numVertixInput = stoi(line);
 	if (numVertixInput <= 0)
 	{
-		throw errorMassege("invalid vertix amount");
+		throw errorMessage("invalid vertix amount");
 	}
 
 	//(2)Edges Amount
@@ -96,7 +97,7 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 	numEdgesInput = stoi(line);
 	if (numEdgesInput <= 0)
 	{
-		throw errorMassege("invalid edges amount");
+		throw errorMessage("invalid edges amount");
 	}
 	//now reading the edges:
 
@@ -133,10 +134,10 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 	line.erase();
 
 	if (line != "") 
-		throw errorMassege("to many lines in file");
+		throw errorMessage("to many lines in file");
 	
 	if (removedEdge.end_ver <= 0 ||	removedEdge.end_ver <= 0)
-		throw errorMassege("unkown negative edge");
+		throw errorMessage("unkown negative edge");
 	
 
 

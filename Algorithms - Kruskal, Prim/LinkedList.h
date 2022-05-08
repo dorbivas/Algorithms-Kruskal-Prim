@@ -8,7 +8,6 @@ struct Node {
     int index = UNINIT;
     int weight = UNINIT;
     Node* next;
-
     bool includedFlag = false;
     Node* brother;
 

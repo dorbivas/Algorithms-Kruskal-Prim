@@ -37,7 +37,7 @@ public:
 	bool RemoveEdge(int ver1, int ver2);
 
 	void setFlagInit(int flag_init);
-	bool IsConnectedDFS();
+	bool IsConnectedVisit();
 	void PrintColorArray();
 
 private:

@@ -1,20 +1,35 @@
 // AdjacencyList.cpp : This file contains the 'main' function. Program execution begins and ends there.
 #include "AdjListGraph.h"
 
+#include "Utils.h"
+
 #define N 6 // Number of vertices in the graph
 
 using namespace std;
-
-bool AdjListGraph::IsConnectedDFS() {
+//if tree is connected, all neighbores should be visited eventually, since we know it has no cycles,
+//we can ensure if all nodes were visited they finish black eventualy.
+bool AdjListGraph::IsConnectedVisit() {
 
 	for (int i = 0; i < vertixAmount; ++i) {
+		//colorArr
 		colorArr[i] = WHITE;
+
+		//graph arr neighbor list
+		Node* currNode = adjGraphArr[i].head;
+		while (currNode != nullptr)
+		{
+			currNode->includedFlag = false;
+			currNode->includedFlag = false;
+			currNode = currNode->next;
+		}
 	}
+	
 
 	Visit(0);
-
-
+	
+	
 	bool status = true;
+
 	for (int i = 0; i < vertixAmount; ++i) {
 		if (colorArr[i] == WHITE)
 		{
@@ -56,7 +71,7 @@ void AdjListGraph::Visit(int vertexId) {
 			if (colorArr[currNode->index] == WHITE) {
 				//		cout << "going to neighbor:  " << currNode->index << endl;
 				Visit(currNode->index);
-
+				
 			}
 		}
 		currNode = currNode->next;
@@ -119,7 +134,7 @@ void AdjListGraph::AddEdge(int start_ver, int end_ver, int weight)
 
 	if (IsAdjacent(start_ver, end_ver) == true)
 	{
-		throw errorMassege("edge already exists");
+		throw errorMessage("edge already exists");
 	}
 
 
