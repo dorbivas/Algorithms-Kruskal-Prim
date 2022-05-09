@@ -1,19 +1,15 @@
 #pragma once
+
 #include "ExeSolution.h"
 #include "Utils.h"
 
 //TODO:
-// V     ***delete edge is acting weird - needs fixing (test with test1.txt)***
-//go ever kruskal, prim and graph efficiency
-// ***partly done*** handle errors
-//			- to file ?
-//			- error format
-//			- place in catch write to file or console ?
-// 
-//test output file
-// 
-//V    ***create main **
-//if desired for easier testing - you can use graph print operator(to see for example delete from edge isn't working)
+// prim
+//check the main that uses files (from CMD)
+//dtors 
+//final tests
+
+
 
 int ExeSolution::runProgram()
 {
@@ -23,8 +19,9 @@ int ExeSolution::runProgram()
 	string s_Prim = "Prim ";
 	string s_Kruskal2 = "Kruskal2 ";
 
-	try {
-		readData(); //todo: read from user
+	try
+	{
+		readData(); 
 		cout << *graph;
 		vector<string> result;
 
@@ -41,10 +38,11 @@ int ExeSolution::runProgram()
 			auto kruskalRes1 = Kruskel(*graph); //res[0]
 			result.push_back(s_Kruskal + kruskalRes1.second);
 
-			auto prim = Prim(*graph);
-			result.push_back(s_Prim + prim.second);
+			//auto prim = Prim(*graph);
+			//result.push_back(s_Prim + prim.second);
 
 			graph->RemoveEdge(removedEdge.start_ver, removedEdge.end_ver); // TODO this is not working i think
+
 			cout << *graph;
 			if (!graph->IsConnectedVisit()) {
 				result.push_back(s_Kruskal2 + s_NoMstMsg);
@@ -55,7 +53,7 @@ int ExeSolution::runProgram()
 			}
 
 		}
-		//PrintGraphWeights(resultsArr[0], resultArr[1], resultsArr[2]);
+
 		for (auto res : result)
 		{
 			cout << res << endl;
@@ -64,7 +62,11 @@ int ExeSolution::runProgram()
 	}
 	catch (exception& e)
 	{
-		cout << e.what() << endl;
+		fResult << "NO MST" << endl;
+		fResult << "NO MST" << endl;
+		fResult << "NO MST" << endl;
+
+		cout << invalidInput << endl;
 	}
 
 
@@ -74,6 +76,8 @@ int ExeSolution::runProgram()
 void ExeSolution::createGraphFromInput(int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput)
 {
 	graph = new AdjListGraph(numVertixInput);
+	graph->vertixAmount = numVertixInput;
+
 	for (int i = 0; i < numEdgesInput; i++)
 	{
 		graphEdge addedEdge = edgesArrInput[i];
@@ -88,7 +92,7 @@ void ExeSolution::readVertixNumberInput(string& line, int& numVertixInput)
 	numVertixInput = stoi(line);
 	if (numVertixInput <= 0)
 	{
-		throw errorMessage("invalid input"); //todo: const
+		throw errorMessage(invalidInput); 
 	}
 }
 
@@ -98,7 +102,7 @@ void ExeSolution::readEdgesNumberInput(string& line, int& numEdgesInput)
 	numEdgesInput = stoi(line);
 	if (numEdgesInput <= 0)
 	{
-		throw errorMessage("invalid input");
+		throw errorMessage(invalidInput);
 	}
 }
 
@@ -120,7 +124,7 @@ void ExeSolution::readEdgesArrayInput(string& delimiter, string& line, size_t& p
 		token = line.substr(0, posEdge);
 		edgeTmp[2] = stoi(token);
 		line.erase(0, posEdge + delimiter.length());
-		edgesArrInput.emplace_back(edgeTmp[0]-1, edgeTmp[1]-1, edgeTmp[2]);
+		edgesArrInput.emplace_back(edgeTmp[0], edgeTmp[1], edgeTmp[2]);
 	}
 }
 
@@ -130,7 +134,6 @@ void ExeSolution::readRemovedEdgeInput(string& delimiter, string& line, size_t& 
 	int edgeTmp[3] = { -1,-1,-1 };
 	for (int j = 0; j < 2; j++)
 	{
-
 		posEdge = line.find(delimiter);
 		token = line.substr(0, posEdge);
 		edgeTmp[j] = stoi(token) - 1;
@@ -142,7 +145,7 @@ void ExeSolution::readRemovedEdgeInput(string& delimiter, string& line, size_t& 
 	line.erase();
 
 	if (removedEdge.end_ver <= 0 || removedEdge.end_ver <= 0)
-		throw errorMessage("invalid input");
+		throw errorMessage(invalidInput);
 }
 
 void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& posEdge, int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token)
@@ -175,104 +178,35 @@ void ExeSolution::readData()
 	createGraphFromInput(numVertixInput, numEdgesInput, edgesArrInput, removedEdgeInput);
 }
 
-//vertix 0-9 
-//edge 0-9
-//edges (start, end, weight)
-
-/*
-*
-8
-10
-1 2 1
-2 3 3
-2 4 4
-2 5 2
-3 4 4
-4 5 1
-5 6 1
-5 8 5
-6 7 3
-7 8 4
-1 3
-
-*/
-//
-//void readEdgeLine(string line, graphEdge& edge)
-//{
-//	string delimiter = " ";
-//	size_t pos = 0;
-//	pos = line.find(delimiter);
-//	line.erase(0, pos + delimiter.length()); //delete date
-//
-//	pos = line.find(delimiter);
-//	edge.start_ver = getOneParam(delimiter, line, pos);
-//	edge.end_ver = getOneParam(delimiter, line, pos);
-//	edge.weight = getOneParam(delimiter, line, pos);
-//
-//}
-//
-//int getOneParam(string delimiter, string& line, size_t& pos)
-//{
-//	string token = line.substr(0, pos);
-//	line.erase(0, pos + delimiter.length());
-//	pos = line.find(delimiter);
-//	return stoi(token);
-//}
-
-
-
-void ExeSolution::readInputFromFunc(int& numVectors, int& numEdges, vector<graphEdge>& graphEdges, graphEdge& removedEdge)
-{
-	numVectors = 6;
-	numEdges = 9;
-	graphEdges.emplace_back(0, 1, 16);
-	graphEdges.emplace_back(0, 2, 13);
-	graphEdges.emplace_back(1, 2, 10);
-	graphEdges.emplace_back(1, 3, 12);
-	graphEdges.emplace_back(3, 2, 9);
-	graphEdges.emplace_back(2, 4, 14);
-	graphEdges.emplace_back(4, 3, 7);
-	graphEdges.emplace_back(4, 5, 4);
-	graphEdges.emplace_back(3, 5, 20);
-	removedEdge = graphEdge(0, 1, 13);
-
-}
-
 void ExeSolution::CreatKruskelEdgesArray(AdjListGraph graph, vector<graphEdge>& Edges)
 {
 	bool flag = false;
-	int wightInd = 1;
+	int wightInd = 1, currSize;
 
 	for (int i = 0; i < graph.vertixAmount; i++)
 	{
 		Node* ptr = graph[i].head;
 		while (ptr != nullptr)
 		{
+			ptr->includedFlag = false;
+			ptr = ptr->next;
+		}
+	}
 
+	for (int i = 0; i < graph.vertixAmount; i++)
+	{
+		Node* ptr = graph[i].head;
+		while (ptr != nullptr)
+		{
 			graphEdge tmp = graphEdge(i, ptr->index, ptr->weight);
-			if (Edges.capacity() == 0)
+			if (ptr->brother->includedFlag == false)
 			{
+				ptr->brother->includedFlag = ptr->includedFlag = true;
 				Edges.push_back(tmp);
-			}
-			else
-			{
-				int currSize = Edges.size();
-				for (int i = 0; i < currSize; i++)
-				{
-					graphEdge edge = Edges[i];
-					flag |= (tmp.end_ver == edge.start_ver && tmp.start_ver == edge.end_ver);
-				}
-				if (flag == false)
-				{
-					Edges.push_back(tmp);
-				}
-				else // flag == true
-				{
-					flag = false;
-				}
 			}
 			ptr = ptr->next;
 		}
+
 	}
 }
 
@@ -318,7 +252,7 @@ pair<vector<graphEdge>, string> ExeSolution::Kruskel(AdjListGraph graph)
 	CreatKruskelEdgesArray(graph, Edges);
 	quickSort(Edges, 0, Edges.size() - 1);
 
-	for (int i = 0; i < 6 /*for each vertix in graph*/; i++) //todo: make arr to vector then use graph.size
+	for (int i = 0; i < graph.vertixAmount ; i++) 
 		graphSet.MakeSet(i);
 
 	for (auto& Edge : Edges)
@@ -338,7 +272,6 @@ pair<vector<graphEdge>, string> ExeSolution::Kruskel(AdjListGraph graph)
 		currWeight += i.weight;
 	}
 	result.second = to_string(currWeight);
-	//calculate tree weight
 	return result;
 }
 
@@ -363,18 +296,17 @@ pair<vector<int>, string> ExeSolution::Prim(AdjListGraph graph)
 
 	while (!Q.IsEmpty())
 	{
-
 		int minWeightIndex = Q.DeleteMin();
-		//cout << "deleting current min(ID) : " << minWeightIndex << endl;
+		cout << "deleting current min(ID) : " << minWeightIndex + 1 << endl;
 		inT[minWeightIndex] = true;
 		Node* curr_neighbor = graph[minWeightIndex].head;
-		while (curr_neighbor)
+		while (curr_neighbor != nullptr)
 		{
-			//cout << "Passing neighbor: " << curr_neighbor->index << endl;
+			cout << "Passing neighbor: " << curr_neighbor->index + 1 << endl;
 			if (!inT[curr_neighbor->index] && curr_neighbor->weight < min[curr_neighbor->index])
 			{
 				min[curr_neighbor->index] = curr_neighbor->weight;
-				p[curr_neighbor->index] = minWeightIndex; //todo: initiate parents to null
+				p[curr_neighbor->index] = minWeightIndex; // initiate parents to null
 				Q.DecreaseKey(curr_neighbor->index, min[curr_neighbor->index]);
 			}
 			curr_neighbor = curr_neighbor->next;
@@ -390,17 +322,4 @@ pair<vector<int>, string> ExeSolution::Prim(AdjListGraph graph)
 	res.first = p;
 	return res;
 
-}
-bool ExeSolution::run_tests(AdjListGraph graph)
-{
-	cout << "(1, 2): " << graph.IsAdjacent(1, 2) << endl; //expected true
-	cout << "(1, 3): " << graph.IsAdjacent(1, 3) << endl; //expected false
-
-	LinkedList list = graph.GetAdjList(1); //expected to return 2 edges linked list
-	cout << endl << "this " << list.head->index << " " << list.head->weight << endl; //print list actually
-
-	graph.RemoveEdge(1, 2);
-	graph.RemoveEdge(2, 3);
-
-	return true;
 }

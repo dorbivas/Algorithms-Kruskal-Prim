@@ -14,7 +14,7 @@ private:
 	void pathCompression();
 
 public:
-	explicit DisjointSet(int arrSize);
+	DisjointSet(int arrSize);
 
 	~DisjointSet();
 

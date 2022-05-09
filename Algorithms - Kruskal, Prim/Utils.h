@@ -4,8 +4,7 @@ using namespace std;
 
 static const string errorMessage(string msg)
 {
-	string str = "Invalid Input. error: " + msg + "\n";
+	string str = "Error: " + msg + "\n";
 	cout << str;
 	return str;
-
 }

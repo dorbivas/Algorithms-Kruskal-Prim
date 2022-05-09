@@ -36,10 +36,8 @@ void LinkedList::insertTail(int index, int weight)
     temp->weight = weight;
     temp->next = nullptr;
     if (isEmpty())
-    {
-        head = temp;
-        tail = temp;
-    }
+        head = tail =  temp;
+    
     else
     {
         tail->next = temp;
@@ -48,11 +46,59 @@ void LinkedList::insertTail(int index, int weight)
     ++size;
 }
 
+bool LinkedList::removeNode(int indexRemoved)//XListNode* currX)
+{
+    bool status = false;
+    Node* current = head, *prev = nullptr, *tmp;
+
+    while (current != nullptr)
+    {
+        if (current->index == indexRemoved) { // if match
+            status = true;
+            break; // break out of while
+        }
+        prev = current;
+        current = current->next; // go to prev value
+    }
+
+    if (status == false) //not found
+        return status;
+    
+
+    tmp = current;
+    /*remove from list with 1 node*/
+    if (prev == nullptr && current->next == nullptr) // 
+    {
+        delete current;
+        head = tail = nullptr;
+    }
+    /*remove first*/
+    else if (prev == nullptr && current->next != nullptr)
+    {
+        head = current->next;
+        delete tmp;
+    }
+    /*remove last*/
+    else if (prev != nullptr && current->next == nullptr)
+    {
+        prev->next = nullptr;
+        delete tmp;
+    }
+    else
+    {
+        prev->next = current->next;
+        delete tmp;
+    }
+    --size;
+    return status;
+}
+
+
 bool LinkedList::RemoveFromList(int indexRemoved) {
     bool status = false;
     if (this->size == 0)
         return status;
-
+  
     Node* current = head;
     Node* prev = nullptr;
 
@@ -69,17 +115,23 @@ bool LinkedList::RemoveFromList(int indexRemoved) {
     if (current == nullptr) { // if we reached end of list
         cout << "Can't RemoveFromList value: no match found.\n"; // no match, cant RemoveFromList
     }
-    else { // found match
-        if (current == tail) {
+    else 
+    { // found match
+        if (current == tail)
+        { //   X -- > NULL
             tail = prev;
-            tail->next = nullptr;
+            if (tail)
+                tail->next = nullptr; 
         }
-        else if (current == head) {
+        if (current == head)
+        {
             head = current->next;
         }
-        else {
+        if (!(head == tail && head == nullptr))
+        {
             prev->next = current;
         }
+
         --size;
         delete current;
     }
@@ -106,8 +158,7 @@ Node* LinkedList::find(int data)
 
 ostream& operator<<(ostream& os, const Node& vertex)
 {
-
-    os << "(" << vertex.index
+    os << "(" << vertex.index + 1
         << ", " << vertex.weight << ") ";
     return os;
 }
@@ -115,10 +166,15 @@ ostream& operator<<(ostream& os, const Node& vertex)
  ostream& operator<<(ostream& os, const LinkedList& list)
 {
     Node* ptr = list.head;
+    if (ptr == nullptr)
+    {
+        os << "empty";
+    }
     while (ptr != nullptr) {
         os << *ptr << "->" ;
         ptr = ptr->next;
 
     }
+
     return os ;
 }

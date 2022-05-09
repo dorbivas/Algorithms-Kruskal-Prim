@@ -46,7 +46,6 @@ int DisjointSet::Find(int index)
     if (index > arrSize)
 	{
 		throw errorMessage("invalid vertix amount");
-
 	}
 	if (parentsArr[index].parent == index || index == -1)
 	{
@@ -54,7 +53,6 @@ int DisjointSet::Find(int index)
 	}
 	else
 	{
-		
 		parentsArr[index].parent = Find(parentsArr[index].parent);
 		return parentsArr[index].parent;
 	}

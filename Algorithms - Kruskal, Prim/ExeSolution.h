@@ -9,19 +9,7 @@
 #include "DisjointSet.h"
 #include "LinkedList.h"
 #include "Heap.h"
-
 using namespace std;
-
-using std::ifstream;
-using std::ios;
-using std::cout;
-using std::cin;
-using std::endl;
-using std::string;
-using std::ofstream;
-
-class AdjListGraph;
-struct graphEdge;
 
 class ExeSolution
 {
@@ -42,7 +30,7 @@ public:
 	{
 		removedEdge.start_ver = 0; removedEdge.end_ver = 0, removedEdge.weight = 0;
 		fGraphInput.open(inpuFileName);
-		fResult.open("Out");
+		fResult.open("Out.txt");
 		
 	}
 	bool run_tests(AdjListGraph graph);
@@ -57,10 +45,10 @@ private:
 
 	ofstream fResult;
 	ifstream fGraphInput;
-	void readEdgeLine();
 	graphEdge removedEdge;
 	AdjListGraph* graph = nullptr;
-	void readInputFromFunc(int& numVectors, int& numEdges, vector<graphEdge>& graphEdges, graphEdge& removedEdge);
+	const string invalidInput = "invalid input";
+
 	void CreatKruskelEdgesArray(AdjListGraph graph, vector<graphEdge>& Edges);
 	void readData();
 	pair<vector<graphEdge>, string> Kruskel(AdjListGraph graph);

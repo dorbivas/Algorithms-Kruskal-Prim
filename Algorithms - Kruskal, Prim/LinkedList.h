@@ -26,6 +26,9 @@ public:
     bool isEmpty();
     void insertHead(int index, int weight);
     void insertTail(int index, int weight);
+
+    bool removeNode(int indexRemoved);//?
+
     Node* find(int data);
     bool RemoveFromList(int index_removed);
 

@@ -3,8 +3,6 @@
 
 #include "Utils.h"
 
-#define N 6 // Number of vertices in the graph
-
 using namespace std;
 //if tree is connected, all neighbores should be visited eventually, since we know it has no cycles,
 //we can ensure if all nodes were visited they finish black eventualy.
@@ -138,7 +136,8 @@ void AdjListGraph::AddEdge(int start_ver, int end_ver, int weight)
 	}
 
 
-	else {
+	else 
+	{
 		adjGraphArr[start_ver].insertTail(end_ver, weight);
 		adjGraphArr[end_ver].insertTail(start_ver, weight);
 		adjGraphArr[end_ver].tail->brother = adjGraphArr[start_ver].tail;
@@ -166,9 +165,9 @@ bool AdjListGraph::RemoveEdge(int ver1, int ver2)
 		if (edgeExists(ver1, ver2) == true)
 		{
 			//TODO Remove unnececry prints
-			status |= adjGraphArr[ver1].RemoveFromList(ver2);
+			status |= adjGraphArr[ver1].removeNode(ver2);
 			if (status) {
-				status |= adjGraphArr[ver2].RemoveFromList(ver1);
+				status |= adjGraphArr[ver2].removeNode(ver1);
 				if (status)
 				{
 				//	cout << " Deleting the edge: " << "(" << ver1 << ", " << ver2 << ") " << endl;
@@ -187,7 +186,7 @@ bool AdjListGraph::RemoveEdge(int ver1, int ver2)
 		else
 		{
 			status = false;
-			//throw "edge not found"; examples show on thrown but ignored
+			cout << "edge not found";
 		}
 	}
 	else {
@@ -241,9 +240,9 @@ ostream& operator<<(ostream& os, const AdjListGraph& graph)
 	for (int i = 0; i < graph.vertixAmount; i++)
 	{
 		if (graph[i].head != nullptr)
-			os << "VertixId: " << i << ":" << graph[i] << endl;
+			os << "VertixId: " << i + 1 << ":" << graph[i] << endl;
 		else
-			os << i << " list is empty. " << endl;
+			os << i + 1<< " list is empty. " << endl;
 	}
 	return os;
 }

@@ -29,8 +29,8 @@ void Heap::DecreaseKey(int nodeId, int newKey)
 
 	if (heapNodeIndex > 0) {
 		do {
-			swap(data[heapNodeIndex], data[parent(heapNodeIndex)]);
-			swap(nodeIDArr[data[heapNodeIndex].index], nodeIDArr[data[parent(heapNodeIndex)].index]);
+			swap(data[heapNodeIndex], data[parent(heapNodeIndex)]); // a[i] = a[p(i)] 
+			swap(nodeIDArr[data[heapNodeIndex].index], nodeIDArr[data[parent(heapNodeIndex)].index]);  
 			lastHeapIndex = heapNodeIndex;
 			heapNodeIndex /= 2;
 		} while (lastHeapIndex > 2);
@@ -91,10 +91,7 @@ void Heap::reassignWeights(vector<int>& min)
 //assumes heapSize is correct
 void Heap::Build(vector<int>& min)
 {
-	
 	//assign wieghts at nodeId
- 
-	
 	for (int i = 0; i < heapSize; ++i) {
 		nodeIDArr.push_back(i);;
 	}
@@ -112,7 +109,8 @@ int Heap::DeleteMin() {
 	int delNodeId = data[0].index;
 	//validatePointingTwoWays();
 	//validateHeapSorted();
-	swap(data[0], data[--heapSize]);
+	--heapSize;
+	swap(data[0], data[heapSize]);
 	swap(nodeIDArr[data[0].index], nodeIDArr[data[heapSize].index]);
 
 	//data[heapSize].weight = INT_MAX; // infinty
@@ -150,33 +148,3 @@ void Heap::fixHeap(int index)
 		fixHeap(min);
 	}
 }
-
-
-//void Heap::fixHeap(int index) {
-//	int i = index;
-//	if (data[i].weight != INT_MAX)
-//	{
-//		while (i > 0 && data[parent(i)].weight >= data[i].weight)
-//		{
-//			Swap(data[i], data[parent(i)]);
-//			i = parent(i);
-//		}
-//	}
-//}
-// 
-// void Heap::creatEmptyMin() {
-// 	heapSize = 0;
-//
-// 	data = new Weight [MAX_SIZE];
-//
-// 	for (int i = 0; i < MAX_SIZE; i++)
-// 	{
-// 		data[i] = INT_MAX; //
-// 	}
-// }
-
-// void Heap::deleteLastLeaf(int ind) {
-// 	Swap(data[ind], data[--heapSize]);
-// 	data[heapSize] = INT_MAX;
-// 	fixHeap(ind);
-// }
