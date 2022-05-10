@@ -35,7 +35,7 @@ int ExeSolution::runProgram()
 			auto prim = Prim(*graph);
 			result.push_back(s_Prim + prim.second);
 
-			graph->RemoveEdge(removedEdge.start_ver, removedEdge.end_ver); // 
+			graph->RemoveEdge(removedEdge.start_ver, removedEdge.end_ver); // TODO this is not working i think
 
 			cout << *graph;
 			if (!graph->IsConnectedVisit()) {

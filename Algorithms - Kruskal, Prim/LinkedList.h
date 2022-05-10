@@ -23,6 +23,17 @@ public:
     Node* tail = nullptr;
     int size = 0;
 
+    ~LinkedList()
+    {
+        Node* current = head;
+        Node* tmpNext = nullptr;
+        while (current != nullptr)
+        {
+            tmpNext = current->next;
+            delete current;
+            current = tmpNext;
+        }
+    }
     bool isEmpty();
     void insertHead(int index, int weight);
     void insertTail(int index, int weight);

@@ -6,6 +6,20 @@
 using namespace std;
 //if tree is connected, all neighbores should be visited eventually, since we know it has no cycles,
 //we can ensure if all nodes were visited they finish black eventualy.
+
+//TODO:
+AdjListGraph::~AdjListGraph()
+{
+
+
+	for (int i = 0; i < vertixAmount; i++)
+	{
+		delete &(adjGraphArr[i]);
+	}
+	delete[] adjGraphArr;
+
+}
+
 bool AdjListGraph::IsConnectedVisit() {
 
 	for (int i = 0; i < vertixAmount; ++i) {
@@ -85,26 +99,7 @@ AdjListGraph::AdjListGraph(int numberOfVector)
 	MakeEmptyGraph(numberOfVector);
 }
 
-//TODO:
-AdjListGraph::~AdjListGraph()
-{
-	// Node* currentEdge = head;
-	// Node* saverEdge = nullptr;
 
-	// for (int i = 0; i < N; i++)
-		//todo: delete list
-		// adjGraphArr[i].delete();
-	// delete[] adjGraphArr;
-
-
-
-	// while (currentEdge != nullptr)
-	// {
-	// 	saverEdge = currentEdge->next;
-	// 	delete[] currentEdge;
-	// 	currentEdge = saverEdge;
-	// }
-}
 
 
 Node* AdjListGraph::getAdjListNode(int index, LinkedList adjArrGraph)
@@ -112,7 +107,7 @@ Node* AdjListGraph::getAdjListNode(int index, LinkedList adjArrGraph)
 	return adjArrGraph.find(index);
 }
 
-LinkedList AdjListGraph::GetAdjList(int index)
+LinkedList& AdjListGraph::GetAdjList(int index)
 {
 	return adjGraphArr[index];
 }
@@ -152,10 +147,10 @@ LinkedList& AdjListGraph::operator[](int start_ver)
 	return adjGraphArr[start_ver];
 }
 
-LinkedList AdjListGraph::operator[](int start_ver) const
-{
-	return adjGraphArr[start_ver];
-}
+//LinkedList AdjListGraph::operator[](int start_ver) const
+//{
+//	return adjGraphArr[start_ver];
+//}
 
 bool AdjListGraph::RemoveEdge(int ver1, int ver2)
 {
@@ -234,13 +229,13 @@ Node* AdjListGraph::createAdjNode(int value, int weight)
 	return newNode;
 }
 
-ostream& operator<<(ostream& os, const AdjListGraph& graph)
+ostream& operator<<(ostream& os,  AdjListGraph& graph)
 {
 	os << "Graph adjacency list " << endl << "(start_vertex, end_vertex, weight):" << endl;
 	for (int i = 0; i < graph.vertixAmount; i++)
 	{
-		if (graph[i].head != nullptr)
-			os << "VertixId: " << i + 1 << ":" << graph[i] << endl;
+		if (graph.adjGraphArr[i].head != nullptr)
+			os << "VertixId: " << i + 1 << ":" << graph[i] << endl; //why the f does this call the dtor
 		else
 			os << i + 1<< " list is empty. " << endl;
 	}

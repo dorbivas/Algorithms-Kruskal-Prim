@@ -26,7 +26,7 @@ public:
 	AdjListGraph(int n);
 	void MakeEmptyGraph(int n);
 	bool IsAdjacent(int start_ver, int end_ver);
-	LinkedList GetAdjList(int index);
+	LinkedList& GetAdjList(int index);
 	//todo: handle exception
 	void AddEdge(int start_ver, int end_ver, int weight);
 	bool RemoveEdge(int ver1, int ver2);
@@ -57,9 +57,9 @@ public:
 	Node* getAdjListNode(int index, LinkedList adjArrGraph);
 	//todo: currently returns node, should return list after created
 	LinkedList& operator [](int start_ver);
-	LinkedList operator [](int start_ver) const;
+	/*LinkedList operator [](int start_ver) const;*/
 
-	friend ostream& operator<<(ostream& os, const AdjListGraph& graph);
+	friend ostream& operator<<(ostream& os,  AdjListGraph& graph);
 
 
 };

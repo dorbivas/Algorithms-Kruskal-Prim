@@ -42,17 +42,22 @@ public:
 	}
 
 private:
+	const string s_NoMstMsg = "NO MST";
+	const string s_Kruskal = "Kruskal ";
+	const string s_Prim = "Prim ";
+	const string s_Kruskal2 = "Kruskal2 ";
+	const string s_invalidInput = "invalid input";
 
 	ofstream fResult;
 	ifstream fGraphInput;
 	graphEdge removedEdge;
 	AdjListGraph* graph = nullptr;
-	const string invalidInput = "invalid input";
+	
 
-	void CreatKruskelEdgesArray(AdjListGraph graph, vector<graphEdge>& Edges);
+	void CreatKruskelEdgesArray(vector<graphEdge>& Edges);
 	void readData();
-	pair<vector<graphEdge>, string> Kruskel(AdjListGraph graph);
-	pair<vector<int>, string> Prim(AdjListGraph graph);
+	pair<vector<graphEdge>, string> Kruskel(AdjListGraph& graph);
+	pair<vector<int>, string> Prim(AdjListGraph& graph);
 	int partition(vector<graphEdge>& edgesArr, int start, int end);
 	void quickSort(vector<graphEdge>& edgesArr, int start, int end);
 	#define NO_PARENT -1
