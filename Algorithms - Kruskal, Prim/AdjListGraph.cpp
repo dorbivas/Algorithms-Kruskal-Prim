@@ -1,6 +1,5 @@
 // AdjacencyList.cpp : This file contains the 'main' function. Program execution begins and ends there.
 #include "AdjListGraph.h"
-
 #include "Utils.h"
 
 using namespace std;
@@ -11,12 +10,12 @@ using namespace std;
 AdjListGraph::~AdjListGraph()
 {
 	if (adjGraphArr != nullptr) {
-		for (int i = 0; i < vertixAmount; i++)
+	/*	for (int i = 0; i < vertixAmount; i++)
 		{
-			if (&adjGraphArr[i].size != 0) {
+			if (adjGraphArr[i].size != 0) {
 				delete &adjGraphArr[i];
 			}
-		}
+		}*/
 		delete[] adjGraphArr;
 	}
 }

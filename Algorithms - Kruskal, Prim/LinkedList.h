@@ -7,33 +7,24 @@ using namespace std;
 struct Node {
     int index = UNINIT;
     int weight = UNINIT;
-    Node* next;
+    Node* next = nullptr;
     bool includedFlag = false;
-    Node* brother;
-
+    Node* brother = nullptr;
+    ~Node() = default;
 private:
     friend ostream& operator<<(ostream& os, const Node& vertex);
 };
 
 
-class LinkedList  //todo: can be made generic with node outside
+class LinkedList  
 {
 public:
     Node* head = nullptr;
     Node* tail = nullptr;
     int size = 0;
 
-    ~LinkedList()
-    {
-        Node* current = head;
-        Node* tmpNext = nullptr;
-        while (current != nullptr)
-        {
-            tmpNext = current->next;
-            delete current;
-            current = tmpNext;
-        }
-    }
+    ~LinkedList();
+
     bool isEmpty();
     void insertHead(int index, int weight);
     void insertTail(int index, int weight);
@@ -45,7 +36,7 @@ public:
 
 private:
     Node* temp = nullptr;
-    friend auto operator<<(ostream& os, const LinkedList& vertex) -> ostream&;  // NOLINT(readability-inconsistent-declaration-parameter-name)
+    friend auto operator<<(ostream& os, const LinkedList& vertex) -> ostream&; 
    
 };
 

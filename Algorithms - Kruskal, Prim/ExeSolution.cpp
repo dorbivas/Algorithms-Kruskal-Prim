@@ -1,7 +1,6 @@
 #pragma once
-
 #include "ExeSolution.h"
-#include "Utils.h"
+
 
 //TODO:
 // prim
@@ -68,9 +67,9 @@ int ExeSolution::runProgram()
 	}
 	catch (exception& e)
 	{
-		fResult << "NO MST" << endl;
-		fResult << "NO MST" << endl;
-		fResult << "NO MST" << endl;
+		fResult << s_Kruskal + s_NoMstMsg << endl;
+		fResult << s_Kruskal + s_NoMstMsg << endl;
+		fResult << s_Kruskal + s_NoMstMsg << endl;
 
 		cout << s_invalidInput << endl;
 	}
@@ -185,8 +184,6 @@ void ExeSolution::readData()
 
 void ExeSolution::CreatKruskelEdgesArray(vector<graphEdge>& Edges)
 {
-	bool flag = false;
-	int wightInd = 1, currSize;
 	for (int i = 0; i < graph->vertixAmount; i++)
 	{
 		Node* ptr = graph->GetAdjList(i).head;

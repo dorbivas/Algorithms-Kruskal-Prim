@@ -1,5 +1,6 @@
 #include "Heap.h"
-#define NULL -1
+
+
 //min heap which sorted by the lowest weight  
 
 bool Heap::IsEmpty()

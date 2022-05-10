@@ -1,11 +1,18 @@
-
 #include "LinkedList.h"
-
-#include <iostream>
-#include <ostream>
 #include "Utils.h"
 
 using namespace std;
+LinkedList::~LinkedList()
+{
+    Node* current = head;
+    Node* tmpNext = nullptr;
+    while (current != nullptr)
+    {
+        tmpNext = current->next;
+        delete current;
+        current = tmpNext;
+    }
+}
 
 bool LinkedList::isEmpty()
 {
@@ -46,7 +53,7 @@ void LinkedList::insertTail(int index, int weight)
     ++size;
 }
 
-bool LinkedList::removeNode(int indexRemoved)//XListNode* currX)
+bool LinkedList::removeNode(int indexRemoved)
 {
     bool status = false;
     Node* current = head, *prev = nullptr, *tmp;
@@ -82,51 +89,6 @@ bool LinkedList::removeNode(int indexRemoved)//XListNode* currX)
 
     delete tmp;
     --size;
-    return status;
-}
-
-
-bool LinkedList::RemoveFromList(int indexRemoved) {
-    bool status = false;
-    if (this->size == 0)
-        return status;
-  
-    Node* current = head;
-    Node* prev = nullptr;
-
-    while (current != nullptr) {
-        if (current->index == indexRemoved) { // if match
-            status = true;
-            break; // break out of while
-        }
-        prev = current;
-        current = current->next; // go to prev value
-        
-        
-    } // end while
-    if (current == nullptr) { // if we reached end of list
-        cout << "Can't RemoveFromList value: no match found.\n"; // no match, cant RemoveFromList
-    }
-    else 
-    { // found match
-        if (current == tail)
-        { //   X -- > NULL
-            tail = prev;
-            if (tail)
-                tail->next = nullptr; 
-        }
-        if (current == head)
-        {
-            head = current->next;
-        }
-        if (!(head == tail && head == nullptr))
-        {
-            prev->next = current;
-        }
-
-        --size;
-        delete current;
-    }
     return status;
 }
 
