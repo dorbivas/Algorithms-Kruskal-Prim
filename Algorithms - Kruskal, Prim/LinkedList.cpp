@@ -69,26 +69,18 @@ bool LinkedList::removeNode(int indexRemoved)//XListNode* currX)
     /*remove from list with 1 node*/
     if (prev == nullptr && current->next == nullptr) // 
     {
-        delete current;
         head = tail = nullptr;
     }
     /*remove first*/
     else if (prev == nullptr && current->next != nullptr)
-    {
         head = current->next;
-        delete tmp;
-    }
     /*remove last*/
     else if (prev != nullptr && current->next == nullptr)
-    {
         prev->next = nullptr;
-        delete tmp;
-    }
     else
-    {
         prev->next = current->next;
-        delete tmp;
-    }
+
+    delete tmp;
     --size;
     return status;
 }

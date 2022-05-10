@@ -2,7 +2,7 @@
 
 int main(int argc, char** argv)
 {
-	ExeSolution solution("InputFiles\\19_19_21.txt"); //todo: static
+	ExeSolution solution("InputFiles\\20_20_NoMST.txt"); //todo: static
 	solution.runProgram();
 	return 0;
 }

@@ -10,6 +10,19 @@
 //final tests
 
 
+ExeSolution::ExeSolution(string inpuFileName)
+{
+	removedEdge.start_ver = 0; removedEdge.end_ver = 0, removedEdge.weight = 0;
+	fGraphInput.open(inpuFileName);
+	fResult.open("Out.txt");
+}
+
+ExeSolution::~ExeSolution()
+{
+	fGraphInput.close();
+	fResult.close();
+	delete graph;
+}
 
 int ExeSolution::runProgram()
 {
@@ -35,8 +48,7 @@ int ExeSolution::runProgram()
 			auto prim = Prim(*graph);
 			result.push_back(s_Prim + prim.second);
 
-			graph->RemoveEdge(removedEdge.start_ver, removedEdge.end_ver); // 
-
+			graph->RemoveEdge(removedEdge.start_ver, removedEdge.end_ver); // res[1]
 			cout << *graph;
 			if (!graph->IsConnectedVisit()) {
 				result.push_back(s_Kruskal2 + s_NoMstMsg);
@@ -45,7 +57,7 @@ int ExeSolution::runProgram()
 				auto kruskalRes2 = Kruskel(*graph); // res[2]
 				result.push_back(s_Kruskal2 + kruskalRes2.second);
 			}
-
+			
 		}
 
 		for (auto res : result)
@@ -62,8 +74,7 @@ int ExeSolution::runProgram()
 
 		cout << s_invalidInput << endl;
 	}
-
-
+	cout << *graph;
 	return 0;
 }
 
@@ -290,12 +301,12 @@ pair<vector<int>, string> ExeSolution::Prim(AdjListGraph& graph)
 	while (!Q.IsEmpty())
 	{
 		int minWeightIndex = Q.DeleteMin();
-		cout << "deleting current min(ID) : " << minWeightIndex + 1 << endl;
+		//cout << "deleting current min(ID) : " << minWeightIndex + 1 << endl;
 		inT[minWeightIndex] = true;
 		Node* curr_neighbor = graph[minWeightIndex].head;
 		while (curr_neighbor != nullptr)
 		{
-			cout << "Passing neighbor: " << curr_neighbor->index + 1 << endl;
+			//cout << "Passing neighbor: " << curr_neighbor->index + 1 << endl;
 			if (!inT[curr_neighbor->index] && curr_neighbor->weight < min[curr_neighbor->index])
 			{
 				min[curr_neighbor->index] = curr_neighbor->weight;

@@ -1,14 +1,11 @@
 #pragma once
 #include <vector>
-#include <filesystem>
+
 #include <istream>
 #include <fstream>
-#include <sstream>
-
 #include "AdjListGraph.h"
-#include "DisjointSet.h"
-#include "LinkedList.h"
 #include "Heap.h"
+
 using namespace std;
 
 class ExeSolution
@@ -26,20 +23,9 @@ public:
 	void readInputFromFile(string& delimiter, string& line, size_t& posEdge, int& numVertixInput,
 	                       int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token);
 
-	ExeSolution(string inpuFileName)
-	{
-		removedEdge.start_ver = 0; removedEdge.end_ver = 0, removedEdge.weight = 0;
-		fGraphInput.open(inpuFileName);
-		fResult.open("Out.txt");
-		
-	}
+	ExeSolution(string inpuFileName);
 	bool run_tests(AdjListGraph graph);
-	~ExeSolution()
-	{
-		fGraphInput.close();
-		fResult.close();
-		delete graph;
-	}
+	~ExeSolution();
 
 private:
 	const string s_NoMstMsg = "NO MST";

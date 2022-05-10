@@ -7,17 +7,18 @@ using namespace std;
 //if tree is connected, all neighbores should be visited eventually, since we know it has no cycles,
 //we can ensure if all nodes were visited they finish black eventualy.
 
-//TODO:
+//TODO: currently not working, doesn't recognize condition
 AdjListGraph::~AdjListGraph()
 {
-
-
-	for (int i = 0; i < vertixAmount; i++)
-	{
-		delete &(adjGraphArr[i]);
+	if (adjGraphArr != nullptr) {
+		for (int i = 0; i < vertixAmount; i++)
+		{
+			if (&adjGraphArr[i].size != 0) {
+				delete &adjGraphArr[i];
+			}
+		}
+		delete[] adjGraphArr;
 	}
-	delete[] adjGraphArr;
-
 }
 
 bool AdjListGraph::IsConnectedVisit() {

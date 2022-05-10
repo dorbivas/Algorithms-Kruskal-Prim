@@ -96,7 +96,7 @@ void Heap::Build(vector<int>& min)
 		nodeIDArr.push_back(i);;
 	}
 	reassignWeights(min);
-	FloydBuild();
+	FloydBuild(); 
 }
 
 int Heap::DeleteMin() {
