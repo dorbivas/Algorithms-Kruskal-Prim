@@ -22,14 +22,14 @@
 // 	cout << set.Find(2);
 // }
 
-void DisjointSet::pathCompression()
+void DisjointSet::pathCompression() // todo ?
 {
-		
+
 }
 
 DisjointSet::DisjointSet(int arrSize) : parentsArr(new Element[arrSize])
 {
-	for (int i = 0; i < arrSize; i++) 
+	for (int i = 0; i < arrSize; i++)
 	{
 		parentsArr[i].parent = -1;
 		parentsArr[i].arrSize = 0;
@@ -37,13 +37,13 @@ DisjointSet::DisjointSet(int arrSize) : parentsArr(new Element[arrSize])
 }
 
 DisjointSet::~DisjointSet()
-{ 
+{
 	delete[] parentsArr;
 }
 
 int DisjointSet::Find(int index)
 {
-    if (index > arrSize)
+	if (index > arrSize)
 	{
 		throw errorMessage("invalid vertix amount");
 	}

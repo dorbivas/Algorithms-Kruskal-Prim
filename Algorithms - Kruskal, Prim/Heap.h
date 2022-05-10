@@ -29,8 +29,7 @@ private:
 
 	bool validatePointingTwoWays(); //validates if two way pointers are correct, otherwise exits.
 	bool validateHeapSorted();
-	
-	
+
 public:
 	int heapSize;
 	vector<int>nodeIDArr; //nodeID at location x points to the index of nodeID in data.
@@ -40,9 +39,9 @@ public:
 	bool IsEmpty();
 	bool validateInput(int nodeId);
 	void DecreaseKey(int searchedIndex, int newWeight);
-	Heap(int size) : heapSize(size) , data(size) { };
-	void insertMin(int nodeID, int weight);
+	Heap(int size) : heapSize(size), data(size) { };
 	int getSize() { return heapSize; }
-	void creatEmptyMin();
+	void insertMin(int nodeID, int weight);
+	void creatEmptyMin(); //todo checl if not use delete
 };
 

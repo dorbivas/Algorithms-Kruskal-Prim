@@ -12,9 +12,7 @@ using namespace std;
 class ExeSolution
 {
 public:
-
 	int runProgram();
-
 	ExeSolution(string inpuFileName);
 	~ExeSolution();
 
@@ -43,10 +41,9 @@ private:
 		int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token);
 	void CreatKruskelEdgesArray(vector<graphEdge>& Edges);
 	void readData();
-	
 	int partition(vector<graphEdge>& edgesArr, int start, int end);
 	void quickSort(vector<graphEdge>& edgesArr, int start, int end);
-	#define NO_PARENT -1
+#define NO_PARENT -1
 };
 
 

@@ -11,7 +11,7 @@
 
 ExeSolution::ExeSolution(string inpuFileName)
 {
-	removedEdge.start_ver = 0; removedEdge.end_ver = 0, removedEdge.weight = 0;
+	removedEdge.starVer = 0; removedEdge.endVer = 0, removedEdge.weight = 0;
 	fGraphInput.open(inpuFileName);
 	fResult.open("Out.txt");
 }
@@ -47,7 +47,7 @@ int ExeSolution::runProgram()
 			auto prim = Prim(*graph);
 			result.push_back(s_Prim + prim.second);
 
-			graph->RemoveEdge(removedEdge.start_ver, removedEdge.end_ver); // res[1]
+			graph->RemoveEdge(removedEdge.starVer, removedEdge.endVer); // res[1]
 			cout << *graph;
 			if (!graph->IsConnectedVisit()) {
 				result.push_back(s_Kruskal2 + s_NoMstMsg);
@@ -56,7 +56,6 @@ int ExeSolution::runProgram()
 				auto kruskalRes2 = Kruskel(*graph); // res[2]
 				result.push_back(s_Kruskal2 + kruskalRes2.second);
 			}
-			
 		}
 
 		for (auto res : result)
@@ -85,7 +84,7 @@ void ExeSolution::createGraphFromInput(int& numVertixInput, int& numEdgesInput, 
 	for (int i = 0; i < numEdgesInput; i++)
 	{
 		graphEdge addedEdge = edgesArrInput[i];
-		graph->AddEdge(addedEdge.start_ver, addedEdge.end_ver, addedEdge.weight);
+		graph->AddEdge(addedEdge.starVer, addedEdge.endVer, addedEdge.weight);
 	}
 }
 
@@ -95,9 +94,8 @@ void ExeSolution::readVertixNumberInput(string& line, int& numVertixInput)
 	getline(fGraphInput, line);
 	numVertixInput = stoi(line);
 	if (numVertixInput <= 0)
-	{
-		throw errorMessage(s_invalidInput); 
-	}
+		throw errorMessage(s_invalidInput);
+
 }
 
 void ExeSolution::readEdgesNumberInput(string& line, int& numEdgesInput)
@@ -120,7 +118,7 @@ void ExeSolution::readEdgesArrayInput(string& delimiter, string& line, size_t& p
 		{
 			posEdge = line.find(delimiter);
 			token = line.substr(0, posEdge);
-			edgeTmp[j] = stoi(token)-1;
+			edgeTmp[j] = stoi(token) - 1;
 			line.erase(0, posEdge + delimiter.length());
 		}
 
@@ -144,11 +142,11 @@ void ExeSolution::readRemovedEdgeInput(string& delimiter, string& line, size_t& 
 		line.erase(0, posEdge + delimiter.length());
 	}
 
-	removedEdge.start_ver = edgeTmp[0];
-	removedEdge.end_ver = edgeTmp[1];
+	removedEdge.starVer = edgeTmp[0];
+	removedEdge.endVer = edgeTmp[1];
 	line.erase();
 
-	if (removedEdge.end_ver <= 0 || removedEdge.end_ver <= 0)
+	if (removedEdge.endVer <= 0 || removedEdge.endVer <= 0)
 		throw errorMessage(s_invalidInput);
 }
 
@@ -165,18 +163,16 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 
 	//(4) removed edge
 	readRemovedEdgeInput(delimiter, line, posEdge, token);
-
 }
 
 void ExeSolution::readData()
 {
-	string delimiter = " ", line;
+	string token, delimiter = " ", line;
 	size_t posEdge = 0;
 	int numVertixInput = 0;
 	int numEdgesInput = 0;
 	vector<graphEdge> edgesArrInput;
 	graphEdge removedEdgeInput;
-	string token;
 
 	readInputFromFile(delimiter, line, posEdge, numVertixInput, numEdgesInput, edgesArrInput, removedEdgeInput, token);
 	createGraphFromInput(numVertixInput, numEdgesInput, edgesArrInput, removedEdgeInput);
@@ -250,16 +246,16 @@ pair<vector<graphEdge>, string> ExeSolution::Kruskel(AdjListGraph& graph)
 	vector<graphEdge>  Edges;
 	pair<vector<graphEdge>, string> result;
 	result.second = "0";
-	CreatKruskelEdgesArray(Edges); 
+	CreatKruskelEdgesArray(Edges);
 	quickSort(Edges, 0, Edges.size() - 1);
 
-	for (int i = 0; i < graph.vertixAmount ; i++) 
+	for (int i = 0; i < graph.vertixAmount; i++)
 		graphSet.MakeSet(i);
 
 	for (auto& Edge : Edges)
 	{
-		u = graphSet.Find(Edge.start_ver);
-		v = graphSet.Find(Edge.end_ver);
+		u = graphSet.Find(Edge.starVer);
+		v = graphSet.Find(Edge.endVer);
 
 		if (u != v && u != -1 && v != -1)
 		{

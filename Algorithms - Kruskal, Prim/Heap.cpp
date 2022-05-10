@@ -31,7 +31,7 @@ void Heap::DecreaseKey(int nodeId, int newKey)
 	if (heapNodeIndex > 0) {
 		do {
 			swap(data[heapNodeIndex], data[parent(heapNodeIndex)]); // a[i] = a[p(i)] 
-			swap(nodeIDArr[data[heapNodeIndex].index], nodeIDArr[data[parent(heapNodeIndex)].index]);  
+			swap(nodeIDArr[data[heapNodeIndex].index], nodeIDArr[data[parent(heapNodeIndex)].index]);
 			lastHeapIndex = heapNodeIndex;
 			heapNodeIndex /= 2;
 		} while (lastHeapIndex > 2);
@@ -46,12 +46,12 @@ bool Heap::validatePointingTwoWays() {
 	bool status = true;
 	for (int i = 0; i < heapSize; ++i) {
 
-		status = i == data[nodeIDArr[i]].index; 
+		status = i == data[nodeIDArr[i]].index;
 		if (!status) {
-			
+
 			cout << "index: " << i << " invalid" << endl;
 			exit(1);
-		
+
 		}
 	}
 }
@@ -75,14 +75,14 @@ bool Heap::validateHeapSorted()
 
 void Heap::FloydBuild()
 {
-	for (int i = heapSize/2; i >= 0; i--)
+	for (int i = heapSize / 2; i >= 0; i--)
 		fixHeap(i);
 }
 
 void Heap::reassignWeights(vector<int>& min)
 {
 	int i = 0;
-	for (HeapNode& node: data)
+	for (HeapNode& node : data)
 	{
 		node.weight = min[i];
 		node.index = i++;
@@ -97,7 +97,7 @@ void Heap::Build(vector<int>& min)
 		nodeIDArr.push_back(i);;
 	}
 	reassignWeights(min);
-	FloydBuild(); 
+	FloydBuild();
 }
 
 int Heap::DeleteMin() {
@@ -106,7 +106,7 @@ int Heap::DeleteMin() {
 		cout << "Invalid input" << endl;
 		exit(1);
 	}
-	
+
 	int delNodeId = data[0].index;
 	//validatePointingTwoWays();
 	//validateHeapSorted();

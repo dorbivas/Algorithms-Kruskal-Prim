@@ -1,42 +1,40 @@
 #pragma once
-#define UNINIT -1;
 #include <iostream>
-
+#define UNINIT -1;
 using namespace std;
 
-struct Node {
-    int index = UNINIT;
-    int weight = UNINIT;
-    Node* next = nullptr;
-    bool includedFlag = false;
-    Node* brother = nullptr;
-    ~Node() = default;
+struct Node
+{
+	int index = UNINIT;
+	int weight = UNINIT;
+	Node* next = nullptr;
+	bool includedFlag = false;
+	Node* brother = nullptr;
+	~Node() = default;
+
 private:
-    friend ostream& operator<<(ostream& os, const Node& vertex);
+	friend ostream& operator<<(ostream& os, const Node& vertex);
 };
 
 
-class LinkedList  
+class LinkedList
 {
 public:
-    Node* head = nullptr;
-    Node* tail = nullptr;
-    int size = 0;
+	Node* head = nullptr;
+	Node* tail = nullptr;
+	Node* find(int data);
+	int size = 0;
 
-    ~LinkedList();
-
-    bool isEmpty();
-    void insertHead(int index, int weight);
-    void insertTail(int index, int weight);
-
-    bool removeNode(int indexRemoved);//?
-
-    Node* find(int data);
-    bool RemoveFromList(int index_removed);
+	~LinkedList();
+	bool isEmpty();
+	void insertHead(int index, int weight);
+	void insertTail(int index, int weight);
+	bool removeNode(int indexRemoved);//?
+	bool RemoveFromList(int index_removed);
 
 private:
-    Node* temp = nullptr;
-    friend auto operator<<(ostream& os, const LinkedList& vertex) -> ostream&; 
-   
+	Node* temp = nullptr;
+	friend auto operator<<(ostream& os, const LinkedList& vertex)->ostream&;
+
 };
 
