@@ -20,7 +20,8 @@ int ExeSolution::runProgram()
 	try
 	{
 		readData(); //reads data into graph dto
-		cout << *graph;
+
+		cout << *graph << endl;
 		vector<string> result;
 
 		if (!graph->IsConnectedVisit())
@@ -40,7 +41,7 @@ int ExeSolution::runProgram()
 			result.push_back(s_Prim + prim.second);
 
 			graph->RemoveEdge(removedEdge.starVer, removedEdge.endVer); // res[1]
-			cout << *graph;
+			cout << *graph << endl;
 			if (!graph->IsConnectedVisit()) {
 				result.push_back(s_Kruskal2 + s_NoMstMsg);
 			}
@@ -65,7 +66,6 @@ int ExeSolution::runProgram()
 
 		cout << s_invalidInput << endl;
 	}
-	cout << *graph;
 	return 0;
 }
 
@@ -292,7 +292,7 @@ pair<vector<int>, string> ExeSolution::Prim(AdjListGraph& graph)
 		Node* curr_neighbor = graph[minWeightIndex].head;
 		while (curr_neighbor != nullptr)
 		{
-			//cout << "Passing neighbor: " << curr_neighbor->index + 1 << endl;
+			//cout << "Passing neighbor: " << curr_neighbor->nodeId + 1 << endl;
 			if (!inT[curr_neighbor->index] && curr_neighbor->weight < min[curr_neighbor->index])
 			{
 				min[curr_neighbor->index] = curr_neighbor->weight;

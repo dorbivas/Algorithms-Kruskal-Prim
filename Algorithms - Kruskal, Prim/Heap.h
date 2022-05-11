@@ -14,7 +14,7 @@ public:
 	struct HeapNode
 	{
 		unsigned int weight;
-		unsigned int index;
+		unsigned int nodeId;
 	};
 
 private:
@@ -32,7 +32,7 @@ private:
 public:
 	Heap(int size) : heapSize(size), data(size) { }; //no dtor needed as nothing is dynamic
 	int heapSize;
-	vector<int>nodeIDArr; //nodeID at location x points to the index of nodeID in data.
+	vector<int>nodeIDArr; //nodeID at location x points to the nodeId of nodeID in data.
 	vector<HeapNode> data;
 	void Build(vector<int>& min);
 	int DeleteMin();

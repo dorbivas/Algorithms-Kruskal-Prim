@@ -30,11 +30,12 @@ void Heap::DecreaseKey(const int nodeId, const int newWeight)
 		int lastHeapIndex;
 		do {
 			swap(data[heapNodeIndex], data[parent(heapNodeIndex)]); // a[i] = a[p(i)] 
-			swap(nodeIDArr[data[heapNodeIndex].index], nodeIDArr[data[parent(heapNodeIndex)].index]);
+			swap(nodeIDArr[data[heapNodeIndex].nodeId], nodeIDArr[data[parent(heapNodeIndex)].nodeId]);
 			lastHeapIndex = heapNodeIndex;
-			heapNodeIndex /= 2;
+			heapNodeIndex /= 2;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 		} while (lastHeapIndex > 2);
 	}
+	data[0].nodeId = nodeId;
 	data[0].weight = newWeight;
 	fixHeap(0);
 
@@ -52,7 +53,7 @@ void Heap::reassignWeights(vector<int>& min)
 	for (HeapNode& node : data)
 	{
 		node.weight = min[i];
-		node.index = i++;
+		node.nodeId = i++;
 	}
 }
 
@@ -73,12 +74,12 @@ int Heap::DeleteMin() {
 		cout << "Invalid input" << endl;
 		exit(1);
 	}
-	int delNodeId = data[0].index;
+	int delNodeId = data[0].nodeId;
 	--heapSize;
 	swap(data[0], data[heapSize]);
-	swap(nodeIDArr[data[0].index], nodeIDArr[data[heapSize].index]);
+	swap(nodeIDArr[data[0].nodeId], nodeIDArr[data[heapSize].nodeId]);
 	//data[heapSize].weight = INT_MAX; // infinty
-	//data[heapSize].index = UNINIT;
+	//data[heapSize].nodeId = UNINIT;
 	fixHeap(0);
 	return(delNodeId);
 }
@@ -105,7 +106,7 @@ void Heap::fixHeap(int index)
 
 	if (min != index)
 	{
-		swap(nodeIDArr[data[index].index], nodeIDArr[data[min].index]);
+		swap(nodeIDArr[data[index].nodeId], nodeIDArr[data[min].nodeId]);
 		swap(data[index], data[min]);
 		fixHeap(min);
 	}
@@ -118,10 +119,10 @@ bool Heap::validatePointingTwoWays() const
 	bool status = true;
 	for (int i = 0; i < heapSize; ++i) {
 
-		status = i == data[nodeIDArr[i]].index;
+		status = i == data[nodeIDArr[i]].nodeId;
 		if (!status) {
 
-			cout << "index: " << i << " invalid" << endl;
+			cout << "nodeId: " << i << " invalid" << endl;
 			exit(1);
 
 		}
@@ -140,7 +141,7 @@ bool Heap::validateHeapSorted()
 			status &= false;
 		}
 		if (!status) {
-			cout << "index: " << i << " invalid" << endl;
+			cout << "nodeId: " << i << " invalid" << endl;
 			exit(1);
 		}
 		return status;
