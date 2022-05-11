@@ -3,7 +3,6 @@
 #include <istream>
 #include <fstream>
 #include "AdjListGraph.h"
-#include "Utils.h"
 #include "Heap.h"
 #include "DisjointSet.h"
 
@@ -36,7 +35,7 @@ private:
 	void readEdgesArrayInput(string& delimiter, string& line, size_t& posEdge, int& numEdgesInput,
 		vector<graphEdge>& edgesArrInput, string& token);
 	void readRemovedEdgeInput(string& delimiter, string& line, size_t& posEdge, string& token);
-	void createGraphFromInput(int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput);
+	void createGraphFromInput(const int& numVertixInput, const int& numEdgesInput, const vector<graphEdge>& edgesArrInput, const graphEdge& removedEdgeInput);
 	void readInputFromFile(string& delimiter, string& line, size_t& posEdge, int& numVertixInput,
 		int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token);
 	void CreatKruskelEdgesArray(vector<graphEdge>& Edges);

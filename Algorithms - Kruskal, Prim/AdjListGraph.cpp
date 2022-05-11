@@ -3,21 +3,13 @@
 #include "Utils.h"
 
 using namespace std;
-//if tree is connected, all neighbores should be visited eventually, since we know it has no cycles,
-//we can ensure if all nodes were visited they finish black eventualy.
+//if tree is connected, all neighbors should be visited eventually, since we know it has no cycles,
+//we can ensure if all nodes were visited they finish black eventually.
 
 //TODO: currently not working, doesn't recognize condition
 AdjListGraph::~AdjListGraph()
 {
-	if (adjGraphArr != nullptr) {
-		/*	for (int i = 0; i < vertixAmount; i++)
-			{
-				if (adjGraphArr[i].size != 0) {
-					delete &adjGraphArr[i];
-				}
-			}*/
 		delete[] adjGraphArr;
-	}
 }
 
 bool AdjListGraph::IsConnectedVisit() {
@@ -48,25 +40,13 @@ bool AdjListGraph::IsConnectedVisit() {
 	return status;
 }
 
-void AdjListGraph::PrintColorArray()
-{
-	for (int i = 0; i < vertixAmount; ++i)
-	{
-		cout << "Index: " << i << " Color: " << colorArr[i] << endl;
-	}
-}
+
 
 void AdjListGraph::Visit(int vertexId) {
 
-	//cout << "Current index visited:" << vertexId << endl << endl; //prints
-	//cout << "color status is: " << colorArr[vertexId] << endl << endl; //prints
-	//if duplicate ignore
-	//cout << "start: " << endl << endl;
-	colorArr[vertexId] = GRAY;
-	//PrintColorArray();
 
+	colorArr[vertexId] = GRAY;
 	Node* currNode = adjGraphArr[vertexId].head;
-	//prints
 	while (currNode != nullptr) {
 
 		if (currNode->brother->includedFlag != true) //if not brothers
@@ -74,37 +54,36 @@ void AdjListGraph::Visit(int vertexId) {
 			currNode->brother->includedFlag = true;
 			currNode->includedFlag = true;
 			if (colorArr[currNode->index] == WHITE) {
-				//		cout << "going to neighbor:  " << currNode->index << endl;
 				Visit(currNode->index);
 			}
 		}
 		currNode = currNode->next;
 	}
 	colorArr[vertexId] = BLACK;
-	//cout << "end: " << endl;
-	//PrintColorArray();
 }
 
-AdjListGraph::AdjListGraph(int numberOfVector)
+AdjListGraph::AdjListGraph(const int numberOfVector)
 {
+
+	vertixAmount = numberOfVector;
 	colorArr = new eColor[vertixAmount];
-	MakeEmptyGraph(numberOfVector);
+	MakeEmptyGraph();
 }
 
-Node* AdjListGraph::getAdjListNode(int index, LinkedList adjArrGraph)
+Node* AdjListGraph::getAdjListNode(const int index, LinkedList adjArrGraph)
 {
 	return adjArrGraph.find(index);
 }
 
-LinkedList& AdjListGraph::GetAdjList(int index)
+LinkedList& AdjListGraph::GetAdjList(int index) const
 {
 	return adjGraphArr[index];
 }
 //Instructions state(forom): MakeEmptyGraph isn't static 
 
-void AdjListGraph::MakeEmptyGraph(int n)
+void AdjListGraph::MakeEmptyGraph()
 {
-	adjGraphArr = new LinkedList[n]();
+	adjGraphArr = new LinkedList[vertixAmount]();
 	// initialize adjGraphArr pointer for all vertices
 	FLAG_INIT = true;
 	// construct directed graph by adding edges to it
@@ -119,40 +98,33 @@ void AdjListGraph::AddEdge(int start_ver, int end_ver, int weight)
 	}
 	else
 	{
-		adjGraphArr[start_ver].insertTail(end_ver, weight);
-		adjGraphArr[end_ver].insertTail(start_ver, weight);
+		adjGraphArr[start_ver].InsertTail(end_ver, weight);
+		adjGraphArr[end_ver].InsertTail(start_ver, weight);
 		adjGraphArr[end_ver].tail->brother = adjGraphArr[start_ver].tail;
 		adjGraphArr[start_ver].tail->brother = adjGraphArr[end_ver].tail;
 		++edgesAmount;
 	}
 }
 
-LinkedList& AdjListGraph::operator[](int start_ver)
+LinkedList& AdjListGraph::operator[](const int start_ver) const
 {
 	return adjGraphArr[start_ver];
 }
 
-//LinkedList AdjListGraph::operator[](int starVer) const
-//{
-//	return adjGraphArr[starVer];
-//}
 
-bool AdjListGraph::RemoveEdge(int ver1, int ver2)
+bool AdjListGraph::RemoveEdge(const int startVer, const int endVer)
 {
 	bool status = true;
 	if (this->adjGraphArr != nullptr)
 	{
-		if (edgeExists(ver1, ver2) == true)
+		if (edgeExists(startVer, endVer) == true)
 		{
 			//TODO Remove unnececry prints
-			status |= adjGraphArr[ver1].removeNode(ver2);
+			status |= adjGraphArr[startVer].removeNode(endVer);
 			if (status) {
-				status |= adjGraphArr[ver2].removeNode(ver1);
+				status |= adjGraphArr[endVer].removeNode(startVer);
 				if (status)
-				{
-					//	cout << " Deleting the edge: " << "(" << ver1 << ", " << ver2 << ") " << endl;
 					--edgesAmount;
-				}
 				else
 					throw "system";//print
 			}
@@ -171,25 +143,25 @@ bool AdjListGraph::RemoveEdge(int ver1, int ver2)
 }
 
 
-void AdjListGraph::setFlagInit(int flagInit)
+void AdjListGraph::setFlagInit(const int flagInit)
 {
 	FLAG_INIT = flagInit;
 }
 
-bool AdjListGraph::IsAdjacent(int starVer, int endVar)
+bool AdjListGraph::IsAdjacent(const int startVer, const int endVer) const
 {
-	return edgeExists(endVar, starVer);
+	return edgeExists(endVer, startVer);
 	//is endVer a neighbor in start_Ver adj list
 }
 
-bool AdjListGraph::edgeExists(int endVar, int starVer) const
+bool AdjListGraph::edgeExists(const int startVer, const int endVer) const
 {
 	bool status = false;
-	Node* curr = adjGraphArr[starVer].head;
+	Node* curr = adjGraphArr[startVer].head;
 
 	while (curr != nullptr)
 	{
-		if (endVar == curr->index)
+		if (endVer == curr->index)
 		{
 			status = true;
 			break;
@@ -200,12 +172,12 @@ bool AdjListGraph::edgeExists(int endVar, int starVer) const
 	return status;
 }
 
-Node* AdjListGraph::createAdjNode(int value, int weight)
+//next and brother aren't set here because they might not exist yet
+Node* AdjListGraph::createAdjNode(const int value, const int weight)
 {
-	Node* newNode = new Node();
+	auto newNode = new Node();
 	newNode->index = value;
 	newNode->weight = weight;
-	newNode->next = nullptr;   // point new node to current adjGraphArr
 	return newNode;
 }
 
@@ -215,9 +187,17 @@ ostream& operator<<(ostream& os, AdjListGraph& graph)
 	for (int i = 0; i < graph.vertixAmount; i++)
 	{
 		if (graph.adjGraphArr[i].head != nullptr)
-			os << "VertixId: " << i + 1 << ":" << graph[i] << endl; //why the f does this call the dtor
+			os << "VertixId: " << i + 1 << ":" << graph[i] << endl; 
 		else
 			os << i + 1 << " list is empty. " << endl;
 	}
 	return os;
+}
+
+void AdjListGraph::PrintColorArray() const
+{
+	for (int i = 0; i < vertixAmount; ++i)
+	{
+		cout << "Index: " << i << " Color: " << colorArr[i] << endl;
+	}
 }

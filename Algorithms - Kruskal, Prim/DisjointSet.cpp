@@ -1,30 +1,12 @@
 
 #include "DisjointSet.h"
 #include "LinkedList.h"
-#include "Utils.h"
 
-// //tests main
-// int main()
-// {
-// 	DisjointSet set(3);
-// 	
-// 	for (int i = 0; i < 3; i++)
-// 	{
-// 		set.MakeSet(i);
-//
-// 	}
-// 	for (int i = 0; i < 2; i++)
-// 	{
-// 		set.UnionBySize(i, i + 1);
-//
-// 	}
-// 	cout << set.Find(1);
-// 	cout << set.Find(2);
-// }
 
+//everytime a Find is made path compression is called
 void DisjointSet::pathCompression() // todo ?
 {
-
+	
 }
 
 DisjointSet::DisjointSet(int arrSize) : parentsArr(new Element[arrSize])
@@ -47,13 +29,13 @@ int DisjointSet::Find(int index)
 	{
 		throw errorMessage("invalid vertix amount");
 	}
-	if (parentsArr[index].parent == index || index == -1)
+	else if (parentsArr[index].parent == index || index == -1)
 	{
 		return index;
 	}
 	else
 	{
-		parentsArr[index].parent = Find(parentsArr[index].parent);
+		parentsArr[index].parent = Find(parentsArr[index].parent); //path compression
 		return parentsArr[index].parent;
 	}
 }

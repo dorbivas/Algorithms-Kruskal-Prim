@@ -1,6 +1,8 @@
 #include "Heap.h"
 
 
+
+
 //min heap which sorted by the lowest weight  
 
 bool Heap::IsEmpty()
@@ -19,16 +21,13 @@ bool Heap::validateInput(int nodeId)
 }
 
 //todo: fix efficiency
-void Heap::DecreaseKey(int nodeId, int newKey)
+void Heap::DecreaseKey(const int nodeId, const int newWeight)
 {
-	//validatePointingTwoWays();
-	//validateHeapSorted();
-	//validateInput(nodeId);
-
 	int heapNodeIndex = nodeIDArr[nodeId];
-	int lastHeapIndex;
 
-	if (heapNodeIndex > 0) {
+	if (heapNodeIndex > 0)
+	{
+		int lastHeapIndex;
 		do {
 			swap(data[heapNodeIndex], data[parent(heapNodeIndex)]); // a[i] = a[p(i)] 
 			swap(nodeIDArr[data[heapNodeIndex].index], nodeIDArr[data[parent(heapNodeIndex)].index]);
@@ -36,41 +35,9 @@ void Heap::DecreaseKey(int nodeId, int newKey)
 			heapNodeIndex /= 2;
 		} while (lastHeapIndex > 2);
 	}
-	data[0].weight = newKey;
+	data[0].weight = newWeight;
 	fixHeap(0);
-	/*validatePointingTwoWays();
-	validateHeapSorted();*/
-}
 
-bool Heap::validatePointingTwoWays() {
-	bool status = true;
-	for (int i = 0; i < heapSize; ++i) {
-
-		status = i == data[nodeIDArr[i]].index;
-		if (!status) {
-
-			cout << "index: " << i << " invalid" << endl;
-			exit(1);
-
-		}
-	}
-}
-bool Heap::validateHeapSorted()
-{
-	bool status = true;
-	for (int i = 0; i < heapSize; ++i) {
-		if (left(i) > heapSize || data[i].weight > data[left(i)].weight) {
-			status &= false;
-		}
-		if (right(i) > heapSize || data[i].weight > data[right(i)].weight) {
-			status &= false;
-		}
-		if (!status) {
-			cout << "index: " << i << " invalid" << endl;
-			exit(1);
-		}
-		return status;
-	}
 }
 
 void Heap::FloydBuild()
@@ -94,7 +61,7 @@ void Heap::Build(vector<int>& min)
 {
 	//assign wieghts at nodeId
 	for (int i = 0; i < heapSize; ++i) {
-		nodeIDArr.push_back(i);;
+		nodeIDArr.push_back(i);
 	}
 	reassignWeights(min);
 	FloydBuild();
@@ -106,19 +73,13 @@ int Heap::DeleteMin() {
 		cout << "Invalid input" << endl;
 		exit(1);
 	}
-
 	int delNodeId = data[0].index;
-	//validatePointingTwoWays();
-	//validateHeapSorted();
 	--heapSize;
 	swap(data[0], data[heapSize]);
 	swap(nodeIDArr[data[0].index], nodeIDArr[data[heapSize].index]);
-
 	//data[heapSize].weight = INT_MAX; // infinty
 	//data[heapSize].index = UNINIT;
 	fixHeap(0);
-	//validatePointingTwoWays();
-	//validateHeapSorted();
 	return(delNodeId);
 }
 
@@ -149,3 +110,41 @@ void Heap::fixHeap(int index)
 		fixHeap(min);
 	}
 }
+
+
+
+bool Heap::validatePointingTwoWays() const
+{
+	bool status = true;
+	for (int i = 0; i < heapSize; ++i) {
+
+		status = i == data[nodeIDArr[i]].index;
+		if (!status) {
+
+			cout << "index: " << i << " invalid" << endl;
+			exit(1);
+
+		}
+	}
+	return status;
+}
+
+bool Heap::validateHeapSorted()
+{
+	bool status = true;
+	for (int i = 0; i < heapSize; ++i) {
+		if (left(i) > heapSize || data[i].weight > data[left(i)].weight) {
+			status &= false;
+		}
+		if (right(i) > heapSize || data[i].weight > data[right(i)].weight) {
+			status &= false;
+		}
+		if (!status) {
+			cout << "index: " << i << " invalid" << endl;
+			exit(1);
+		}
+		return status;
+	}
+	return false;
+}
+

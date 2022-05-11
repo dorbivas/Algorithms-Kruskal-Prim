@@ -1,17 +1,9 @@
-#pragma once
 #include "ExeSolution.h"
-
-
-//TODO:
-// prim
-//check the main that uses files (from CMD)
-//dtors 
-//final tests
 
 
 ExeSolution::ExeSolution(string inpuFileName)
 {
-	removedEdge.starVer = 0; removedEdge.endVer = 0, removedEdge.weight = 0;
+	removedEdge.starVer = 0; removedEdge.endVer = 0; removedEdge.weight = 0;
 	fGraphInput.open(inpuFileName);
 	fResult.open("Out.txt");
 }
@@ -58,14 +50,15 @@ int ExeSolution::runProgram()
 			}
 		}
 
-		for (auto res : result)
+		for (const auto& res : result)
 		{
 			cout << res << endl;
 			fResult << res << endl;
 		}
 	}
-	catch (exception& e)
+	catch (...)
 	{
+		//todo: check what needs to be printed in case of an error like so
 		fResult << s_Kruskal + s_NoMstMsg << endl;
 		fResult << s_Kruskal + s_NoMstMsg << endl;
 		fResult << s_Kruskal + s_NoMstMsg << endl;
@@ -76,7 +69,7 @@ int ExeSolution::runProgram()
 	return 0;
 }
 
-void ExeSolution::createGraphFromInput(int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput)
+void ExeSolution::createGraphFromInput(const int& numVertixInput,const int& numEdgesInput, const vector<graphEdge>& edgesArrInput,const  graphEdge& removedEdgeInput)
 {
 	graph = new AdjListGraph(numVertixInput);
 	graph->vertixAmount = numVertixInput;

@@ -1,13 +1,12 @@
 #pragma once
 #include <vector>
-#include <string>
-#include <algorithm>
-#include <climits>
-#include "AdjListGraph.h"
 #include "Heap.h"
+#include <iostream>
+#include <ostream>
 
 using namespace std;
-using std::string;
+
+
 #define MAX_SIZE 100
 
 class Heap {
@@ -27,10 +26,11 @@ private:
 	void FloydBuild();
 	void reassignWeights(vector<int>& min);
 
-	bool validatePointingTwoWays(); //validates if two way pointers are correct, otherwise exits.
+	bool validatePointingTwoWays() const; //validates if two way pointers are correct, otherwise exits.
 	bool validateHeapSorted();
 
 public:
+	Heap(int size) : heapSize(size), data(size) { }; //no dtor needed as nothing is dynamic
 	int heapSize;
 	vector<int>nodeIDArr; //nodeID at location x points to the index of nodeID in data.
 	vector<HeapNode> data;
@@ -39,7 +39,7 @@ public:
 	bool IsEmpty();
 	bool validateInput(int nodeId);
 	void DecreaseKey(int searchedIndex, int newWeight);
-	Heap(int size) : heapSize(size), data(size) { };
+	
 	int getSize() { return heapSize; }
 	void insertMin(int nodeID, int weight);
 	void creatEmptyMin(); //todo checl if not use delete

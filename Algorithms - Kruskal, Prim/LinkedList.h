@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include "Utils.h"
+
 #define UNINIT -1;
 using namespace std;
 
@@ -10,7 +12,7 @@ struct Node
 	Node* next = nullptr;
 	bool includedFlag = false;
 	Node* brother = nullptr;
-	~Node() = default;
+	~Node() = default; //no ctor or dtor actually needed.
 
 private:
 	friend ostream& operator<<(ostream& os, const Node& vertex);
@@ -26,11 +28,11 @@ public:
 	int size = 0;
 
 	~LinkedList();
-	bool isEmpty();
-	void insertHead(int index, int weight);
-	void insertTail(int index, int weight);
-	bool removeNode(int indexRemoved);//?
-	bool RemoveFromList(int index_removed);
+	bool IsEmpty() const;
+	void InsertHead(int index, int weight);
+	void InsertTail(int index, int weight);
+	bool removeNode(int indexRemoved);
+	
 
 private:
 	Node* temp = nullptr;

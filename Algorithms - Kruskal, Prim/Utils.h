@@ -1,8 +1,9 @@
+#pragma once
 #include <string>
 #include <iostream>
 using namespace std;
 
-static const string errorMessage(string msg)
+static string errorMessage(string msg)
 {
 	string str = "Error: " + msg + "\n";
 	cout << str;

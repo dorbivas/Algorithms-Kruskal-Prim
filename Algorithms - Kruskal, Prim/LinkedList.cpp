@@ -1,7 +1,8 @@
 #include "LinkedList.h"
-#include "Utils.h"
+
 
 using namespace std;
+
 LinkedList::~LinkedList()
 {
 	Node* current = head;
@@ -14,18 +15,18 @@ LinkedList::~LinkedList()
 	}
 }
 
-bool LinkedList::isEmpty()
+bool LinkedList::IsEmpty() const
 {
 	return head == nullptr;
 }
 
-void LinkedList::insertHead(int index, int weight)
+void LinkedList::InsertHead(const int index, const int weight)
 {
 	temp = new Node;
 	temp->index = index;
 	temp->weight = weight;
 
-	if (isEmpty())
+	if (IsEmpty())
 	{
 		temp->next = nullptr;
 		tail = temp;
@@ -36,13 +37,13 @@ void LinkedList::insertHead(int index, int weight)
 	++size;
 }
 
-void LinkedList::insertTail(int index, int weight)
+void LinkedList::InsertTail(const int index, const int weight)
 {
 	temp = new Node;
 	temp->index = index;
 	temp->weight = weight;
 	temp->next = nullptr;
-	if (isEmpty())
+	if (IsEmpty())
 		head = tail = temp;
 
 	else
@@ -56,7 +57,7 @@ void LinkedList::insertTail(int index, int weight)
 bool LinkedList::removeNode(int indexRemoved)
 {
 	bool status = false;
-	Node* current = head, * prev = nullptr, * tmp;
+	Node* current = head, * prev = nullptr;
 
 	while (current != nullptr)
 	{
@@ -71,7 +72,7 @@ bool LinkedList::removeNode(int indexRemoved)
 	if (status == false) //not found
 		return status;
 
-	tmp = current;
+	Node* tmp = current;
 	/*remove from list with 1 node*/
 	if (prev == nullptr && current->next == nullptr) // 
 	{
@@ -99,7 +100,6 @@ Node* LinkedList::find(int data)
 	if (temp->index == data)
 	{
 		ret_val = temp;
-		// cout << "Found at position:" << i << endl;
 	}
 	else if (temp->next == nullptr)
 	{

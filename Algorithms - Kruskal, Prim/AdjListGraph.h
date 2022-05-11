@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include "LinkedList.h"
-#include <vector>
+
 using namespace std;
 
 // structure to store edges
@@ -18,21 +18,23 @@ public:
 	int vertixAmount;
 	int edgesAmount;
 
-	LinkedList& GetAdjList(int index);
-	AdjListGraph(int n);
-	void MakeEmptyGraph(int n);
-	bool IsAdjacent(int start_ver, int end_ver);
-	void AddEdge(int start_ver, int end_ver, int weight);
-	bool RemoveEdge(int ver1, int ver2);
-	void setFlagInit(int flag_init);
-	bool IsConnectedVisit();
-	void PrintColorArray();
-
+	AdjListGraph(int numberOfVector);
 	~AdjListGraph();
+
+	
+	void MakeEmptyGraph();
+	bool IsAdjacent(int startVer, int endVer) const;
+	void AddEdge(int start_ver, int end_ver, int weight);
+	bool RemoveEdge(int startVer, int endVer);
+	
+	bool IsConnectedVisit();
+	void PrintColorArray() const;
+	LinkedList& GetAdjList(int index) const;
+	
 	//todo: currently returns node, should return list after created
 	/*LinkedList operator [](int starVer) const;*/
 	Node* getAdjListNode(int index, LinkedList adjArrGraph);
-	LinkedList& operator [](int start_ver);
+	LinkedList& operator [](int start_ver) const;
 	friend ostream& operator<<(ostream& os, AdjListGraph& graph);
 
 private:
@@ -42,8 +44,10 @@ private:
 	int FLAG_INIT = false; //a flag that MakeEmptyGraph wasn't created properly, later to be used with exceptions
 
 	void Visit(int vertexId);
-	bool edgeExists(int end_ver, int start_ver) const;
+	bool edgeExists(int startVer, int endVer) const;
 	//needs to clear at destructor
 	static Node* createAdjNode(int value, int weight);
+	void setFlagInit(int flagInit);
 	friend ostream& operator<<(ostream& os, const AdjListGraph& graph);
 };
+
