@@ -22,11 +22,11 @@ bool AdjListGraph::IsConnectedVisit() {
 		while (currNode != nullptr)
 		{
 			currNode->includedFlag = false;
-			currNode->includedFlag = false;
 			currNode = currNode->next;
+			cout << "color[" << i << "] = " << colorArr[i] << endl;
 		}
+		
 	}
-
 	Visit(0);
 	bool status = true;
 
@@ -40,14 +40,12 @@ bool AdjListGraph::IsConnectedVisit() {
 	return status;
 }
 
-
-
 void AdjListGraph::Visit(int vertexId) {
 
-
+	cout << "Painting Gray: " << vertexId << endl;
 	colorArr[vertexId] = GRAY;
 	Node* currNode = adjGraphArr[vertexId].head;
-	while (currNode != nullptr) {
+		while (currNode != nullptr) {
 
 		if (currNode->brother->includedFlag != true) //if not brothers
 		{
@@ -57,8 +55,10 @@ void AdjListGraph::Visit(int vertexId) {
 				Visit(currNode->index);
 			}
 		}
+		//if (colorArr[currNode->index] != GRAY)
 		currNode = currNode->next;
 	}
+	cout << "Painting Black: " << vertexId << endl;
 	colorArr[vertexId] = BLACK;
 }
 

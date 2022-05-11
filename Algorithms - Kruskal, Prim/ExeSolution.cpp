@@ -1,6 +1,4 @@
 #include "ExeSolution.h"
-
-
 ExeSolution::ExeSolution(string inpuFileName)
 {
 	removedEdge.starVer = 0; removedEdge.endVer = 0; removedEdge.weight = 0;
@@ -305,8 +303,6 @@ pair<vector<int>, string> ExeSolution::Prim(AdjListGraph& graph)
 	for (auto vertix : min) {
 		currMinWeight += vertix;
 	}
-
-
 	pair<vector<int>, string> res;
 	res.second = to_string(currMinWeight);
 	res.first = p;
