@@ -2,10 +2,11 @@
 
 int main(int argc, char** argv)
 {
-	ExeSolution solution("InputFiles\\47_47_49.txt"); //todo: static
+	ExeSolution solution("InputFiles\\6006_6006_NoMST.txt"); //todo: static
 	solution.runProgram();
 	return 0;
 }
+
 
 //int main1(int argc, char** argv) // argv[0] progname argv[1] inputfile name
 //{

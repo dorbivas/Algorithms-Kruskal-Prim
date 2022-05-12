@@ -99,7 +99,7 @@ void ExeSolution::readEdgesNumberInput(string& line, int& numEdgesInput)
 	}
 }
 
-void ExeSolution::readEdgesArrayInput(string& delimiter, string& line, size_t& posEdge, int& numEdgesInput, vector<graphEdge>& edgesArrInput, string& token)
+void ExeSolution::readEdgesArrayInput(string& delimiter, string& line, size_t& posEdge,int& numOfVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, string& token)
 {
 	for (int i = 0; i < numEdgesInput; i++)
 	{
@@ -110,6 +110,10 @@ void ExeSolution::readEdgesArrayInput(string& delimiter, string& line, size_t& p
 			posEdge = line.find(delimiter);
 			token = line.substr(0, posEdge);
 			edgeTmp[j] = stoi(token) - 1;
+			if (edgeTmp[j] >= numOfVertixInput || edgeTmp[j] < 0)
+			{
+				throw errorMessage(s_invalidInput); 
+			}
 			line.erase(0, posEdge + delimiter.length());
 		}
 
@@ -121,7 +125,7 @@ void ExeSolution::readEdgesArrayInput(string& delimiter, string& line, size_t& p
 	}
 }
 
-void ExeSolution::readRemovedEdgeInput(string& delimiter, string& line, size_t& posEdge, string& token)
+void ExeSolution::readRemovedEdgeInput(string& delimiter, string& line, size_t& posEdge, string& token, int& numOfVertixInput)
 {
 	getline(fGraphInput, line);
 	int edgeTmp[3] = { -1,-1,-1 };
@@ -131,14 +135,14 @@ void ExeSolution::readRemovedEdgeInput(string& delimiter, string& line, size_t& 
 		token = line.substr(0, posEdge);
 		edgeTmp[j] = stoi(token) - 1;
 		line.erase(0, posEdge + delimiter.length());
+		if (edgeTmp[j] >= numOfVertixInput || edgeTmp[j] < 0)
+		{
+			throw errorMessage(s_invalidInput);
+		}
 	}
-
 	removedEdge.starVer = edgeTmp[0];
 	removedEdge.endVer = edgeTmp[1];
 	line.erase();
-
-	if (removedEdge.endVer <= 0 || removedEdge.endVer <= 0)
-		throw errorMessage(s_invalidInput);
 }
 
 void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& posEdge, int& numVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token)
@@ -150,10 +154,10 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 	readEdgesNumberInput(line, numEdgesInput);
 
 	//(3) edges[] (v1,v2,weight)
-	readEdgesArrayInput(delimiter, line, posEdge, numEdgesInput, edgesArrInput, token);
+	readEdgesArrayInput(delimiter, line, posEdge, numVertixInput, numEdgesInput, edgesArrInput, token);
 
 	//(4) removed edge
-	readRemovedEdgeInput(delimiter, line, posEdge, token);
+	readRemovedEdgeInput(delimiter, line, posEdge, token,numVertixInput);
 }
 
 void ExeSolution::readData()
@@ -285,17 +289,17 @@ pair<vector<int>, string> ExeSolution::Prim(AdjListGraph& graph)
 	while (!Q.IsEmpty())
 	{
 		int minWeightIndex = Q.DeleteMin();
-		cout << "deleting current min(ID) : " << minWeightIndex + 1 << endl;
+		//cout << "deleting current min(ID) : " << minWeightIndex + 1 << endl;
 		
  		inT[minWeightIndex] = true;
 		Node* curr_neighbor = graph[minWeightIndex].head;
 		
 		while (curr_neighbor != nullptr)
 		{
-			cout << "Passing neighbor: " << curr_neighbor->nodeId+1 << endl;
+		//	cout << "Passing neighbor: " << curr_neighbor->nodeId+1 << endl;
 			if (!inT[curr_neighbor->nodeId] && curr_neighbor->weight < min[curr_neighbor->nodeId])
 			{
-				cout << "updating neighbor: " << curr_neighbor->nodeId + 1 << endl;
+				//cout << "updating neighbor: " << curr_neighbor->nodeId + 1 << endl;
 				min[curr_neighbor->nodeId] = curr_neighbor->weight;
  				p[curr_neighbor->nodeId] = minWeightIndex; // initiate parents to null
 				Q.DecreaseKey(curr_neighbor->nodeId, min[curr_neighbor->nodeId]);

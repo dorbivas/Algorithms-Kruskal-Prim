@@ -32,9 +32,9 @@ private:
 
 	void readVertixNumberInput(string& line, int& numVertixInput);
 	void readEdgesNumberInput(string& line, int& numEdgesInput);
-	void readEdgesArrayInput(string& delimiter, string& line, size_t& posEdge, int& numEdgesInput,
-		vector<graphEdge>& edgesArrInput, string& token);
-	void readRemovedEdgeInput(string& delimiter, string& line, size_t& posEdge, string& token);
+	void readEdgesArrayInput(string& delimiter, string& line, size_t& posEdge, int& numOfVertixInput,
+	                         int& numEdgesInput, vector<graphEdge>& edgesArrInput, string& token);
+	void readRemovedEdgeInput(string& delimiter, string& line, size_t& posEdge, string& token, int& numOfVertixInput);
 	void createGraphFromInput(const int& numVertixInput, const int& numEdgesInput, const vector<graphEdge>& edgesArrInput, const graphEdge& removedEdgeInput);
 	void readInputFromFile(string& delimiter, string& line, size_t& posEdge, int& numVertixInput,
 		int& numEdgesInput, vector<graphEdge>& edgesArrInput, graphEdge& removedEdgeInput, string& token);

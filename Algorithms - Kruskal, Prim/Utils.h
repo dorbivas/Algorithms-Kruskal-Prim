@@ -6,6 +6,6 @@ using namespace std;
 static string errorMessage(string msg)
 {
 	string str = "Error: " + msg + "\n";
-	cout << str;
+	//cout << str;
 	return str;
 }

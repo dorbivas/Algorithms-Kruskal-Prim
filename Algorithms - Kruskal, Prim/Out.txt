@@ -1,3 +1,0 @@
-Kruskal 47
-Prim 47
-Kruskal2 NO MST
