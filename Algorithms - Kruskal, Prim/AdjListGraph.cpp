@@ -23,7 +23,7 @@ bool AdjListGraph::IsConnectedVisit() {
 		{
 			currNode->includedFlag = false;
 			currNode = currNode->next;
-			cout << "color[" << i << "] = " << colorArr[i] << endl;
+			//cout << "color[" << i << "] = " << colorArr[i] << endl;
 		}
 		
 	}
@@ -42,7 +42,7 @@ bool AdjListGraph::IsConnectedVisit() {
 
 void AdjListGraph::Visit(int vertexId) {
 
-	cout << "Painting Gray: " << vertexId << endl;
+	//cout << "Painting Gray: " << vertexId << endl;
 	colorArr[vertexId] = GRAY;
 	Node* currNode = adjGraphArr[vertexId].head;
 		while (currNode != nullptr) {
@@ -51,14 +51,14 @@ void AdjListGraph::Visit(int vertexId) {
 		{
 			currNode->brother->includedFlag = true;
 			currNode->includedFlag = true;
-			if (colorArr[currNode->index] == WHITE) {
-				Visit(currNode->index);
+			if (colorArr[currNode->nodeId] == WHITE) {
+				Visit(currNode->nodeId);
 			}
 		}
-		//if (colorArr[currNode->index] != GRAY)
+		//if (colorArr[currNode->nodeId] != GRAY)
 		currNode = currNode->next;
 	}
-	cout << "Painting Black: " << vertexId << endl;
+	//cout << "Painting Black: " << vertexId << endl;
 	colorArr[vertexId] = BLACK;
 }
 
@@ -161,7 +161,7 @@ bool AdjListGraph::edgeExists(const int startVer, const int endVer) const
 
 	while (curr != nullptr)
 	{
-		if (endVer == curr->index)
+		if (endVer == curr->nodeId)
 		{
 			status = true;
 			break;
@@ -176,7 +176,7 @@ bool AdjListGraph::edgeExists(const int startVer, const int endVer) const
 Node* AdjListGraph::createAdjNode(const int value, const int weight)
 {
 	auto newNode = new Node();
-	newNode->index = value;
+	newNode->nodeId = value;
 	newNode->weight = weight;
 	return newNode;
 }

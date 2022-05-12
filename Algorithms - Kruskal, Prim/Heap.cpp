@@ -24,21 +24,17 @@ bool Heap::validateInput(int nodeId)
 void Heap::DecreaseKey(const int nodeId, const int newWeight)
 {
 	int heapNodeIndex = nodeIDArr[nodeId];
-
-	if (heapNodeIndex > 0)
+	if (heapNodeIndex > 0 && heapNodeIndex < heapSize)
 	{
-		int lastHeapIndex;
-		do {
+		while (heapNodeIndex >= 1){
 			swap(data[heapNodeIndex], data[parent(heapNodeIndex)]); // a[i] = a[p(i)] 
 			swap(nodeIDArr[data[heapNodeIndex].nodeId], nodeIDArr[data[parent(heapNodeIndex)].nodeId]);
-			lastHeapIndex = heapNodeIndex;
-			heapNodeIndex /= 2;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-		} while (lastHeapIndex > 2);
+			heapNodeIndex = parent(heapNodeIndex);
+		}
+		data[0].weight = newWeight;
+		fixHeap(0);
+		//validateHeapSorted();
 	}
-	data[0].nodeId = nodeId;
-	data[0].weight = newWeight;
-	fixHeap(0);
-
 }
 
 void Heap::FloydBuild()
@@ -77,10 +73,12 @@ int Heap::DeleteMin() {
 	int delNodeId = data[0].nodeId;
 	--heapSize;
 	swap(data[0], data[heapSize]);
-	swap(nodeIDArr[data[0].nodeId], nodeIDArr[data[heapSize].nodeId]);
+	swap(nodeIDArr[delNodeId], nodeIDArr[data[heapSize].nodeId]);
 	//data[heapSize].weight = INT_MAX; // infinty
 	//data[heapSize].nodeId = UNINIT;
 	fixHeap(0);
+	//validateHeapSorted();
+
 	return(delNodeId);
 }
 

@@ -186,7 +186,7 @@ void ExeSolution::CreatKruskelEdgesArray(vector<graphEdge>& Edges)
 		Node* ptr = graph->GetAdjList(i).head;
 		while (ptr != nullptr)
 		{
-			graphEdge tmp = graphEdge(i, ptr->index, ptr->weight);
+			graphEdge tmp = graphEdge(i, ptr->nodeId, ptr->weight);
 			if (ptr->brother->includedFlag == false)
 			{
 				ptr->brother->includedFlag = ptr->includedFlag = true;
@@ -285,17 +285,20 @@ pair<vector<int>, string> ExeSolution::Prim(AdjListGraph& graph)
 	while (!Q.IsEmpty())
 	{
 		int minWeightIndex = Q.DeleteMin();
-		//cout << "deleting current min(ID) : " << minWeightIndex + 1 << endl;
-		inT[minWeightIndex] = true;
+		cout << "deleting current min(ID) : " << minWeightIndex + 1 << endl;
+		
+ 		inT[minWeightIndex] = true;
 		Node* curr_neighbor = graph[minWeightIndex].head;
+		
 		while (curr_neighbor != nullptr)
 		{
-			//cout << "Passing neighbor: " << curr_neighbor->nodeId + 1 << endl;
-			if (!inT[curr_neighbor->index] && curr_neighbor->weight < min[curr_neighbor->index])
+			cout << "Passing neighbor: " << curr_neighbor->nodeId+1 << endl;
+			if (!inT[curr_neighbor->nodeId] && curr_neighbor->weight < min[curr_neighbor->nodeId])
 			{
-				min[curr_neighbor->index] = curr_neighbor->weight;
-				p[curr_neighbor->index] = minWeightIndex; // initiate parents to null
-				Q.DecreaseKey(curr_neighbor->index, min[curr_neighbor->index]);
+				cout << "updating neighbor: " << curr_neighbor->nodeId + 1 << endl;
+				min[curr_neighbor->nodeId] = curr_neighbor->weight;
+ 				p[curr_neighbor->nodeId] = minWeightIndex; // initiate parents to null
+				Q.DecreaseKey(curr_neighbor->nodeId, min[curr_neighbor->nodeId]);
 			}
 			curr_neighbor = curr_neighbor->next;
 		}

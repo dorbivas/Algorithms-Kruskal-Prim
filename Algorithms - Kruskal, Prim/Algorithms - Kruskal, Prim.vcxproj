@@ -156,44 +156,7 @@
     <ClInclude Include="DisjointSet.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\InputFiles\15_15_15.txt" />
-    <Text Include="..\InputFiles\19_19_21.txt" />
-    <Text Include="..\InputFiles\20_20_NoMST.txt" />
-    <Text Include="..\InputFiles\43_43_46.txt" />
-    <Text Include="..\InputFiles\47_47_49.txt" />
-    <Text Include="..\InputFiles\47_47_NoMST.txt" />
-    <Text Include="..\InputFiles\6006_6006_NoMST.txt" />
-    <Text Include="..\InputFiles\badNumberOfVertex.txt" />
-    <Text Include="..\InputFiles\EmptyFile.txt" />
-    <Text Include="..\InputFiles\missingWeight.txt" />
-    <Text Include="..\InputFiles\negativeAmountOfVertex.txt" />
-    <Text Include="..\InputFiles\negativeVertexIdInSomeVertex.txt" />
-    <Text Include="..\InputFiles\negativeVertexIdInVertexToRemove.txt" />
-    <Text Include="..\InputFiles\noConnection.txt" />
-    <Text Include="..\InputFiles\notADigitInInput.txt" />
-    <Text Include="..\InputFiles\notADigitInWeight.txt" />
-    <Text Include="..\InputFiles\wrongAmountOfEdges.txt" />
-    <Text Include="..\InputFiles\wrongVertexIdInEdge.txt" />
-    <Text Include="..\OutputFiles\15_15_15Output.txt" />
-    <Text Include="..\OutputFiles\19_19_21Output.txt" />
-    <Text Include="..\OutputFiles\20_20_NoMSTOutput.txt" />
-    <Text Include="..\OutputFiles\43_43_46Output.txt" />
-    <Text Include="..\OutputFiles\47_47_49Output.txt" />
-    <Text Include="..\OutputFiles\47_47_NoMSTOutput.txt" />
-    <Text Include="..\OutputFiles\6006_6006_NoMSTOutput.txt" />
-    <Text Include="..\OutputFiles\badNumberOfVertexOutput.txt" />
-    <Text Include="..\OutputFiles\EmptyFileOutput.txt" />
-    <Text Include="..\OutputFiles\missingWeightOutput.txt" />
-    <Text Include="..\OutputFiles\negativeAmountOfVertexOutput.txt" />
-    <Text Include="..\OutputFiles\negativeVertexIdInSomeVertexOutput.txt" />
-    <Text Include="..\OutputFiles\negativeVertexIdInVertexToRemoveOutput.txt" />
-    <Text Include="..\OutputFiles\noConnectionOutput.txt" />
-    <Text Include="..\OutputFiles\notADigitInInputOutput.txt" />
-    <Text Include="..\OutputFiles\notADigitInWeightOutput.txt" />
-    <Text Include="..\OutputFiles\wrongAmountOfEdgesOutput.txt" />
-    <Text Include="..\OutputFiles\wrongVertexIdInEdgeOutput.txt" />
     <Text Include="readMe.txt" />
-    <Text Include="test1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

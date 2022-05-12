@@ -23,7 +23,7 @@ bool LinkedList::IsEmpty() const
 void LinkedList::InsertHead(const int index, const int weight)
 {
 	temp = new Node;
-	temp->index = index;
+	temp->nodeId = index;
 	temp->weight = weight;
 
 	if (IsEmpty())
@@ -40,7 +40,7 @@ void LinkedList::InsertHead(const int index, const int weight)
 void LinkedList::InsertTail(const int index, const int weight)
 {
 	temp = new Node;
-	temp->index = index;
+	temp->nodeId = index;
 	temp->weight = weight;
 	temp->next = nullptr;
 	if (IsEmpty())
@@ -61,7 +61,7 @@ bool LinkedList::removeNode(int indexRemoved)
 
 	while (current != nullptr)
 	{
-		if (current->index == indexRemoved) { // if match
+		if (current->nodeId == indexRemoved) { // if match
 			status = true;
 			break; 
 		}
@@ -96,14 +96,14 @@ Node* LinkedList::find(int data)
 {
 	int i;
 	Node* ret_val = nullptr;
-	for (i = 1, temp = head; temp->next != nullptr && temp->index != data; temp = temp->next, i++);
-	if (temp->index == data)
+	for (i = 1, temp = head; temp->next != nullptr && temp->nodeId != data; temp = temp->next, i++);
+	if (temp->nodeId == data)
 	{
 		ret_val = temp;
 	}
 	else if (temp->next == nullptr)
 	{
-		throw errorMessage("cant find vertix to remove in list " + this->head->index);
+		throw errorMessage("cant find vertix to remove in list " + this->head->nodeId);
 	}
 	return ret_val;
 
@@ -111,7 +111,7 @@ Node* LinkedList::find(int data)
 
 ostream& operator<<(ostream& os, const Node& vertex)
 {
-	os << "(" << vertex.index + 1
+	os << "(" << vertex.nodeId + 1
 		<< ", " << vertex.weight << ") ";
 	return os;
 }

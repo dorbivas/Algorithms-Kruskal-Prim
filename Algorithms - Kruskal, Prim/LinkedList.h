@@ -7,7 +7,7 @@ using namespace std;
 
 struct Node
 {
-	int index = UNINIT;
+	int nodeId = UNINIT;
 	int weight = UNINIT;
 	Node* next = nullptr;
 	bool includedFlag = false;
