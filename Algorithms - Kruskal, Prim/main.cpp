@@ -1,21 +1,27 @@
 #include "ExeSolution.h"
 void insertInputFilesFromLocalFiles(vector<string>& inputFiles);
 void testInputs(vector<string> inputFiles);
-
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
-	//basic tests
-	 vector<string> inputFiles;
-	//insertInputFilesFromLocalFiles(inputFiles);
-	//testInputs(inputFiles); //static size
-
-	//run single solution
-	int testInputIndex = 0;
-	cout << inputFiles[testInputIndex] << endl;
-	ExeSolution solution(inputFiles[testInputIndex]); 
+	cout << argv[1] << endl;
+	ExeSolution solution(argv[1]);
 	solution.runProgram();
 	return 0;
 }
+//int main(int argc, char** argv)
+//{
+//	//basic tests
+//	 vector<string> inputFiles;
+//	//insertInputFilesFromLocalFiles(inputFiles);
+//	//testInputs(inputFiles); //static size
+//
+//	//run single solution
+//	int testInputIndex = 0;
+//	cout << inputFiles[testInputIndex] << endl;
+//	ExeSolution solution(inputFiles[testInputIndex]); 
+//	solution.runProgram();
+//	return 0;
+//}
 
 void insertInputFilesFromLocalFiles(vector<string>& inputFiles)
 {
@@ -43,7 +49,6 @@ void insertInputFilesFromLocalFiles(vector<string>& inputFiles)
 
 void testInputs(vector<string> inputFiles)
 {
-
 	for (int i = 0 ; i < inputFiles.capacity(); i++)
 	{
 

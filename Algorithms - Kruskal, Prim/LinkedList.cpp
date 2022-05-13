@@ -103,7 +103,7 @@ Node* LinkedList::find(int data)
 	}
 	else if (temp->next == nullptr)
 	{
-		throw errorMessage("cant find vertix to remove in list " + this->head->nodeId);
+		throw "cant find vertix to remove in list " + this->head->nodeId;
 	}
 	return ret_val;
 
