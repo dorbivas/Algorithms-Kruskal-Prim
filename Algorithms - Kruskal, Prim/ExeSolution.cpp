@@ -2,13 +2,12 @@
 ExeSolution::ExeSolution(string inpuFileName)
 {
 	removedEdge.starVer = 0; removedEdge.endVer = 0; removedEdge.weight = 0;
-	fGraphInput.open(inpuFileName);
+	fGraphInput.open(inpuFileName); 
 	fResult.open("Out.txt");
 }
 
 ExeSolution::~ExeSolution()
 {
-
 	fGraphInput.close();
 	fResult.close();
 	delete graph;
@@ -18,18 +17,18 @@ int ExeSolution::runProgram()
 {
 	try
 	{
-		readData(); //reads data into graph dto
-
-	//	cout << *graph << endl;
 		vector<string> result;
+		readData();
 
 		if (!graph->IsConnectedVisit())
 		{
+			ProgramException e;
+			e.isConnected = false;
 
 			result.push_back(s_Kruskal + s_NoMstMsg);
 			result.push_back(s_Prim + s_NoMstMsg);
 			result.push_back(s_Kruskal2 + s_NoMstMsg);
-
+			throw e;
 		}
 		else {
 
@@ -40,7 +39,6 @@ int ExeSolution::runProgram()
 			result.push_back(s_Prim + prim.second);
 
 			graph->RemoveEdge(removedEdge.starVer, removedEdge.endVer); // res[1]
-	//		cout << *graph << endl;
 			if (!graph->IsConnectedVisit()) {
 				result.push_back(s_Kruskal2 + s_NoMstMsg);
 			}
@@ -59,13 +57,18 @@ int ExeSolution::runProgram()
 	catch(ProgramException& e)
 	{
 		cout << e.what() << endl;
-		//exit(1); //todo: uncomment this is for testing
-
+		fResult << s_Kruskal + s_NoMstMsg << endl;
+		fResult << s_Prim + s_NoMstMsg << endl;
+		fResult << s_Kruskal2 + s_NoMstMsg << endl;
+		//exit(1);
 	}
 	catch (exception& e)
 	{
-		//todo: generic catch
-		
+		cout << e.what() << endl;
+		fResult << s_Kruskal + s_NoMstMsg << endl;
+		fResult << s_Prim + s_NoMstMsg << endl;
+		fResult << s_Kruskal2 + s_NoMstMsg << endl;
+		exit(1);
 	}
 	return 0;
 }
@@ -86,16 +89,15 @@ void ExeSolution::updateNumberIfStrIsNumber(string& string, int& number)
 {
 	if (isNumber(string)) {
 		number = stoi(string);
-	}else
+	}
+	else
 	{
 		throw ProgramException();
 	}
 }
 
-//also checks if files is empty
 void ExeSolution::readVertixNumberInput(string& line, int& numVertixInput)
 {
-
 	getline(fGraphInput, line);
 	if (line.empty())
 	{
@@ -131,8 +133,8 @@ void ExeSolution::readEdgesArrayInput(string& delimiter, string& line, size_t& p
 			posEdge = line.find(delimiter);
 			token = line.substr(0, posEdge);
 			updateNumberIfStrIsNumber(token, edgeTmp[j]); //valida
-			edgeTmp[j]--; //parsing is lowering result by one
-			if (edgeTmp[j] >= numOfVertixInput || edgeTmp[j] < 0) //validate legal number
+			edgeTmp[j]--; 
+			if (edgeTmp[j] >= numOfVertixInput || edgeTmp[j] < 0) 
 				throw ProgramException();
 			
 			line.erase(0, posEdge + delimiter.length());
@@ -322,19 +324,19 @@ pair<vector<int>, string> ExeSolution::Prim(AdjListGraph& graph)
 	while (!Q.IsEmpty())
 	{
 		int minWeightIndex = Q.DeleteMin();
-		//cout << "deleting current min(ID) : " << minWeightIndex + 1 << endl;
+		//cout << "deleting current min(ID) : " << minWeightIndex + 1 << endl; // for testing
 		
  		inT[minWeightIndex] = true;
 		Node* curr_neighbor = graph[minWeightIndex].head;
 		
 		while (curr_neighbor != nullptr)
 		{
-		//	cout << "Passing neighbor: " << curr_neighbor->nodeId+1 << endl;
+			//cout << "Passing neighbor: " << curr_neighbor->nodeId+1 << endl;// for testing
 			if (!inT[curr_neighbor->nodeId] && curr_neighbor->weight < min[curr_neighbor->nodeId])
 			{
-				//cout << "updating neighbor: " << curr_neighbor->nodeId + 1 << endl;
+				//cout << "updating neighbor: " << curr_neighbor->nodeId + 1 << endl;// for testing
 				min[curr_neighbor->nodeId] = curr_neighbor->weight;
- 				p[curr_neighbor->nodeId] = minWeightIndex; // initiate parents to null
+ 				p[curr_neighbor->nodeId] = minWeightIndex;
 				Q.DecreaseKey(curr_neighbor->nodeId, min[curr_neighbor->nodeId]);
 			}
 			curr_neighbor = curr_neighbor->next;

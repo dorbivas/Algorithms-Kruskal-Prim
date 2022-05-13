@@ -74,7 +74,7 @@ bool LinkedList::removeNode(int indexRemoved)
 
 	Node* tmp = current;
 	/*remove from list with 1 node*/
-	if (prev == nullptr && current->next == nullptr) // 
+	if (prev == nullptr && current->next == nullptr)  
 	{
 		head = tail = nullptr;
 	}

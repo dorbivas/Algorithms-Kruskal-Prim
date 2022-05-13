@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "Utils.h"
+#include "ProgramException.h"
 
 #define UNINIT -1;
 using namespace std;
@@ -12,7 +12,7 @@ struct Node
 	Node* next = nullptr;
 	bool includedFlag = false;
 	Node* brother = nullptr;
-	~Node() = default; //no ctor or dtor actually needed.
+	~Node() = default; 
 
 private:
 	friend ostream& operator<<(ostream& os, const Node& vertex);

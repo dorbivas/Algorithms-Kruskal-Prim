@@ -1,6 +1,5 @@
 #include "DisjointSet.h"
-
-#include "Utils.h"
+#include "ProgramException.h"
 
 DisjointSet::DisjointSet(int arrSize) : parentsArr(arrSize)
 {

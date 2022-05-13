@@ -1,10 +1,4 @@
 #include "Heap.h"
-
-
-
-
-//min heap which sorted by the lowest weight  
-
 bool Heap::IsEmpty()
 {
 	return heapSize == 0;
@@ -20,11 +14,10 @@ bool Heap::validateInput(int nodeId)
 	return false;
 }
 
-//todo: fix efficiency
 void Heap::DecreaseKey(const int nodeId, const int newWeight)
 {
 	int heapNodeIndex = nodeIDArr[nodeId];
-	if (heapNodeIndex > 0 && heapNodeIndex < heapSize)
+	if (heapNodeIndex > 0 && heapNodeIndex < heapSize )
 	{
 		while (heapNodeIndex >= 1){
 			swap(data[heapNodeIndex], data[parent(heapNodeIndex)]); // a[i] = a[p(i)] 
@@ -33,7 +26,6 @@ void Heap::DecreaseKey(const int nodeId, const int newWeight)
 		}
 		data[0].weight = newWeight;
 		fixHeap(0);
-		//validateHeapSorted();
 	}
 }
 
@@ -74,10 +66,7 @@ int Heap::DeleteMin() {
 	--heapSize;
 	swap(data[0], data[heapSize]);
 	swap(nodeIDArr[delNodeId], nodeIDArr[data[heapSize].nodeId]);
-	//data[heapSize].weight = INT_MAX; // infinty
-	//data[heapSize].nodeId = UNINIT;
 	fixHeap(0);
-	//validateHeapSorted();
 
 	return(delNodeId);
 }
@@ -109,8 +98,6 @@ void Heap::fixHeap(int index)
 		fixHeap(min);
 	}
 }
-
-
 
 bool Heap::validatePointingTwoWays() const
 {

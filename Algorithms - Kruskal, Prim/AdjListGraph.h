@@ -31,8 +31,6 @@ public:
 	void PrintColorArray() const;
 	LinkedList& GetAdjList(int index) const;
 	
-	//todo: currently returns node, should return list after created
-	/*LinkedList operator [](int starVer) const;*/
 	Node* getAdjListNode(int index, LinkedList adjArrGraph);
 	LinkedList& operator [](int start_ver) const;
 	friend ostream& operator<<(ostream& os, AdjListGraph& graph);
@@ -41,11 +39,10 @@ private:
 	enum eColor { WHITE, GRAY, BLACK };
 	LinkedList* adjGraphArr;
 	eColor* colorArr;
-	int FLAG_INIT = false; //a flag that MakeEmptyGraph wasn't created properly, later to be used with exceptions
+	int FLAG_INIT = false; 
 
 	void Visit(int vertexId);
 	bool edgeExists(int startVer, int endVer) const;
-	//needs to clear at destructor
 	static Node* createAdjNode(int value, int weight);
 	void setFlagInit(int flagInit);
 	friend ostream& operator<<(ostream& os, const AdjListGraph& graph);
