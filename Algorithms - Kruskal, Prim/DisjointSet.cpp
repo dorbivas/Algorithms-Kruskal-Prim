@@ -1,15 +1,8 @@
-
 #include "DisjointSet.h"
-#include "LinkedList.h"
 
+#include "Utils.h"
 
-//everytime a Find is made path compression is called
-void DisjointSet::pathCompression() // todo ?
-{
-	
-}
-
-DisjointSet::DisjointSet(int arrSize) : parentsArr(new Element[arrSize])
+DisjointSet::DisjointSet(int arrSize) : parentsArr(arrSize)
 {
 	for (int i = 0; i < arrSize; i++)
 	{
@@ -18,16 +11,11 @@ DisjointSet::DisjointSet(int arrSize) : parentsArr(new Element[arrSize])
 	}
 }
 
-DisjointSet::~DisjointSet()
-{
-	delete[] parentsArr;
-}
-
 int DisjointSet::Find(int index)
 {
 	if (index > arrSize)
 	{
-		throw errorMessage("invalid vertix amount");
+		throw ProgramException();
 	}
 	else if (parentsArr[index].parent == index || index == -1)
 	{
@@ -51,7 +39,6 @@ void DisjointSet::UnionBySize(int aSet, int bSet)
 		parentsArr[aSet].parent = bSet;
 		parentsArr[bSet].arrSize += parentsArr[aSet].arrSize;
 	}
-
 }
 
 void DisjointSet::MakeSet(int index)

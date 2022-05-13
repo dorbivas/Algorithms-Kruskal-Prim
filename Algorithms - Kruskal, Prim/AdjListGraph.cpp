@@ -94,7 +94,7 @@ void AdjListGraph::AddEdge(int start_ver, int end_ver, int weight)
 {
 	if (IsAdjacent(start_ver, end_ver) == true)
 	{
-		throw errorMessage("edge already exists");
+		throw ProgramException();
 	}
 	else
 	{
@@ -133,7 +133,8 @@ bool AdjListGraph::RemoveEdge(const int startVer, const int endVer)
 		}
 		else {
 			status = false;
-			cout << "edge not found";
+			//cout << "edge not found";
+			throw ProgramException();
 		}
 	}
 	else

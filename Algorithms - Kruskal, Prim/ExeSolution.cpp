@@ -8,6 +8,7 @@ ExeSolution::ExeSolution(string inpuFileName)
 
 ExeSolution::~ExeSolution()
 {
+
 	fGraphInput.close();
 	fResult.close();
 	delete graph;
@@ -19,7 +20,7 @@ int ExeSolution::runProgram()
 	{
 		readData(); //reads data into graph dto
 
-		cout << *graph << endl;
+	//	cout << *graph << endl;
 		vector<string> result;
 
 		if (!graph->IsConnectedVisit())
@@ -39,7 +40,7 @@ int ExeSolution::runProgram()
 			result.push_back(s_Prim + prim.second);
 
 			graph->RemoveEdge(removedEdge.starVer, removedEdge.endVer); // res[1]
-			cout << *graph << endl;
+	//		cout << *graph << endl;
 			if (!graph->IsConnectedVisit()) {
 				result.push_back(s_Kruskal2 + s_NoMstMsg);
 			}
@@ -55,14 +56,16 @@ int ExeSolution::runProgram()
 			fResult << res << endl;
 		}
 	}
-	catch (...)
+	catch(ProgramException& e)
 	{
-		//todo: check what needs to be printed in case of an error like so
-		fResult << s_Kruskal + s_NoMstMsg << endl;
-		fResult << s_Kruskal + s_NoMstMsg << endl;
-		fResult << s_Kruskal + s_NoMstMsg << endl;
+		cout << e.what() << endl;
+		//exit(1); //todo: uncomment this is for testing
 
-		cout << s_invalidInput << endl;
+	}
+	catch (exception& e)
+	{
+		//todo: generic catch
+		
 	}
 	return 0;
 }
@@ -79,25 +82,43 @@ void ExeSolution::createGraphFromInput(const int& numVertixInput,const int& numE
 	}
 }
 
+void ExeSolution::updateNumberIfStrIsNumber(string& string, int& number)
+{
+	if (isNumber(string)) {
+		number = stoi(string);
+	}else
+	{
+		throw ProgramException();
+	}
+}
 
+//also checks if files is empty
 void ExeSolution::readVertixNumberInput(string& line, int& numVertixInput)
 {
+
 	getline(fGraphInput, line);
-	numVertixInput = stoi(line);
+	if (line.empty())
+	{
+		throw ProgramException();
+	}
+	updateNumberIfStrIsNumber(line, numVertixInput);
 	if (numVertixInput <= 0)
-		throw errorMessage(s_invalidInput);
+		throw ProgramException();
 
 }
 
 void ExeSolution::readEdgesNumberInput(string& line, int& numEdgesInput)
 {
 	getline(fGraphInput, line);
+	updateNumberIfStrIsNumber(line, numEdgesInput);
 	numEdgesInput = stoi(line);
 	if (numEdgesInput <= 0)
 	{
-		throw errorMessage(s_invalidInput);
+		throw ProgramException();
 	}
 }
+
+
 
 void ExeSolution::readEdgesArrayInput(string& delimiter, string& line, size_t& posEdge,int& numOfVertixInput, int& numEdgesInput, vector<graphEdge>& edgesArrInput, string& token)
 {
@@ -109,17 +130,20 @@ void ExeSolution::readEdgesArrayInput(string& delimiter, string& line, size_t& p
 		{
 			posEdge = line.find(delimiter);
 			token = line.substr(0, posEdge);
-			edgeTmp[j] = stoi(token) - 1;
-			if (edgeTmp[j] >= numOfVertixInput || edgeTmp[j] < 0)
-			{
-				throw errorMessage(s_invalidInput); 
-			}
+			updateNumberIfStrIsNumber(token, edgeTmp[j]); //valida
+			edgeTmp[j]--; //parsing is lowering result by one
+			if (edgeTmp[j] >= numOfVertixInput || edgeTmp[j] < 0) //validate legal number
+				throw ProgramException();
+			
 			line.erase(0, posEdge + delimiter.length());
+			if (line.empty())
+				throw ProgramException();
 		}
+		
 
 		posEdge = line.find(delimiter);
 		token = line.substr(0, posEdge);
-		edgeTmp[2] = stoi(token);
+		updateNumberIfStrIsNumber(token, edgeTmp[2]); //valida
 		line.erase(0, posEdge + delimiter.length());
 		edgesArrInput.emplace_back(edgeTmp[0], edgeTmp[1], edgeTmp[2]);
 	}
@@ -129,16 +153,20 @@ void ExeSolution::readRemovedEdgeInput(string& delimiter, string& line, size_t& 
 {
 	getline(fGraphInput, line);
 	int edgeTmp[3] = { -1,-1,-1 };
-	for (int j = 0; j < 2; j++)
+ 	for (int j = 0; j < 2; j++)
 	{
 		posEdge = line.find(delimiter);
 		token = line.substr(0, posEdge);
-		edgeTmp[j] = stoi(token) - 1;
+		updateNumberIfStrIsNumber(token, edgeTmp[j]); //valida
+		if (token.empty())
+		{
+			throw ProgramException();
+		}
+		edgeTmp[j]--;
 		line.erase(0, posEdge + delimiter.length());
 		if (edgeTmp[j] >= numOfVertixInput || edgeTmp[j] < 0)
-		{
-			throw errorMessage(s_invalidInput);
-		}
+			throw ProgramException();
+
 	}
 	removedEdge.starVer = edgeTmp[0];
 	removedEdge.endVer = edgeTmp[1];
@@ -158,6 +186,11 @@ void ExeSolution::readInputFromFile(string& delimiter, string& line, size_t& pos
 
 	//(4) removed edge
 	readRemovedEdgeInput(delimiter, line, posEdge, token,numVertixInput);
+	getline(fGraphInput, line);
+	if (!line.empty())
+	{
+		throw ProgramException();
+	}
 }
 
 void ExeSolution::readData()
@@ -237,8 +270,8 @@ void ExeSolution::quickSort(vector<graphEdge>& edgesArr, int start, int end)
 pair<vector<graphEdge>, string> ExeSolution::Kruskel(AdjListGraph& graph)
 {
 	int u, v, currWeight = 0;
-	DisjointSet graphSet(graph.edgesAmount);
-	vector<graphEdge>  Edges;
+	DisjointSet graphSet(graph.vertixAmount);
+	vector<graphEdge> Edges;
 	pair<vector<graphEdge>, string> result;
 	result.second = "0";
 	CreatKruskelEdgesArray(Edges);
@@ -315,4 +348,10 @@ pair<vector<int>, string> ExeSolution::Prim(AdjListGraph& graph)
 	res.first = p;
 	return res;
 
+}
+
+bool ExeSolution::isNumber(const string& s)
+{
+	return !s.empty() && std::find_if(s.begin(),
+		s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
 }
