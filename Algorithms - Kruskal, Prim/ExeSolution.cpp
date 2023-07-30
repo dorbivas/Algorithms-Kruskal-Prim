@@ -12,11 +12,9 @@ ExeSolution::~ExeSolution()
 	fResult.close();
 	delete graph;
 }
-
-int ExeSolution::runProgram()
-{
-	try
-	{
+#wow good code
+int ExeSolution::runProgram(){
+	try{
 		vector<string> result;
 		readData();
 
