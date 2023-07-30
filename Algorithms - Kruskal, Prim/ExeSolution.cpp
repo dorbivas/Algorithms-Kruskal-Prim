@@ -208,37 +208,6 @@ void ExeSolution::readData()
 	createGraphFromInput(numVertixInput, numEdgesInput, edgesArrInput, removedEdgeInput);
 }
 
-void ExeSolution::CreatKruskelEdgesArray(vector<graphEdge>& Edges)
-{
-	for (int i = 0; i < graph->vertixAmount; i++)
-	{
-		Node* ptr = graph->GetAdjList(i).head;
-		while (ptr != nullptr)
-		{
-			ptr->includedFlag = false;
-			ptr = ptr->next;
-		}
-	}
-
-	for (int i = 0; i < graph->vertixAmount; i++)
-	{
-		Node* ptr = graph->GetAdjList(i).head;
-		while (ptr != nullptr)
-		{
-			graphEdge tmp = graphEdge(i, ptr->nodeId, ptr->weight);
-			if (ptr->brother->includedFlag == false)
-			{
-				ptr->brother->includedFlag = ptr->includedFlag = true;
-				Edges.push_back(tmp);
-			}
-			ptr = ptr->next;
-		}
-
-	}
-}
-
-
-
 int ExeSolution::partition(vector<graphEdge>& edgesArr, int start, int end)
 
 {
@@ -269,38 +238,6 @@ void ExeSolution::quickSort(vector<graphEdge>& edgesArr, int start, int end)
 }
 
 
-pair<vector<graphEdge>, string> ExeSolution::Kruskel(AdjListGraph& graph)
-{
-	int u, v, currWeight = 0;
-	DisjointSet graphSet(graph.vertixAmount);
-	vector<graphEdge> Edges;
-	pair<vector<graphEdge>, string> result;
-	result.second = "0";
-	CreatKruskelEdgesArray(Edges);
-	quickSort(Edges, 0, Edges.size() - 1);
-
-	for (int i = 0; i < graph.vertixAmount; i++)
-		graphSet.MakeSet(i);
-
-	for (auto& Edge : Edges)
-	{
-		u = graphSet.Find(Edge.starVer);
-		v = graphSet.Find(Edge.endVer);
-
-		if (u != v && u != -1 && v != -1)
-		{
-			result.first.push_back(Edge);
-			graphSet.UnionBySize(u, v);
-		}
-	}
-
-	for (auto& i : result.first)
-	{
-		currWeight += i.weight;
-	}
-	result.second = to_string(currWeight);
-	return result;
-}
 
 pair<vector<int>, string> ExeSolution::Prim(AdjListGraph& graph)
 {
